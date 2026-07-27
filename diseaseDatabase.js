@@ -1,286 +1,13 @@
 /**
  * Crop Disease & Cure Database
- * Contains detailed pathology records for common agricultural crops.
+ * Specialized dataset including major commercial & staple crops grown across Telugu-speaking regions (AP & Telangana).
  */
 
 export const CROP_DISEASES = [
   {
-    id: "tomato_late_blight",
-    crop: "Tomato",
-    diseaseName: "Late Blight",
-    scientificName: "Phytophthora infestans",
-    type: "Oomycete / Fungal-like Pathogen",
-    severityLevel: "Severe",
-    severityScore: 88,
-    badgeColor: "#ef4444",
-    colorSignatures: { hueMin: 15, hueMax: 45, darknessThreshold: 0.35, spotRatioMin: 0.15 },
-    symptoms: [
-      "Large, irregular water-soaked dark brown to black spots on leaves",
-      "White cottony fungal growth on the undersides of leaves during high humidity",
-      "Stems develop dark brown oily lesions causing vine collapse",
-      "Fruit develops firm, dark brown greasy patches"
-    ],
-    rootCauses: [
-      "Prolonged leaf wetness (>10 hours) combined with moderate temperatures (15°C - 22°C)",
-      "High relative humidity above 90%",
-      "Wind-blown sporangia from nearby infected fields or infected seed tubers",
-      "Poor field air circulation and overcrowded planting layout"
-    ],
-    organicCures: [
-      {
-        name: "Copper Hydroxide / Bordeaux Mixture",
-        dosage: "3g to 4g per Liter of water",
-        application: "Foliar spray every 5-7 days during damp conditions. Cover both sides of leaves."
-      },
-      {
-        name: "Bio-fungicide (Trichoderma viride / harzianum)",
-        dosage: "5g to 10g per Liter of water",
-        application: "Soil drenching and foliar spray at early onset."
-      },
-      {
-        name: "Neem Seed Kernel Extract (5% Concentration)",
-        dosage: "50ml per Liter of water + 1ml liquid soap surfactant",
-        application: "Spray preventive every 7 days."
-      }
-    ],
-    chemicalCures: [
-      {
-        name: "Mancozeb 75% WP",
-        dosage: "2.5g per Liter of water",
-        application: "Preventive spray before canopy closure and high humidity periods."
-      },
-      {
-        name: "Metalaxyl 8% + Mancozeb 64% WP (Ridomil Gold)",
-        dosage: "2g per Liter of water",
-        application: "Systemic curative action. Apply at first sign of lesions; max 2 sprays per season."
-      },
-      {
-        name: "Cymoxanil 8% + Mancozeb 64% WP",
-        dosage: "2g per Liter of water",
-        application: "Curative application within 48 hours of infection."
-      }
-    ],
-    preventionProtocol: [
-      "Destroy and burn all infected crop residues immediately (do not compost).",
-      "Adopt drip irrigation instead of overhead sprinklers to keep foliage dry.",
-      "Maintain wide row spacing (60cm x 45cm) for maximum airflow and sunlight penetration.",
-      "Apply crop rotation with non-solanaceous crops (e.g., corn, legumes) for at least 3 years."
-    ]
-  },
-  {
-    id: "potato_early_blight",
-    crop: "Potato",
-    diseaseName: "Early Blight",
-    scientificName: "Alternaria solani",
-    type: "Fungal Pathogen",
-    severityLevel: "Moderate to High",
-    severityScore: 72,
-    badgeColor: "#f97316",
-    colorSignatures: { hueMin: 25, hueMax: 55, darknessThreshold: 0.40, spotRatioMin: 0.12 },
-    symptoms: [
-      "Concentric ring dark brown spots ('target-board' pattern) on older leaves",
-      "Yellow halo (chlorosis) surrounding brown necrotic lesions",
-      "Lower leaves wither, dry up, and drop prematurely",
-      "Sunken brown lesions on tubers near harvest"
-    ],
-    rootCauses: [
-      "Warm temperatures (24°C - 29°C) coupled with alternating wet and dry periods",
-      "Nitrogen and potassium nutrient stress in aging plants",
-      "Fungal spores overwintering in infected plant debris and solanaceous weeds",
-      "Dew or sprinkler irrigation creating periodic wet foliage"
-    ],
-    organicCures: [
-      {
-        name: "Potassium Bicarbonate + Horticultural Oil",
-        dosage: "5g Potassium Bicarbonate + 5ml oil per Liter of water",
-        application: "Spray thoroughly at first appearance of target spots."
-      },
-      {
-        name: "Bacillus subtilis Bio-Fungicide",
-        dosage: "4ml to 6ml per Liter of water",
-        application: "Weekly preventative application during foliage growth."
-      }
-    ],
-    chemicalCures: [
-      {
-        name: "Chlorothalonil 75% WP",
-        dosage: "2g per Liter of water",
-        application: "Broad-spectrum protectant spray every 7-10 days."
-      },
-      {
-        name: "Azoxystrobin 23% SC",
-        dosage: "1ml per Liter of water",
-        application: "Systemic strobilurin fungicide spray at early disease initiation."
-      },
-      {
-        name: "Propineb 70% WP",
-        dosage: "3g per Liter of water",
-        application: "Contact protective spray with zinc nutrition benefit."
-      }
-    ],
-    preventionProtocol: [
-      "Ensure balanced soil fertilization; avoid late-stage nitrogen deficiency.",
-      "Mulch soil around plants to prevent fungal spores from splashing onto lower leaves.",
-      "Remove infected lower leaves promptly.",
-      "Use certified disease-free seed tubers."
-    ]
-  },
-  {
-    id: "corn_common_rust",
-    crop: "Corn (Maize)",
-    diseaseName: "Common Rust",
-    scientificName: "Puccinia sorghi",
-    type: "Fungal Pathogen",
-    severityLevel: "Moderate",
-    severityScore: 64,
-    badgeColor: "#eab308",
-    colorSignatures: { hueMin: 10, hueMax: 35, darknessThreshold: 0.30, spotRatioMin: 0.18 },
-    symptoms: [
-      "Elongated cinnamon-brown to reddish pustules on both upper and lower leaf surfaces",
-      "Pustules rupture exposing powdery reddish-brown rust spores",
-      "Severe infection causes leaf chlorosis, yellowing, and premature leaf death",
-      "Reduced kernel filling and stalk weakening"
-    ],
-    rootCauses: [
-      "Cool to moderate temperatures (16°C - 23°C) with continuous high moisture",
-      "Airborne urediniospores blown long distances from southern corn fields",
-      "Continuous cropping of susceptible hybrid corn varieties"
-    ],
-    organicCures: [
-      {
-        name: "Sulfur Dusting / Wettable Sulfur 80% WP",
-        dosage: "3g per Liter of water",
-        application: "Foliar application when reddish rust pustules first emerge."
-      },
-      {
-        name: "Compost Tea + Neem Oil Extract",
-        dosage: "100ml compost tea + 5ml neem oil per Liter",
-        application: "Spray early morning to boost leaf microbial defense."
-      }
-    ],
-    chemicalCures: [
-      {
-        name: "Tebuconazole 25.9% EC",
-        dosage: "1ml to 1.5ml per Liter of water",
-        application: "Triazole systemic fungicide at early tassel/tasseling stage."
-      },
-      {
-        name: "Pyraclostrobin 20% WG",
-        dosage: "0.5g to 0.75g per Liter of water",
-        application: "Apply at first sign of rust pustules prior to silk stage."
-      }
-    ],
-    preventionProtocol: [
-      "Plant rust-resistant hybrid corn varieties.",
-      "Plant early in the season to avoid peak spore migration windows.",
-      "Ensure proper crop spacing and weed control."
-    ]
-  },
-  {
-    id: "grape_black_rot",
-    crop: "Grape",
-    diseaseName: "Black Rot",
-    scientificName: "Guignardia bidwellii",
-    type: "Fungal Pathogen",
-    severityLevel: "High to Severe",
-    severityScore: 82,
-    badgeColor: "#dc2626",
-    colorSignatures: { hueMin: 20, hueMax: 50, darknessThreshold: 0.45, spotRatioMin: 0.14 },
-    symptoms: [
-      "Small reddish-brown circular spots on leaves with dark brown borders",
-      "Tiny black pinpoint dots (pycnidia) inside the brown spots",
-      "Infected grapes shrivel into hard, black, wrinkled 'mummies'",
-      "Cane lesions turn dark brown and cracked"
-    ],
-    rootCauses: [
-      "Warm moist spring weather (21°C - 27°C) with extended leaf wetness (6-7 hours)",
-      "Overwintered mummified berries left on vines or ground",
-      "Dense canopy restricting sunlight and canopy drying"
-    ],
-    organicCures: [
-      {
-        name: "Liquid Lime Sulfur Solution",
-        dosage: "15ml to 20ml per Liter of water",
-        application: "Dormant spray before bud break."
-      },
-      {
-        name: "Copper Sulfate + Hydrated Lime (Bordeaux)",
-        dosage: "4g Copper + 4g Lime per Liter of water",
-        application: "Apply post-bloom through early fruit set."
-      }
-    ],
-    chemicalCures: [
-      {
-        name: "Myclobutanil 10% WP",
-        dosage: "0.4g to 0.5g per Liter of water",
-        application: "Apply from pre-bloom until 4 weeks post-bloom."
-      },
-      {
-        name: "Mancozeb + Difenoconazole",
-        dosage: "2g Mancozeb + 0.5ml Difenoconazole per Liter",
-        application: "Foliar spray at 10-14 day intervals."
-      }
-    ],
-    preventionProtocol: [
-      "Sanitation: Prune out all mummified berries and infected canes in winter.",
-      "Trellis management: Open up canopy by shoot positioning and leaf pulling around fruit zones.",
-      "Keep ground free of leaf litter."
-    ]
-  },
-  {
-    id: "apple_scab",
-    crop: "Apple",
-    diseaseName: "Apple Scab",
-    scientificName: "Venturia inaequalis",
-    type: "Fungal Pathogen",
-    severityLevel: "High",
-    severityScore: 78,
-    badgeColor: "#ea580c",
-    colorSignatures: { hueMin: 35, hueMax: 70, darknessThreshold: 0.38, spotRatioMin: 0.16 },
-    symptoms: [
-      "Olive-green to dark velvety brown spots on leaves with feathery margins",
-      "Leaves turn yellow and drop early (severe defoliation)",
-      "Scabby, corky, dark brown cracked lesions on apple fruit surface"
-    ],
-    rootCauses: [
-      "Cool rainy spring weather (12°C - 20°C) with prolonged leaf wetness",
-      "Overwintering ascopores in fallen leaf litter on the orchard floor",
-      "Susceptible apple varieties (e.g., McIntosh, Red Delicious)"
-    ],
-    organicCures: [
-      {
-        name: "Sulfur 80% WDG",
-        dosage: "3g to 5g per Liter of water",
-        application: "Apply from green tip stage through petal fall."
-      },
-      {
-        name: "Neem Oil 70% EC",
-        dosage: "5ml per Liter of water",
-        application: "Preventative bio-pesticide spray."
-      }
-    ],
-    chemicalCures: [
-      {
-        name: "Captan 50% WP",
-        dosage: "2.5g per Liter of water",
-        application: "Standard protective fungicide spray prior to rain events."
-      },
-      {
-        name: "Difenoconazole 25% EC",
-        dosage: "0.5ml per Liter of water",
-        application: "Curative systemic triazole fungicide within 48h of rain."
-      }
-    ],
-    preventionProtocol: [
-      "Rake and destroy fallen leaves in autumn or apply 5% urea spray to speed leaf decomposition.",
-      "Prune trees to maintain open canopy structure.",
-      "Plant scab-resistant cultivars (e.g., Enterprise, Liberty, Prima)."
-    ]
-  },
-  {
     id: "rice_blast",
-    crop: "Rice",
-    diseaseName: "Rice Blast",
+    crop: "Rice (వరి)",
+    diseaseName: "Rice Blast (వరి అగ్గి తెగులు)",
     scientificName: "Magnaporthe oryzae",
     type: "Fungal Pathogen",
     severityLevel: "Severe",
@@ -288,104 +15,369 @@ export const CROP_DISEASES = [
     badgeColor: "#b91c1c",
     colorSignatures: { hueMin: 30, hueMax: 65, darknessThreshold: 0.32, spotRatioMin: 0.20 },
     symptoms: [
-      "Diamond/spindle-shaped lesions with gray-white centers and reddish-brown borders",
-      "Nodal blast turning stem nodes black and prone to breaking",
-      "Neck rot causing complete head loss ('blank panicles' or empty grains)"
+      "Spindle-shaped diamond spots with ash-gray center and brown margins on leaves",
+      "Blackening and breaking of stem nodes (Nodal Blast)",
+      "Neck rot causing panicle head loss and empty grain chaff"
     ],
     rootCauses: [
-      "High nitrogen fertilizer application exceeding recommended levels",
-      "Frequent dew periods, high humidity (>90%), and temperatures (25°C - 28°C)",
-      "Low soil moisture stress (aerobic / dry soil conditions)"
+      "Excessive nitrogen fertilizer application",
+      "Cool humid nights (20°C-25°C) coupled with prolonged morning dew and overcast skies"
     ],
     organicCures: [
       {
         name: "Pseudomonas fluorescens Bio-Control",
         dosage: "10g per Liter of water",
-        application: "Seed treatment + foliar spray at tillering and panicle initiation."
+        application: "Foliar spray at tillering and panicle initiation stage."
       },
       {
-        name: "Silicon Soil Amendment (Calcium Silicate)",
-        dosage: "100kg - 200kg per hectare",
-        application: "Enhances cell wall strength against fungal penetration."
+        name: "Silicon Amendment (Calcium Silicate)",
+        dosage: "100kg per acre",
+        application: "Apply to soil to strengthen silica cell wall defense against fungal penetration."
       }
     ],
     chemicalCures: [
       {
-        name: "Tricyclazole 75% WP",
+        name: "Tricyclazole 75% WP (Baan / Beam)",
         dosage: "0.6g per Liter of water",
-        application: "Highly effective preventive melanin-synthesis inhibitor. Spray at boot stage."
+        application: "Systemic preventive spray at boot leaf stage."
       },
       {
-        name: "Isoprothiolane 40% EC",
+        name: "Isoprothiolane 40% EC (Fuji-one)",
         dosage: "1.5ml per Liter of water",
-        application: "Curative and systemic spray at early neck blast stage."
-      },
-      {
-        name: "Kasugamycin 3% SL",
-        dosage: "2ml per Liter of water",
-        application: "Antibiotic fungicide spray."
+        application: "Curative spray upon first appearance of leaf blast spots."
       }
     ],
     preventionProtocol: [
-      "Avoid excessive nitrogen fertilization; split nitrogen into multiple balanced applications.",
-      "Maintain adequate water depth in paddy fields (5cm - 10cm continuous standing water).",
-      "Burn or plow under infected crop stubble after harvest."
+      "Avoid excessive nitrogen fertilization; split N into 3 balanced doses.",
+      "Maintain 5cm standing water level in paddy fields."
     ]
   },
   {
-    id: "citrus_greening",
-    crop: "Citrus (Orange/Lemon)",
-    diseaseName: "Citrus Greening (Huanglongbing)",
-    scientificName: "Candidatus Liberibacter asiaticus",
-    type: "Bacterial Pathogen (Vectored by Asian Citrus Psyllid)",
-    severityLevel: "Critical / Severe",
-    severityScore: 95,
-    badgeColor: "#991b1b",
-    colorSignatures: { hueMin: 45, hueMax: 85, darknessThreshold: 0.25, spotRatioMin: 0.25 },
+    id: "chilli_leaf_curl",
+    crop: "Chilli (మిరప)",
+    diseaseName: "Chilli Leaf Curl & Dieback (మిరప ఆకు ముడుత & కొమ్మ ఎండు తెగులు)",
+    scientificName: "Chilli Leaf Curl Virus (Thrips & Whitefly Vectored)",
+    type: "Viral & Fungal Complex",
+    severityLevel: "Critical",
+    severityScore: 94,
+    badgeColor: "#dc2626",
+    colorSignatures: { hueMin: 40, hueMax: 80, darknessThreshold: 0.30, spotRatioMin: 0.18 },
     symptoms: [
-      "Asymmetrical yellow mottling (blotchy mottle) on leaves crossing leaf veins",
-      "Small, narrow, upright leaves with zinc-deficiency-like symptoms",
-      "Lopsided, small, bitter green fruit that fails to color properly",
-      "Twig dieback and gradual root system decay"
+      "Upward and downward curling of young leaves ('boat-shaped' leaves)",
+      "Stunted plant growth, puckering, and vein thickening",
+      "Dieback of tender branches from top downward with black necrotic tips",
+      "Fruit rot and premature chilli drop"
     ],
     rootCauses: [
-      "Transmission by Asian Citrus Psyllid (Diaphorina citri) insects feeding on young flushes",
-      "Infected nursery rootstock or budwood grafting material"
+      "Transmission by Thrips (Scirtothrips dorsalis) and Whiteflies (Bemisia tabaci) during dry hot spells",
+      "High temperature (30°C-36°C) accelerating insect vector breeding"
     ],
     organicCures: [
       {
-        name: "Psyllid Vector Control - Neem Oil + Insecticidal Soap",
-        dosage: "10ml Neem oil + 5ml Soap per Liter",
-        application: "Weekly spray during young shoot flushes to control psyllid vector."
+        name: "Neem Seed Kernel Extract (NSKE 5%) + Soap",
+        dosage: "50ml NSKE + 1ml soap per Liter of water",
+        application: "Weekly foliar spray to control vector insects."
       },
       {
-        name: "Foliar Micronutrient Cocktail (Zinc + Iron + Manganese + Boron)",
-        dosage: "2g Zinc Sulfate + 2g Ferrous Sulfate per Liter",
-        application: "Frequent nutritional sprays to sustain tree vigor."
+        name: "Agniastra Bio-Pesticide (Garlic + Green Chilli + Neem)",
+        dosage: "20ml per Liter of water",
+        application: "Natural organic botanical spray against sucking pests."
       }
     ],
     chemicalCures: [
       {
-        name: "Imidacloprid 17.8% SL (Vector Control)",
-        dosage: "0.5ml per Liter of water or soil drench",
-        application: "Systemic insecticide to eliminate feeding psyllids."
+        name: "Fipronil 5% SC / Imidacloprid 17.8% SL",
+        dosage: "1.5ml Fipronil or 0.5ml Imidacloprid per Liter",
+        application: "Systemic insecticide to eliminate thrips and whiteflies."
       },
       {
-        name: "Oxytetracycline / Streptomycin Trunk Injection (Where approved)",
-        dosage: "Follow local agronomist prescription",
-        application: "Direct antibiotic trunk injection for commercial orchards."
+        name: "Azoxystrobin 18.2% + Difenoconazole 11.4% SC (Amistar Top)",
+        dosage: "1ml per Liter of water",
+        application: "Spray for dieback and fruit rot control."
       }
     ],
     preventionProtocol: [
-      "Use certified disease-free nursery stock from screenhouses.",
-      "Eradicate infected trees immediately upon positive diagnostic testing.",
-      "Deploy yellow sticky traps for psyllid monitoring."
+      "Install Yellow & Blue Sticky Traps (20 per acre) to catch thrips and whiteflies.",
+      "Grow border crops of Maize or Sorghum (3 rows) around chilli field as barrier."
+    ]
+  },
+  {
+    id: "cotton_leaf_spot",
+    crop: "Cotton (ప్రత్తి)",
+    diseaseName: "Cotton Alternaria Leaf Spot (ప్రత్తి ఆకు మచ్చ తెగులు)",
+    scientificName: "Alternaria macrospora",
+    type: "Fungal Pathogen",
+    severityLevel: "Moderate to High",
+    severityScore: 76,
+    badgeColor: "#ea580c",
+    colorSignatures: { hueMin: 20, hueMax: 50, darknessThreshold: 0.38, spotRatioMin: 0.15 },
+    symptoms: [
+      "Small circular brown spots with purple-red borders on leaves",
+      "Concentric rings inside mature lesions leading to leaf perforation ('shot-hole')",
+      "Premature defoliation of lower boll-bearing leaves"
+    ],
+    rootCauses: [
+      "Potash nutrient stress during heavy boll loading stage",
+      "Intermittent rainfall and high humidity above 85%"
+    ],
+    organicCures: [
+      {
+        name: "Cow Urine + Sour Buttermilk Ferment",
+        dosage: "50ml Fermented mixture per Liter of water",
+        application: "Spray every 10 days as bio-fungicide and leaf fertilizer."
+      }
+    ],
+    chemicalCures: [
+      {
+        name: "Copper Oxychloride 50% WP (Blitox)",
+        dosage: "3g per Liter of water",
+        application: "Foliar spray at early lesion development."
+      },
+      {
+        name: "Propiconazole 25% EC (Tilt)",
+        dosage: "1ml per Liter of water",
+        application: "Systemic triazole fungicide spray."
+      }
+    ],
+    preventionProtocol: [
+      "Apply recommended doses of Muriate of Potash (MOP) to prevent leaf weakening.",
+      "Remove and burn fallen infected leaf litter."
+    ]
+  },
+  {
+    id: "groundnut_tikka",
+    crop: "Groundnut (వేరుశనగ)",
+    diseaseName: "Groundnut Tikka Leaf Spot (వేరుశనగ తిక్కా ఆకు మచ్చ తెగులు)",
+    scientificName: "Cercospora arachidicola / Phaeoisariopsis personata",
+    type: "Fungal Pathogen",
+    severityLevel: "High",
+    severityScore: 80,
+    badgeColor: "#d97706",
+    colorSignatures: { hueMin: 25, hueMax: 55, darknessThreshold: 0.42, spotRatioMin: 0.16 },
+    symptoms: [
+      "Small dark brown to black circular spots surrounded by yellow halo on leaf upper surface",
+      "Carbon-black cushion-like fungal tufts on leaf underside",
+      "Severe leaf shedding leading to pod filling failure"
+    ],
+    rootCauses: [
+      "Warm humid conditions (26°C-30°C) with continuous wet foliage",
+      "Soil-borne fungal spores overwintering in groundnut crop debris"
+    ],
+    organicCures: [
+      {
+        name: "Trichoderma viride + Vermicompost Soil Application",
+        dosage: "2kg Trichoderma + 100kg Vermicompost per acre",
+        application: "Apply to soil at field preparation."
+      }
+    ],
+    chemicalCures: [
+      {
+        name: "Tebuconazole 50% + Trifloxystrobin 25% WG (Nativo)",
+        dosage: "0.75g per Liter of water",
+        application: "Spray 35-40 days after sowing."
+      },
+      {
+        name: "Mancozeb 75% WP + Carbendazim 12% WP (SAAF)",
+        dosage: "2g per Liter of water",
+        application: "Foliar spray at first spot appearance."
+      }
+    ],
+    preventionProtocol: [
+      "Practice crop rotation with Cereals (Maize, Sorghum).",
+      "Treat seeds with Carbendazim 2g/kg before planting."
+    ]
+  },
+  {
+    id: "sugarcane_red_rot",
+    crop: "Sugarcane (చెరకు)",
+    diseaseName: "Sugarcane Red Rot (చెరకు ఎర్ర కుళ్ళు తెగులు)",
+    scientificName: "Colletotrichum falcatum",
+    type: "Fungal Pathogen",
+    severityLevel: "Severe",
+    severityScore: 90,
+    badgeColor: "#b91c1c",
+    colorSignatures: { hueMin: 15, hueMax: 40, darknessThreshold: 0.35, spotRatioMin: 0.22 },
+    symptoms: [
+      "Third and fourth leaves turn yellow and wither from margin inward",
+      "Internal stalk tissues show reddening with characteristic white transverse bands",
+      "Stalks emit alcoholic sour odor when split open"
+    ],
+    rootCauses: [
+      "Infected seed setts used during planting",
+      "Waterlogging and poor field drainage during monsoon flooding"
+    ],
+    organicCures: [
+      {
+        name: "Hot Water Seed Sett Treatment (52°C for 30 min)",
+        dosage: "Pre-planting dip",
+        application: "Treat seed setts before planting to destroy internal fungus."
+      }
+    ],
+    chemicalCures: [
+      {
+        name: "Carbendazim 50% WP (Bavistin)",
+        dosage: "2g per Liter of water",
+        application: "Soak seed setts for 15 minutes before planting."
+      }
+    ],
+    preventionProtocol: [
+      "Plant red-rot resistant sugarcane varieties.",
+      "Ensure proper field drainage ditches to prevent standing water."
+    ]
+  },
+  {
+    id: "mango_powdery_mildew",
+    crop: "Mango (మామిడి)",
+    diseaseName: "Mango Powdery Mildew & Anthracnose (మామిడి బూడిద & నల్ల మచ్చ తెగులు)",
+    scientificName: "Oidium mangiferae / Colletotrichum gloeosporioides",
+    type: "Fungal Pathogen",
+    severityLevel: "High",
+    severityScore: 82,
+    badgeColor: "#eab308",
+    colorSignatures: { hueMin: 45, hueMax: 75, darknessThreshold: 0.25, spotRatioMin: 0.14 },
+    symptoms: [
+      "White powdery coating on inflorescence blossom panicles and young leaves",
+      "Dark brown necrotic tear-stain spots on fruits (Anthracnose)",
+      "Blossom dropping leading to complete fruit set loss"
+    ],
+    rootCauses: [
+      "Cool humid nights during flowering stage (February-March)",
+      "High humidity and morning dew during bloom"
+    ],
+    organicCures: [
+      {
+        name: "Wettable Sulfur 80% WP",
+        dosage: "3g per Liter of water",
+        application: "Spray at early panicle emergence."
+      }
+    ],
+    chemicalCures: [
+      {
+        name: "Hexaconazole 5% EC (Contaf)",
+        dosage: "1ml to 1.5ml per Liter of water",
+        application: "Spray at full blossom stage."
+      },
+      {
+        name: "Carbendazim 50% WP",
+        dosage: "1g per Liter of water",
+        application: "Spray for anthracnose control."
+      }
+    ],
+    preventionProtocol: [
+      "Prune overcrowding inner branches to allow sunlight penetration into canopy.",
+      "Keep orchard floor clear of fallen leaves and decaying fruits."
+    ]
+  },
+  {
+    id: "turmeric_rhizome_rot",
+    crop: "Turmeric (పసుపు)",
+    diseaseName: "Turmeric Leaf Spot & Rhizome Rot (పసుపు ఆకు మచ్చ & దుంప కుళ్ళు తెగులు)",
+    scientificName: "Taphrina maculans / Pythium aphanidermatum",
+    type: "Fungal Pathogen Complex",
+    severityLevel: "High",
+    severityScore: 84,
+    badgeColor: "#ea580c",
+    colorSignatures: { hueMin: 30, hueMax: 60, darknessThreshold: 0.35, spotRatioMin: 0.16 },
+    symptoms: [
+      "Numerous yellow spots on both leaf surfaces turning brown and dry",
+      "Basal stem rotting and rhizomes turning soft, water-soaked, and foul smelling"
+    ],
+    rootCauses: [
+      "Heavy monsoon rains and waterlogging in raised beds",
+      "Un-treated seed rhizomes infected with Pythium fungus"
+    ],
+    organicCures: [
+      {
+        name: "Trichoderma harzianum Bio-Treatment",
+        dosage: "50g per seed rhizome basket + Soil drench",
+        application: "Apply to soil and rhizomes before planting."
+      }
+    ],
+    chemicalCures: [
+      {
+        name: "Metalaxyl 4% + Mancozeb 64% (Ridomil Gold Soil Drench)",
+        dosage: "2.5g per Liter of water",
+        application: "Drench soil around plants upon waterlogging."
+      }
+    ],
+    preventionProtocol: [
+      "Plant turmeric in raised beds (30cm height) with adequate drainage channels."
+    ]
+  },
+  {
+    id: "tomato_late_blight",
+    crop: "Tomato (టమోటా)",
+    diseaseName: "Tomato Late Blight (టమోటా ఎండు తెగులు)",
+    scientificName: "Phytophthora infestans",
+    type: "Oomycete Pathogen",
+    severityLevel: "Severe",
+    severityScore: 88,
+    badgeColor: "#ef4444",
+    colorSignatures: { hueMin: 15, hueMax: 45, darknessThreshold: 0.35, spotRatioMin: 0.15 },
+    symptoms: [
+      "Large, irregular water-soaked dark brown to black spots on leaves",
+      "White cottony fungal growth on the undersides of leaves during high humidity",
+      "Stems develop dark brown oily lesions causing vine collapse"
+    ],
+    rootCauses: [
+      "Prolonged leaf wetness (>10 hours) combined with moderate temperatures (15°C - 22°C)"
+    ],
+    organicCures: [
+      {
+        name: "Copper Hydroxide / Bordeaux Mixture 1%",
+        dosage: "3g to 4g per Liter of water",
+        application: "Foliar spray every 5-7 days during damp conditions."
+      }
+    ],
+    chemicalCures: [
+      {
+        name: "Metalaxyl 8% + Mancozeb 64% WP (Ridomil Gold)",
+        dosage: "2g per Liter of water",
+        application: "Systemic curative action upon first lesion sign."
+      }
+    ],
+    preventionProtocol: [
+      "Destroy and burn all infected crop residues immediately."
+    ]
+  },
+  {
+    id: "corn_common_rust",
+    crop: "Maize (మొక్కజొన్న)",
+    diseaseName: "Maize Common Rust (మొక్కజొన్న తుప్పు తెగులు)",
+    scientificName: "Puccinia sorghi",
+    type: "Fungal Pathogen",
+    severityLevel: "Moderate",
+    severityScore: 64,
+    badgeColor: "#eab308",
+    colorSignatures: { hueMin: 10, hueMax: 35, darknessThreshold: 0.30, spotRatioMin: 0.18 },
+    symptoms: [
+      "Elongated cinnamon-brown to reddish pustules on both upper and lower leaf surfaces"
+    ],
+    rootCauses: [
+      "Cool to moderate temperatures (16°C - 23°C) with continuous high moisture"
+    ],
+    organicCures: [
+      {
+        name: "Wettable Sulfur 80% WP",
+        dosage: "3g per Liter of water",
+        application: "Foliar application when reddish rust pustules first emerge."
+      }
+    ],
+    chemicalCures: [
+      {
+        name: "Tebuconazole 25.9% EC",
+        dosage: "1ml per Liter of water",
+        application: "Triazole systemic fungicide at early tasseling stage."
+      }
+    ],
+    preventionProtocol: [
+      "Plant rust-resistant hybrid corn varieties."
     ]
   },
   {
     id: "healthy_leaf",
-    crop: "General Crop",
-    diseaseName: "Healthy & Vibrant Plant Leaf",
+    crop: "General Crop (అన్ని రకాల పంటలు)",
+    diseaseName: "Healthy Plant Leaf (ఆరోగ్యకరమైన ఆకు)",
     scientificName: "Normal Physiological State",
     type: "No Pathogen Detected",
     severityLevel: "Healthy",
@@ -394,9 +386,10 @@ export const CROP_DISEASES = [
     colorSignatures: { hueMin: 80, hueMax: 150, darknessThreshold: 0.15, spotRatioMin: 0.02 },
     symptoms: [
       "Uniform green pigmentation across the leaf surface",
-      "Intact leaf margins without necrotic spots or yellow halos",
-      "Proper turgor pressure and crisp leaf texture",
-      "Strong vein structure without discoloration"
+      "Intact leaf margins without necrotic spots or yellow halos"
+    ],
+    rootCauses: [
+      "Optimal soil moisture, balanced N-P-K nutrition, and adequate sunlight"
     ],
     organicCures: [
       {
@@ -413,20 +406,20 @@ export const CROP_DISEASES = [
       }
     ],
     preventionProtocol: [
-      "Maintain consistent soil moisture and organic mulch cover.",
-      "Monitor fields weekly for early insect or fungal vectors.",
-      "Practice clean field sanitation."
+      "Maintain consistent soil moisture and organic mulch cover."
     ]
   }
 ];
 
 export const CROP_LIST = [
-  "All Crops",
-  "Tomato",
-  "Potato",
-  "Corn (Maize)",
-  "Grape",
-  "Apple",
-  "Rice",
-  "Citrus (Orange/Lemon)"
+  "All Crops (అన్ని పంటలు)",
+  "Rice (వరి)",
+  "Chilli (మిరప)",
+  "Cotton (ప్రత్తి)",
+  "Groundnut (వేరుశనగ)",
+  "Sugarcane (చెరకు)",
+  "Mango (మామిడి)",
+  "Tomato (టమోటా)",
+  "Maize (మొక్కజొన్న)",
+  "Turmeric (పసుపు)"
 ];
