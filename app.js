@@ -1,17 +1,16 @@
 import { CROP_DISEASES, CROP_LIST } from './diseaseDatabase.js';
 import { SAMPLE_GALLERY } from './sampleImages.js';
 import { analyzeLeafImage } from './imageAnalyzer.js';
+import { TRANSLATIONS, TELUGU_DISEASE_DATA } from './translations.js';
 
 // Application State
 const state = {
+  language: localStorage.getItem('crop_lang') || 'en',
   currentCropFilter: "All Crops",
   selectedImage: null,
   isScanning: false,
   activeTab: "root_cause",
   currentAnalysis: null,
-  chatHistory: [
-    { sender: "bot", text: "Hello! I'm your AI Agronomist. Ask me any question about plant leaf symptoms, fungicide spray schedules, or soil nutrition!" }
-  ],
   history: JSON.parse(localStorage.getItem('crop_scan_history') || '[]')
 };
 
@@ -23,10 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCropSelector();
   renderSampleGallery();
   bindEvents();
+  updateUiLanguage();
 });
 
 function initDomReferences() {
   dom = {
+    langPills: document.querySelectorAll('.lang-pill'),
     cropSelect: document.getElementById('cropSelect'),
     dropzone: document.getElementById('dropzone'),
     fileInput: document.getElementById('fileInput'),
@@ -44,6 +45,7 @@ function initDomReferences() {
     severityPill: document.getElementById('severityPill'),
     confidenceVal: document.getElementById('confidenceVal'),
     confidenceFill: document.getElementById('confidenceFill'),
+    whatsappShareBtn: document.getElementById('whatsappShareBtn'),
     
     // Tabs & Contents
     tabButtons: document.querySelectorAll('.tab-btn'),
@@ -68,8 +70,42 @@ function initDomReferences() {
     sectionPredictor: document.getElementById('sectionPredictor'),
     sectionLibrary: document.getElementById('sectionLibrary'),
     sectionCalculator: document.getElementById('sectionCalculator'),
-    libraryContainer: document.getElementById('libraryContainer')
+    libraryContainer: document.getElementById('libraryContainer'),
+    
+    // FAQ elements
+    faqQuestions: document.querySelectorAll('.faq-question')
   };
+}
+
+function updateUiLanguage() {
+  const t = TRANSLATIONS[state.language];
+
+  // Update text nodes with data-i18n
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key]) {
+      if (el.tagName === 'INPUT' && el.placeholder) {
+        el.placeholder = t[key];
+      } else {
+        el.innerHTML = t[key];
+      }
+    }
+  });
+
+  // Active language pill styling
+  dom.langPills.forEach(pill => {
+    if (pill.dataset.lang === state.language) {
+      pill.classList.add('active');
+    } else {
+      pill.classList.remove('active');
+    }
+  });
+
+  // Refresh active diagnostic card if present
+  if (state.currentAnalysis) {
+    renderTabContent();
+    updateWhatsappShareLink();
+  }
 }
 
 function renderCropSelector() {
@@ -103,6 +139,15 @@ function renderSampleGallery() {
 }
 
 function bindEvents() {
+  // Language Switcher Pills
+  dom.langPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      state.language = pill.dataset.lang;
+      localStorage.setItem('crop_lang', state.language);
+      updateUiLanguage();
+    });
+  });
+
   // Dropzone drag & drop
   if (dom.dropzone) {
     dom.dropzone.addEventListener('dragover', (e) => {
@@ -154,6 +199,14 @@ function bindEvents() {
       btn.classList.add('active');
       state.activeTab = btn.dataset.tab;
       renderTabContent();
+    });
+  });
+
+  // FAQ Accordion
+  dom.faqQuestions.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const answer = btn.nextElementSibling;
+      answer.classList.toggle('hidden');
     });
   });
 
@@ -218,11 +271,11 @@ function startWebcamCapture() {
       
       const capBtn = document.createElement('button');
       capBtn.className = 'btn-primary';
-      capBtn.textContent = '📸 Snap Leaf Photo';
+      capBtn.textContent = state.language === 'te' ? '📸 ఆకు ఫోటో తీయండి' : '📸 Snap Leaf Photo';
       
       const cancelBtn = document.createElement('button');
       cancelBtn.className = 'btn-secondary';
-      cancelBtn.textContent = 'Cancel';
+      cancelBtn.textContent = state.language === 'te' ? 'రద్దు చేయి' : 'Cancel';
 
       modal.appendChild(video);
       modal.appendChild(capBtn);
@@ -248,7 +301,7 @@ function startWebcamCapture() {
       };
     })
     .catch(() => {
-      alert("Unable to access camera. Please select a leaf photo or sample image instead.");
+      alert(state.language === 'te' ? "కెమెరా అందుబాటులో లేదు. ఫైల్ లేదా నమూనా చిత్రాన్ని ఎంచుకోండి." : "Unable to access camera. Please select a leaf photo or sample image instead.");
     });
 }
 
@@ -270,21 +323,17 @@ async function runAnalysis(imgElement) {
   state.isScanning = true;
   dom.scannerOverlay.classList.remove('hidden');
 
-  // Trigger analysis simulation laser window
   setTimeout(async () => {
     const analysis = await analyzeLeafImage(imgElement, state.currentCropFilter);
     state.currentAnalysis = analysis;
     state.isScanning = false;
     dom.scannerOverlay.classList.add('hidden');
-    
-    // Save to history
-    saveToHistory(analysis);
     displayAnalysisResults(analysis);
   }, 1800);
 }
 
 function displayAnalysisResults(analysis) {
-  const d = analysis.disease;
+  const d = getLocalizedDiseaseData(analysis.disease);
   
   dom.placeholderCard.classList.add('hidden');
   dom.resultCard.classList.remove('hidden');
@@ -299,18 +348,44 @@ function displayAnalysisResults(analysis) {
   dom.confidenceVal.textContent = `${analysis.confidence}%`;
   dom.confidenceFill.style.width = `${analysis.confidence}%`;
 
-  // Pre-fill calculation default rate from medicine
-  if (d.chemicalCures && d.chemicalCures[0] && dom.calcRate) {
-    const match = d.chemicalCures[0].dosage.match(/([\d\.]+)/);
-    if (match) dom.calcRate.value = match[1];
-  }
-
   renderTabContent();
+  updateWhatsappShareLink();
+}
+
+function getLocalizedDiseaseData(baseDisease) {
+  if (state.language === 'te' && TELUGU_DISEASE_DATA[baseDisease.id]) {
+    const teData = TELUGU_DISEASE_DATA[baseDisease.id];
+    return {
+      ...baseDisease,
+      diseaseName: teData.diseaseName || baseDisease.diseaseName,
+      symptoms: teData.symptoms || baseDisease.symptoms,
+      rootCauses: teData.rootCauses || baseDisease.rootCauses,
+      organicCures: teData.organicCures || baseDisease.organicCures,
+      chemicalCures: teData.chemicalCures || baseDisease.chemicalCures,
+      preventionProtocol: teData.preventionProtocol || baseDisease.preventionProtocol
+    };
+  }
+  return baseDisease;
+}
+
+function updateWhatsappShareLink() {
+  if (!state.currentAnalysis || !dom.whatsappShareBtn) return;
+  const d = getLocalizedDiseaseData(state.currentAnalysis.disease);
+  
+  let msg = `🌱 *Crop Care AI Diagnostic Report*\n\n`;
+  msg += `🌾 *Crop*: ${d.crop}\n`;
+  msg += `🦠 *Disease Identified*: ${d.diseaseName}\n`;
+  msg += `🎯 *AI Confidence*: ${state.currentAnalysis.confidence}%\n\n`;
+  msg += `🌿 *Recommended Remedy*: ${d.organicCures[0].name} (${d.organicCures[0].dosage})\n\n`;
+  msg += `Check your crop diseases free here: https://crop-disease-predictor-mu.vercel.app/`;
+
+  dom.whatsappShareBtn.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
 }
 
 function renderTabContent() {
   if (!state.currentAnalysis) return;
-  const d = state.currentAnalysis.disease;
+  const d = getLocalizedDiseaseData(state.currentAnalysis.disease);
+  const t = TRANSLATIONS[state.language];
 
   dom.tabRootCause.classList.add('hidden');
   dom.tabOrganic.classList.add('hidden');
@@ -321,13 +396,13 @@ function renderTabContent() {
     dom.tabRootCause.classList.remove('hidden');
     dom.tabRootCause.innerHTML = `
       <div style="margin-bottom: 1.25rem;">
-        <h4 style="color:#a7f3d0; margin-bottom:0.5rem; font-family:'Outfit',sans-serif;">🔍 Observed Symptoms</h4>
+        <h4 style="color:#a7f3d0; margin-bottom:0.5rem; font-family:'Outfit',sans-serif;">${t.observedSymptoms}</h4>
         <ul class="info-list">
           ${d.symptoms.map(s => `<li class="info-item"><span class="bullet-icon">●</span> ${s}</li>`).join('')}
         </ul>
       </div>
       <div>
-        <h4 style="color:#fcd34d; margin-bottom:0.5rem; font-family:'Outfit',sans-serif;">🌧️ Root Causes & Triggers</h4>
+        <h4 style="color:#fcd34d; margin-bottom:0.5rem; font-family:'Outfit',sans-serif;">${t.rootCausesHeader}</h4>
         <ul class="info-list">
           ${d.rootCauses.map(r => `<li class="info-item"><span class="bullet-icon">▲</span> ${r}</li>`).join('')}
         </ul>
@@ -338,8 +413,8 @@ function renderTabContent() {
     dom.tabOrganic.innerHTML = d.organicCures.map(med => `
       <div class="medicine-card" style="border-left-color: #10b981;">
         <div class="medicine-name">🌿 ${med.name}</div>
-        <div class="medicine-dosage">Recommended Dosage: ${med.dosage}</div>
-        <div class="medicine-app">Application Guide: ${med.application}</div>
+        <div class="medicine-dosage">${t.dosageLabel} ${med.dosage}</div>
+        <div class="medicine-app">${t.appGuideLabel} ${med.application}</div>
       </div>
     `).join('');
   } else if (state.activeTab === 'chemical') {
@@ -347,14 +422,14 @@ function renderTabContent() {
     dom.tabChemical.innerHTML = d.chemicalCures ? d.chemicalCures.map(med => `
       <div class="medicine-card" style="border-left-color: #3b82f6;">
         <div class="medicine-name">🧪 ${med.name}</div>
-        <div class="medicine-dosage">Active Dosage: ${med.dosage}</div>
-        <div class="medicine-app">Application Guide: ${med.application}</div>
+        <div class="medicine-dosage">${t.dosageLabel} ${med.dosage}</div>
+        <div class="medicine-app">${t.appGuideLabel} ${med.application}</div>
       </div>
-    `).join('') : '<p style="color:var(--text-muted);">No synthetic chemical sprays required. Organic management recommended.</p>';
+    `).join('') : `<p style="color:var(--text-muted);">${state.language === 'te' ? 'రసాయన మందుల ప్రమేయం అవసరం లేదు. సేంద్రీయ పద్ధతులు పాటించండి.' : 'No synthetic chemical sprays required. Organic management recommended.'}</p>`;
   } else if (state.activeTab === 'prevention') {
     dom.tabPrevention.classList.remove('hidden');
     dom.tabPrevention.innerHTML = `
-      <h4 style="color:#34d399; margin-bottom:0.75rem; font-family:'Outfit',sans-serif;">🛡️ Step-by-Step Crop Recovery & Prevention Protocol</h4>
+      <h4 style="color:#34d399; margin-bottom:0.75rem; font-family:'Outfit',sans-serif;">${t.preventionHeader}</h4>
       <ul class="info-list">
         ${d.preventionProtocol.map((step, idx) => `
           <li class="info-item">
@@ -368,37 +443,40 @@ function renderTabContent() {
 }
 
 function calculateDosage() {
-  const area = parseFloat(dom.calcArea?.value || 1); // liters or acres
-  const rate = parseFloat(dom.calcRate?.value || 2.5); // grams or ml per liter
+  const area = parseFloat(dom.calcArea?.value || 1);
+  const rate = parseFloat(dom.calcRate?.value || 2.5);
 
-  const totalWaterLitres = Math.round(area * 200); // ~200L spray water per acre
+  const totalWaterLitres = Math.round(area * 200);
   const totalMedicineGrams = (totalWaterLitres * rate).toFixed(1);
 
-  if (dom.calcVolumeResult) dom.calcVolumeResult.textContent = `${totalWaterLitres} Liters`;
-  if (dom.calcMedicineResult) dom.calcMedicineResult.textContent = `${totalMedicineGrams} g/ml`;
+  const unitL = state.language === 'te' ? 'లీటర్లు' : 'Liters';
+  const unitG = state.language === 'te' ? 'గ్రాములు/మి.లీ' : 'g/ml';
+
+  if (dom.calcVolumeResult) dom.calcVolumeResult.textContent = `${totalWaterLitres} ${unitL}`;
+  if (dom.calcMedicineResult) dom.calcMedicineResult.textContent = `${totalMedicineGrams} ${unitG}`;
 }
 
 function handleUserChatMessage() {
   const question = dom.chatInput.value.trim();
   if (!question) return;
 
-  // Add user bubble
   appendChatBubble("user", question);
   dom.chatInput.value = "";
 
-  // Generate intelligent response based on keywords or current diagnosis
   setTimeout(() => {
-    let answer = "For effective crop protection, ensure uniform foliar coverage during early morning or late evening hours. Avoid spraying under strong sunlight or imminent rain.";
+    let answer = state.language === 'te' 
+      ? "పంట పైరుపై మందుల పిచికారీని తెల్లవారుజామున లేదా సాయంత్రం వేళల్లో ఆకుల రెండు వైపులా తడిసేలా చేయాలి."
+      : "For effective crop protection, ensure uniform foliar coverage during early morning or late evening hours. Avoid spraying under strong sunlight or imminent rain.";
     
     const qLower = question.toLowerCase();
-    if (qLower.includes("neem") || qLower.includes("organic")) {
-      answer = "Neem oil works best when emulsified with 1ml liquid soap per liter of water. Spray every 7 days as a preventative against fungal spores and soft-bodied sucking insects.";
-    } else if (qLower.includes("blight") || qLower.includes("spot")) {
-      answer = "Fungal blights spread rapidly through moisture. Immediately prune infected lower leaves, increase air circulation, and apply a Copper Hydroxide or Mancozeb protective spray.";
-    } else if (qLower.includes("dose") || qLower.includes("water") || qLower.includes("mix")) {
-      answer = "Always mix powders in a small quantity of water to form a smooth paste before adding to the full spray tank. Maintain 200 Liters of water per acre for standard field crops.";
-    } else if (state.currentAnalysis) {
-      answer = `Regarding your current scan (${state.currentAnalysis.disease.diseaseName}): Follow the organic and chemical remedies listed in the diagnostic card. Maintain clean crop field sanitation.`;
+    if (qLower.includes("neem") || qLower.includes("వేప")) {
+      answer = state.language === 'te'
+        ? "వేప నూనెను లీటరు నీటికి 5 మి.లీ మరియు 1 మి.లీ సబ్బు నీరు కలిపి పిచికారీ చేయాలి. ఇది శిలీంధ్రాలు మరియు రసం పీల్చే పురుగులను నివారిస్తుంది."
+        : "Neem oil works best when emulsified with 1ml liquid soap per liter of water. Spray every 7 days as a preventative against fungal spores and soft-bodied sucking insects.";
+    } else if (qLower.includes("blight") || qLower.includes("తెగులు")) {
+      answer = state.language === 'te'
+        ? "తెగులు సోకిన కింది ఆకులను వెంటనే తొలగించి కాల్చివేయండి. గాలి వెలుతురు తగిలేలా చూసి బోర్డో మిశ్రమం లేదా మ్యాంకోజెబ్ పిచికారీ చేయండి."
+        : "Fungal blights spread rapidly through moisture. Immediately prune infected lower leaves, increase air circulation, and apply a Copper Hydroxide or Mancozeb protective spray.";
     }
 
     appendChatBubble("bot", answer);
@@ -415,32 +493,24 @@ function appendChatBubble(sender, text) {
 
 function renderLibrary() {
   if (!dom.libraryContainer) return;
-  dom.libraryContainer.innerHTML = CROP_DISEASES.map(d => `
-    <div class="glass-card" style="margin-bottom: 1.25rem;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-        <h3 style="font-family:'Outfit',sans-serif; color:#fff;">${d.diseaseName} (${d.crop})</h3>
-        <span class="severity-pill" style="background:${d.badgeColor}; color:#fff;">${d.severityLevel}</span>
+  dom.libraryContainer.innerHTML = CROP_DISEASES.map(base => {
+    const d = getLocalizedDiseaseData(base);
+    return `
+      <div class="glass-card" style="margin-bottom: 1.25rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+          <h3 style="font-family:'Outfit',sans-serif; color:#fff;">${d.diseaseName} (${d.crop})</h3>
+          <span class="severity-pill" style="background:${d.badgeColor}; color:#fff;">${d.severityLevel}</span>
+        </div>
+        <p style="font-style:italic; color:var(--text-muted); font-size:0.9rem; margin-bottom:0.75rem;">Pathogen: ${d.scientificName}</p>
+        <div style="margin-bottom:0.75rem;">
+          <strong style="color:#a7f3d0; font-size:0.9rem;">${state.language === 'te' ? 'వ్యాధి లక్షణాలు:' : 'Key Symptoms:'}</strong>
+          <p style="color:#d1d5db; font-size:0.9rem;">${d.symptoms.slice(0, 2).join('. ')}</p>
+        </div>
+        <div>
+          <strong style="color:#fcd34d; font-size:0.9rem;">${state.language === 'te' ? 'నివారణ మార్గాలు:' : 'Recommended Remedies:'}</strong>
+          <p style="color:#d1d5db; font-size:0.9rem;">${d.organicCures[0].name} (${d.organicCures[0].dosage})</p>
+        </div>
       </div>
-      <p style="font-style:italic; color:var(--text-muted); font-size:0.9rem; margin-bottom:0.75rem;">Pathogen: ${d.scientificName}</p>
-      <div style="margin-bottom:0.75rem;">
-        <strong style="color:#a7f3d0; font-size:0.9rem;">Key Symptoms:</strong>
-        <p style="color:#d1d5db; font-size:0.9rem;">${d.symptoms.slice(0, 2).join('. ')}</p>
-      </div>
-      <div>
-        <strong style="color:#fcd34d; font-size:0.9rem;">Recommended Remedies:</strong>
-        <p style="color:#d1d5db; font-size:0.9rem;">${d.organicCures[0].name} (${d.organicCures[0].dosage})</p>
-      </div>
-    </div>
-  `).join('');
-}
-
-function saveToHistory(analysis) {
-  state.history.unshift({
-    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-    crop: analysis.disease.crop,
-    diseaseName: analysis.disease.diseaseName,
-    confidence: analysis.confidence
-  });
-  if (state.history.length > 10) state.history.pop();
-  localStorage.setItem('crop_scan_history', JSON.stringify(state.history));
+    `;
+  }).join('');
 }
