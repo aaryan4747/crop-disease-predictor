@@ -1,296 +1,151 @@
-/**
- * Crop Disease & Cure Database
- * Comprehensive pathology database covering field crops, cash crops, fruits, and vegetables.
- */
-
 export const CROP_DISEASES = [
   {
-    id: "watermelon_anthracnose",
-    crop: "Watermelon (పుచ్చకాయ)",
-    diseaseName: "Watermelon Anthracnose & Wilt (పుచ్చకాయ నల్ల మచ్చ & వాడిపోయే తెగులు)",
-    scientificName: "Colletotrichum orbiculare / Fusarium oxysporum",
-    type: "Fungal Pathogen",
-    severityLevel: "High",
-    severityScore: 84,
-    badgeColor: "#ea580c",
-    colorSignatures: { hueMin: 25, hueMax: 55, darknessThreshold: 0.38, spotRatioMin: 0.16 },
-    symptoms: [
-      "Circular water-soaked spots on leaves turning dark brown to black",
-      "Sunken circular lesions on watermelon rind filled with pinkish spore masses",
-      "Vines wilting suddenly during fruit expansion"
-    ],
-    rootCauses: [
-      "Warm humid weather (24°C-30°C) with frequent rain or overhead sprinkler irrigation",
-      "Fungal spores surviving in soil debris from previous cucurbit crops"
-    ],
-    organicCures: [
-      {
-        name: "Trichoderma viride + Soil Solarization",
-        dosage: "5g per Liter soil drench",
-        application: "Drench soil around vine roots before flowering."
-      },
-      {
-        name: "Copper Hydroxide 77% WP",
-        dosage: "2.5g per Liter of water",
-        application: "Foliar spray at early fruit set."
-      }
-    ],
-    chemicalCures: [
-      {
-        name: "Azoxystrobin 23% SC (Amistar)",
-        dosage: "1ml per Liter of water",
-        application: "Spray every 10-14 days during fruit growth."
-      },
-      {
-        name: "Carbendazim 50% WP",
-        dosage: "1g per Liter of water",
-        application: "Preventive drench for fusarium wilt."
-      }
-    ],
-    preventionProtocol: [
-      "Practice 3-year crop rotation with non-cucurbit crops.",
-      "Use drip irrigation and silver-black plastic mulch beds."
-    ]
-  },
-  {
-    id: "banana_sigatoka",
-    crop: "Banana (అరటి)",
-    diseaseName: "Banana Sigatoka Leaf Spot (అరటి సిగటోకా ఆకు మచ్చ తెగులు)",
-    scientificName: "Mycosphaerella musicola / fijiensis",
-    type: "Fungal Pathogen",
-    severityLevel: "Severe",
-    severityScore: 88,
-    badgeColor: "#ef4444",
-    colorSignatures: { hueMin: 30, hueMax: 65, darknessThreshold: 0.35, spotRatioMin: 0.18 },
-    symptoms: [
-      "Pale yellow-green streaks parallel to leaf veins turning dark brown",
-      "Sunken gray centers with dark reddish-brown borders on mature leaves",
-      "Premature leaf drying leading to small, unmarketable banana bunches"
-    ],
-    rootCauses: [
-      "High humidity above 90% and continuous warm temperatures (27°C-30°C)",
-      "Overcrowded banana plantation limiting sunlight and airflow"
-    ],
-    organicCures: [
-      {
-        name: "Mineral Oil / Horticultural Spray Oil",
-        dosage: "10ml per Liter of water + 1g Soap",
-        application: "Spray on young emerging banana leaves."
-      }
-    ],
-    chemicalCures: [
-      {
-        name: "Propiconazole 25% EC (Tilt) + Mineral Oil",
-        dosage: "1ml Tilt + 10ml Mineral oil per Liter",
-        application: "Spray at first streak initiation during monsoon."
-      }
-    ],
-    preventionProtocol: [
-      "De-trashing: Promptly cut and remove dried, infected lower leaves.",
-      "Maintain wider spacing (1.8m x 1.8m) and control sucker density."
-    ]
-  },
-  {
-    id: "papaya_ring_spot",
-    crop: "Papaya (బొప్పాయి)",
-    diseaseName: "Papaya Ring Spot Virus & Anthracnose (బొప్పాయి రింగ్ స్పాట్ వైరస్ & కాయ కుళ్ళు)",
-    scientificName: "Papaya Ringspot Virus (Aphid Vectored)",
-    type: "Viral & Fungal Complex",
+    id: "chilli_leaf_curl",
+    crop: "Chilli (మిరప)",
+    diseaseName: "Chilli Black Thrips & Leaf Curl (మిరప నల్ల తామర పురుగు & ఆకు ముడుత)",
+    scientificName: "Thrips parvispinus & Scirtothrips dorsalis / Chilli Leaf Curl Virus",
+    type: "Insect Vector & Viral Complex",
     severityLevel: "Critical",
-    severityScore: 95,
+    severityScore: 96,
     badgeColor: "#dc2626",
-    colorSignatures: { hueMin: 40, hueMax: 80, darknessThreshold: 0.30, spotRatioMin: 0.20 },
+    colorSignatures: { hueMin: 40, hueMax: 80, darknessThreshold: 0.30, spotRatioMin: 0.18 },
     symptoms: [
-      "Yellow mosaic mottling and leaf shoe-stringing (leaves reduced to main veins)",
-      "Dark green oily rings and streaks on young stems and green papaya fruits",
-      "Stunted crown growth and bitter, small fruits"
+      "Upward and downward boat-shaped leaf curling with puckered veins",
+      "Flower dropping, deformed chilli pods, and silvering on leaf underside",
+      "Blackening of tender shoot tips and dieback of flowering branches"
     ],
     rootCauses: [
-      "Transmitted by Aphids (Aphis gossypii) migrating from nearby cucurbit fields",
-      "Warm dry weather boosting aphid populations"
+      "Heavy infestation of Black Thrips (*Thrips parvispinus*) during dry hot spells",
+      "High temperature (30°C-36°C) accelerating insect vector breeding"
     ],
     organicCures: [
       {
-        name: "Neem Oil 10,000 PPM + Sticky Traps",
-        dosage: "3ml per Liter of water",
-        application: "Weekly spray to suppress aphid vector feeding."
+        name: "5% Neem Seed Kernel Extract (NSKE 50ml/L) + Blue/Yellow Sticky Traps",
+        dosage: "50ml NSKE + 1ml liquid soap per Liter (Install 30 traps/acre)",
+        application: "Weekly foliar spray to disrupt thrips feeding and trap flying vectors."
       },
       {
-        name: "Foliar Micronutrient Spray (Zinc + Boron)",
-        dosage: "2g Zinc + 1g Boron per Liter",
-        application: "Enhances papaya physiological vigor against virus."
+        name: "Agniastra Bio-Pesticide (Garlic + Green Chilli + Neem)",
+        dosage: "20ml per Liter of water",
+        application: "Botanical organic spray targeting nymph colonies on leaf undersides."
       }
     ],
     chemicalCures: [
       {
-        name: "Dimethoate 30% EC or Thiamethoxam 25% WG",
-        dosage: "1.7ml Dimethoate or 0.3g Thiamethoxam per Liter",
-        application: "Systemic insecticide to eliminate aphid vector colonies."
+        name: "Spinetoram 11.7% SC (Delegate) or Spinosad 45% SC (Tracer)",
+        dosage: "1ml Spinetoram or 0.3ml Spinosad per Liter of water",
+        application: "KVK recommended rotation spray targeting thrips underneath leaves.",
+        phiDays: 5
+      },
+      {
+        name: "Fipronil 5% SC or Fipronil 80% WG",
+        dosage: "1.5ml SC or 0.2g WG per Liter of water",
+        application: "Systemic contact spray for severe thrips infestation.",
+        phiDays: 7
       }
     ],
     preventionProtocol: [
-      "Roughing: Eradicate and burn virus-infected plants immediately.",
-      "Avoid planting papaya near cucumber, watermelon, or pumpkin crops."
-    ]
+      "Plant 3 border rows of Sorghum (Jowar) or Bajra around chilli field as physical wind barrier.",
+      "Avoid excess nitrogenous fertilizers which attract sucking pests."
+    ],
+    mineralDeficiency: "Nitrogen (N) excess causing succulent tender growth that heavily attracts sucking thrips pests."
   },
   {
-    id: "okra_yellow_vein",
-    crop: "Okra / Lady's Finger (బెండకాయ)",
-    diseaseName: "Okra Yellow Vein Mosaic Virus (బెండకాయ పసుపు ఈనెల మోజాయిక్ తెగులు)",
-    scientificName: "Okra Yellow Vein Mosaic Virus (Whitefly Vectored)",
-    type: "Viral Pathogen",
+    id: "rice_bph",
+    crop: "Rice (వరి)",
+    diseaseName: "Paddy Brown Plant Hopper - BPH (వరి సుడి దోమ తెగులు)",
+    scientificName: "Nilaparvata lugens",
+    type: "Sucking Insect Pest",
     severityLevel: "Severe",
-    severityScore: 90,
+    severityScore: 94,
     badgeColor: "#b91c1c",
-    colorSignatures: { hueMin: 45, hueMax: 85, darknessThreshold: 0.20, spotRatioMin: 0.25 },
+    colorSignatures: { hueMin: 35, hueMax: 70, darknessThreshold: 0.35, spotRatioMin: 0.22 },
     symptoms: [
-      "Networks of bright yellow veins contrasting against green leaf blade",
-      "Complete yellowing of leaves in severe cases with small upright leaves",
-      "Fruits become small, pale yellow, hard, and unmarketable"
+      "Circular patches of yellowing and drying plants in the field ('Hopper Burn')",
+      "Base of paddy tillers swarming with brown nymphs and adult hoppers near water line",
+      "Sooty mold fungus developing on honey-dew excreted by hoppers"
     ],
     rootCauses: [
-      "Whiteflies (Bemisia tabaci) transmitting the virus while feeding on plant sap",
-      "High summer temperatures favoring rapid whitefly multiplication"
+      "High humidity in dense crop canopy with standing water",
+      "Indiscriminate use of synthetic pyrethroids killing natural predator spiders"
     ],
     organicCures: [
       {
-        name: "Yellow Sticky Traps + Neem Oil 5%",
-        dosage: "5ml Neem Oil per Liter of water",
-        application: "Install 20 yellow sticky traps per acre; spray Neem weekly."
+        name: "Temporary Field Draining & Aeration",
+        dosage: "Drain water for 3-4 days",
+        application: "Drop humidity at soil level to interrupt hopper nymph development."
+      },
+      {
+        name: "Neem Oil 10,000 PPM",
+        dosage: "3ml per Liter of water",
+        application: "Spray targeted directly at the base of paddy tillers."
       }
     ],
     chemicalCures: [
       {
-        name: "Acetamiprid 20% SP or Imidacloprid 17.8% SL",
-        dosage: "0.2g Acetamiprid or 0.5ml Imidacloprid per Liter",
-        application: "Spray at 10-15 day intervals for whitefly control."
-      }
-    ],
-    preventionProtocol: [
-      "Sow resistant okra varieties (e.g., Arka Anamika, Parbhani Kranti).",
-      "Remove weeds like Abutilon indicum which act as alternate viral hosts."
-    ]
-  },
-  {
-    id: "brinjal_shoot_borer",
-    crop: "Brinjal / Eggplant (వంకాయ)",
-    diseaseName: "Brinjal Little Leaf & Fruit Borer (వంకాయ చిన్న ఆకు & కాయ తొలుచు తెగులు)",
-    scientificName: "Phytoplasma (Leafhopper Vectored) / Leucinodes orbonalis",
-    type: "Phytoplasma & Insect Complex",
-    severityLevel: "High",
-    severityScore: 86,
-    badgeColor: "#ea580c",
-    colorSignatures: { hueMin: 35, hueMax: 70, darknessThreshold: 0.32, spotRatioMin: 0.15 },
-    symptoms: [
-      "Extremely small, narrow, crowded leaves producing bushy 'witch's broom' appearance",
-      "Drooping shoots and wilting tender terminal tips",
-      "Holes in brinjal fruits filled with insect frass"
-    ],
-    rootCauses: [
-      "Phytoplasma spread by Leafhoppers (Hishimonus phycitis)",
-      "Continuous brinjal cultivation without crop rotation"
-    ],
-    organicCures: [
+        name: "Pymetrozine 50% WDG (Chess)",
+        dosage: "0.6g per Liter of water",
+        application: "KVK recommended spray directed at plant base.",
+        phiDays: 19
+      },
       {
-        name: "Pheromone Traps + Bacillus thuringiensis (Bt)",
-        dosage: "2g Bt per Liter of water",
-        application: "Install 10 Pheromone traps per acre; spray Bt every 7 days."
-      }
-    ],
-    chemicalCures: [
-      {
-        name: "Emamectin Benzoate 5% SG",
+        name: "Dinotefuran 20% SG (Token)",
         dosage: "0.4g per Liter of water",
-        application: "Spray for shoot and fruit borer caterpillar control."
-      },
-      {
-        name: "Dimethoate 30% EC (for Leafhopper Vector)",
-        dosage: "1.7ml per Liter of water",
-        application: "Spray to control little leaf vector leafhoppers."
+        application: "Systemic action paralyzing hopper feeding.",
+        phiDays: 14
       }
     ],
     preventionProtocol: [
-      "Clip and destroy wilted shoot tips weekly.",
-      "Uproot and burn little-leaf infected bushy plants."
-    ]
+      "Form 'Alleyways' (passing lanes of 30cm every 2 meters) during transplanting for aeration.",
+      "Avoid continuous standing water; practice alternate wetting and drying (AWD)."
+    ],
+    mineralDeficiency: "Potassium (K) deficiency weakening tiller straw strength and lowering hopper pest resistance."
   },
   {
-    id: "onion_purple_blotch",
-    crop: "Onion (ఉల్లిపాయ)",
-    diseaseName: "Onion Purple Blotch (ఉల్లిపాయ ఊదా రంగు మచ్చ తెగులు)",
-    scientificName: "Alternaria porri",
-    type: "Fungal Pathogen",
-    severityLevel: "Moderate to High",
-    severityScore: 78,
-    badgeColor: "#d97706",
-    colorSignatures: { hueMin: 20, hueMax: 50, darknessThreshold: 0.40, spotRatioMin: 0.14 },
+    id: "cotton_pink_bollworm",
+    crop: "Cotton (ప్రత్తి)",
+    diseaseName: "Cotton Pink Bollworm (ప్రత్తి గులాబీ రంగు పురుగు తెగులు)",
+    scientificName: "Pectinophora gossypiella",
+    type: "Lepidopteran Insect Pest",
+    severityLevel: "Severe",
+    severityScore: 92,
+    badgeColor: "#dc2626",
+    colorSignatures: { hueMin: 20, hueMax: 50, darknessThreshold: 0.36, spotRatioMin: 0.16 },
     symptoms: [
-      "Small sunken water-soaked spots on leaves expanding into oval purple lesions",
-      "Yellow zone surrounding purple spots; leaves break and fall over",
-      "Bulb neck rot during storage"
+      "'Rosette' flowers (petals tied together like a rosette)",
+      "Entry holes in young bolls plugged with larval excreted frass",
+      "Stained lint and premature shedding of green bolls"
     ],
     rootCauses: [
-      "Warm humid climate (25°C-30°C) with frequent rainfall or heavy dew",
-      "Thrips feeding injuries providing entry points for fungal spores"
+      "Carry-over of larvae in un-destroyed crop stalks from previous season",
+      "Late-season irrigation extending crop duration beyond 160 days"
     ],
     organicCures: [
       {
-        name: "Trichoderma viride + Neem Oil 5%",
-        dosage: "5g Trichoderma + 5ml Neem oil per Liter",
-        application: "Spray at 10-day intervals."
+        name: "Pheromone Traps + Rosette Flower Plucking",
+        dosage: "5 Pheromone traps per acre",
+        application: "Manual destruction of rosette flowers and trapping adult male moths."
       }
     ],
     chemicalCures: [
       {
-        name: "Mancozeb 75% WP + Sticker Agent",
-        dosage: "2.5g Mancozeb + 1ml Sandovit sticker per Liter",
-        application: "Spray thoroughly ensuring liquid sticks to waxy onion leaves."
+        name: "Thiodicarb 75% WP (Larvin)",
+        dosage: "2g per Liter of water",
+        application: "Spray at 60-90 days after sowing upon reaching 10% rosette flower threshold.",
+        phiDays: 30
       },
       {
-        name: "Tebuconazole 25.9% EC",
-        dosage: "1ml per Liter of water",
-        application: "Systemic spray for purple blotch control."
+        name: "Chlorpyrifos 20% EC",
+        dosage: "2ml per Liter of water",
+        application: "Foliar spray during boll formation stage.",
+        phiDays: 21
       }
     ],
     preventionProtocol: [
-      "Always add a non-ionic spreader/sticker to spray tank for onion crops.",
-      "Ensure proper bulb drying/curing before post-harvest storage."
-    ]
-  },
-  {
-    id: "mango_powdery_mildew",
-    crop: "Mango (మామిడి)",
-    diseaseName: "Mango Powdery Mildew & Anthracnose (మామిడి బూడిద & నల్ల మచ్చ తెగులు)",
-    scientificName: "Oidium mangiferae / Colletotrichum gloeosporioides",
-    type: "Fungal Pathogen",
-    severityLevel: "High",
-    severityScore: 82,
-    badgeColor: "#eab308",
-    colorSignatures: { hueMin: 45, hueMax: 75, darknessThreshold: 0.25, spotRatioMin: 0.14 },
-    symptoms: [
-      "White powdery coating on inflorescence blossom panicles and young leaves",
-      "Dark brown necrotic tear-stain spots on fruits (Anthracnose)"
+      "Sow early-maturing short-duration cotton hybrids.",
+      "Destroy and burn cotton stalks immediately after final picking."
     ],
-    rootCauses: [
-      "Cool humid nights during flowering stage (February-March)"
-    ],
-    organicCures: [
-      {
-        name: "Wettable Sulfur 80% WP",
-        dosage: "3g per Liter of water",
-        application: "Spray at early panicle emergence."
-      }
-    ],
-    chemicalCures: [
-      {
-        name: "Hexaconazole 5% EC (Contaf)",
-        dosage: "1ml per Liter of water",
-        application: "Spray at full blossom stage."
-      }
-    ],
-    preventionProtocol: [
-      "Prune overcrowding inner branches to allow sunlight penetration."
-    ]
+    mineralDeficiency: "Magnesium (Mg) deficiency causing reddening of leaves during boll development."
   },
   {
     id: "rice_blast",
@@ -320,47 +175,87 @@ export const CROP_DISEASES = [
       {
         name: "Tricyclazole 75% WP (Baan)",
         dosage: "0.6g per Liter of water",
-        application: "Preventive spray at boot leaf stage."
+        application: "Preventive spray at boot leaf stage.",
+        phiDays: 30
       }
     ],
     preventionProtocol: [
       "Avoid excessive nitrogen fertilization."
-    ]
+    ],
+    mineralDeficiency: "Silicon (Si) deficiency weakening leaf epidermal cell walls against fungal hyphae penetration."
   },
   {
-    id: "chilli_leaf_curl",
-    crop: "Chilli (మిరప)",
-    diseaseName: "Chilli Leaf Curl & Dieback (మిరప ఆకు ముడుత & కొమ్మ ఎండు తెగులు)",
-    scientificName: "Chilli Leaf Curl Virus",
-    type: "Viral & Fungal Complex",
-    severityLevel: "Critical",
-    severityScore: 94,
-    badgeColor: "#dc2626",
-    colorSignatures: { hueMin: 40, hueMax: 80, darknessThreshold: 0.30, spotRatioMin: 0.18 },
+    id: "watermelon_anthracnose",
+    crop: "Watermelon (పుచ్చకాయ)",
+    diseaseName: "Watermelon Anthracnose & Wilt (పుచ్చకాయ నల్ల మచ్చ & వాడిపోయే తెగులు)",
+    scientificName: "Colletotrichum orbiculare",
+    type: "Fungal Pathogen",
+    severityLevel: "High",
+    severityScore: 84,
+    badgeColor: "#ea580c",
+    colorSignatures: { hueMin: 25, hueMax: 55, darknessThreshold: 0.38, spotRatioMin: 0.16 },
     symptoms: [
-      "Upward and downward curling of leaves, stunted plant growth",
-      "Dieback of tender branches from top downward"
+      "Circular water-soaked spots on leaves turning dark brown to black",
+      "Sunken circular lesions on watermelon rind filled with pinkish spore masses"
     ],
     rootCauses: [
-      "Transmission by Thrips and Whiteflies during dry hot spells"
+      "Warm humid weather (24°C-30°C) with frequent rain"
     ],
     organicCures: [
       {
-        name: "Neem Seed Kernel Extract (NSKE 5%)",
-        dosage: "50ml NSKE + 1ml soap per Liter",
-        application: "Weekly spray."
+        name: "Trichoderma viride + Soil Solarization",
+        dosage: "5g per Liter soil drench",
+        application: "Drench soil around vine roots."
       }
     ],
     chemicalCures: [
       {
-        name: "Fipronil 5% SC / Imidacloprid 17.8% SL",
-        dosage: "1.5ml Fipronil or 0.5ml Imidacloprid per Liter",
-        application: "Spray for vector control."
+        name: "Azoxystrobin 23% SC (Amistar)",
+        dosage: "1ml per Liter of water",
+        application: "Spray every 10-14 days.",
+        phiDays: 7
       }
     ],
     preventionProtocol: [
-      "Install Yellow & Blue Sticky Traps."
-    ]
+      "Use drip irrigation and plastic mulch."
+    ],
+    mineralDeficiency: "Zinc (Zn) & Calcium (Ca) deficiency causing blossom end rot and rind cracking."
+  },
+  {
+    id: "banana_sigatoka",
+    crop: "Banana (అరటి)",
+    diseaseName: "Banana Sigatoka Leaf Spot (అరటి సిగటోకా తెగులు)",
+    scientificName: "Mycosphaerella musicola",
+    type: "Fungal Pathogen",
+    severityLevel: "Severe",
+    severityScore: 88,
+    badgeColor: "#ef4444",
+    colorSignatures: { hueMin: 30, hueMax: 65, darknessThreshold: 0.35, spotRatioMin: 0.18 },
+    symptoms: [
+      "Yellow-green streaks parallel to leaf veins turning dark brown"
+    ],
+    rootCauses: [
+      "High humidity above 90% and continuous warm temperatures"
+    ],
+    organicCures: [
+      {
+        name: "Horticultural Mineral Oil",
+        dosage: "10ml per Liter + 1g Soap",
+        application: "Spray on young leaves."
+      }
+    ],
+    chemicalCures: [
+      {
+        name: "Tilt (Propiconazole 1ml/L + Mineral oil)",
+        dosage: "1ml per Liter of water",
+        application: "Spray during monsoon.",
+        phiDays: 30
+      }
+    ],
+    preventionProtocol: [
+      "De-trashing infected lower leaves."
+    ],
+    mineralDeficiency: "Potassium (K) deficiency causing leaf tip firing and reduced bunch weight."
   },
   {
     id: "healthy_leaf",
@@ -373,34 +268,38 @@ export const CROP_DISEASES = [
     badgeColor: "#10b981",
     colorSignatures: { hueMin: 80, hueMax: 150, darknessThreshold: 0.15, spotRatioMin: 0.02 },
     symptoms: [
-      "Uniform green pigmentation across the leaf surface",
-      "Intact leaf margins without necrotic spots"
+      "Uniform green pigmentation across the leaf surface"
     ],
     rootCauses: [
-      "Optimal soil moisture, balanced N-P-K nutrition, and adequate sunlight"
+      "Optimal soil moisture and balanced nutrition"
     ],
     organicCures: [
       {
-        name: "Preventative Seaweed Extract Foliar Spray",
+        name: "Seaweed Extract Foliar Spray",
         dosage: "2ml per Liter of water",
-        application: "Monthly biostimulant spray."
+        application: "Monthly spray."
       }
     ],
     chemicalCures: [
       {
-        name: "Balanced N-P-K (19-19-19) Foliar Nutrition",
+        name: "Balanced N-P-K (19-19-19)",
         dosage: "3g to 5g per Liter of water",
-        application: "Apply every 15-20 days."
+        application: "Apply every 15-20 days.",
+        phiDays: 0
       }
     ],
     preventionProtocol: [
       "Maintain consistent soil moisture."
-    ]
+    ],
+    mineralDeficiency: "No deficiencies detected. Maintain balanced fertilization."
   }
 ];
 
 export const CROP_LIST = [
   "All Crops (అన్ని పంటలు)",
+  "Chilli (మిరప)",
+  "Rice (వరి)",
+  "Cotton (ప్రత్తి)",
   "Watermelon (పుచ్చకాయ)",
   "Banana (అరటి)",
   "Papaya (బొప్పాయి)",
@@ -408,9 +307,6 @@ export const CROP_LIST = [
   "Brinjal / Eggplant (వంకాయ)",
   "Onion (ఉల్లిపాయ)",
   "Mango (మామిడి)",
-  "Rice (వరి)",
-  "Chilli (మిరప)",
-  "Cotton (ప్రత్తి)",
   "Groundnut (వేరుశనగ)",
   "Sugarcane (చెరకు)",
   "Tomato (టమోటా)",
