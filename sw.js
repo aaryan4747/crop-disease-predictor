@@ -1,4 +1,4 @@
-const CACHE_NAME = 'crop-care-ai-v1';
+const CACHE_NAME = 'crop-care-ai-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
