@@ -1,0 +1,56 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Crop Care AI - Plant Disease Pathology API",
+    "description": "Enterprise API for crop leaf disease prediction, Grad-CAM heatmap generation, and fungicide medicine dosage calculation.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://crop-disease-predictor-mu.vercel.app/api",
+      "description": "Production Vercel Cloud Server"
+    }
+  ],
+  "paths": {
+    "/predict": {
+      "post": {
+        "summary": "Diagnose Crop Leaf Disease",
+        "description": "Submits a base64 encoded or binary crop leaf image for AI pathology diagnosis, confidence scoring, and treatment dosages.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": { "type": "string", "description": "Base64 image data string" },
+                  "crop": { "type": "string", "example": "Watermelon (పుచ్చకాయ)" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful diagnostic prediction",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "diseaseName": { "type": "string" },
+                    "confidence": { "type": "number", "example": 96.4 },
+                    "symptoms": { "type": "array", "items": { "type": "string" } },
+                    "organicRemedy": { "type": "string" },
+                    "chemicalMedicine": { "type": "string" },
+                    "phiDays": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

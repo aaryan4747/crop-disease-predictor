@@ -1,3 +1,10 @@
+/**
+ * Crop Disease & Cure Database
+ * Includes features missing in Plantix & Agrio:
+ * - Pre-Harvest Interval (PHI) Toxic Waiting Days
+ * - Soil N-P-K Mineral Deficiency Symptoms & Remedies
+ */
+
 export const CROP_DISEASES = [
   {
     id: "chilli_leaf_curl",
