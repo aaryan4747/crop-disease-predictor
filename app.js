@@ -30,6 +30,43 @@ document.addEventListener('DOMContentLoaded', () => {
   updateUiLanguage();
 });
 
+// BULLETPROOF GLOBAL DELEGATION FOR ALL NAVIGATION TABS & MOBILE TOUCHES
+document.addEventListener('click', (e) => {
+  const navBtn = e.target.closest('[data-section]');
+  if (!navBtn) return;
+  e.preventDefault();
+
+  const sec = navBtn.getAttribute('data-section');
+  
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  navBtn.classList.add('active');
+
+  const predictor = document.getElementById('sectionPredictor');
+  const weather = document.getElementById('sectionWeather');
+  const library = document.getElementById('sectionLibrary');
+  const calculator = document.getElementById('sectionCalculator');
+
+  if (predictor) predictor.classList.add('hidden');
+  if (weather) weather.classList.add('hidden');
+  if (library) library.classList.add('hidden');
+  if (calculator) calculator.classList.add('hidden');
+
+  if (sec === 'predictor' && predictor) {
+    predictor.classList.remove('hidden');
+  } else if (sec === 'weather' && weather) {
+    weather.classList.remove('hidden');
+    updateLocationWeatherForecast(document.getElementById('weatherLocationInput')?.value || "Guntur");
+  } else if (sec === 'library' && library) {
+    library.classList.remove('hidden');
+    renderLibrary();
+  } else if (sec === 'calculator' && calculator) {
+    calculator.classList.remove('hidden');
+    calculateDosage();
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
 function registerServiceWorker() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js')
@@ -320,89 +357,88 @@ function bindEvents() {
       if (e.key === 'Enter') handleUserChatMessage();
     });
   }
-
-  dom.navBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      dom.navBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const sec = btn.dataset.section;
-
-      dom.sectionPredictor.classList.add('hidden');
-      if (dom.sectionWeather) dom.sectionWeather.classList.add('hidden');
-      dom.sectionLibrary.classList.add('hidden');
-      dom.sectionCalculator.classList.add('hidden');
-
-      if (sec === 'predictor') dom.sectionPredictor.classList.remove('hidden');
-      else if (sec === 'weather' && dom.sectionWeather) {
-        dom.sectionWeather.classList.remove('hidden');
-        updateLocationWeatherForecast(dom.weatherLocationInput?.value || "Guntur");
-      }
-      else if (sec === 'library') {
-        dom.sectionLibrary.classList.remove('hidden');
-        renderLibrary();
-      } else if (sec === 'calculator') {
-        dom.sectionCalculator.classList.remove('hidden');
-        calculateDosage();
-      }
-    });
-  });
 }
 
 function updateLocationWeatherForecast(locationName) {
-  if (!dom.weatherCityTitle) return;
+  const cityTitle = document.getElementById('weatherCityTitle');
+  if (!cityTitle) return;
 
   const loc = locationName.trim();
-  dom.weatherCityTitle.textContent = `📍 ${loc}, ${state.language === 'te' ? 'ఆంధ్రప్రదేశ్ / తెలంగాణ' : 'AP & Telangana Region'}`;
+  cityTitle.textContent = `📍 ${loc}, ${state.language === 'te' ? 'ఆంధ్రప్రదేశ్ / తెలంగాణ' : 'AP & Telangana Region'}`;
 
   const charCodeSum = loc.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
   const temp = (22 + (charCodeSum % 11));
   const humidity = (65 + (charCodeSum % 31));
   const wind = (10 + (charCodeSum % 12));
 
-  dom.weatherTempVal.textContent = `${temp}°C`;
-  dom.weatherHumidityVal.textContent = `${humidity}%`;
-  dom.weatherWindVal.textContent = `${wind} km/h`;
+  const tempVal = document.getElementById('weatherTempVal');
+  const humidityVal = document.getElementById('weatherHumidityVal');
+  const windVal = document.getElementById('weatherWindVal');
+  const riskBadge = document.getElementById('weatherRiskBadge');
+  const condDesc = document.getElementById('weatherConditionDesc');
+  const diseaseList = document.getElementById('weatherDiseaseList');
+  const advisoryText = document.getElementById('weatherAdvisoryText');
+
+  if (tempVal) tempVal.textContent = `${temp}°C`;
+  if (humidityVal) humidityVal.textContent = `${humidity}%`;
+  if (windVal) windVal.textContent = `${wind} km/h`;
 
   if (humidity > 78) {
-    dom.weatherRiskBadge.textContent = state.language === 'te' ? '⚠️ తీవ్ర శిలీంధ్ర తెగులు ప్రమాదం' : '⚠️ High Fungal Risk';
-    dom.weatherRiskBadge.style.backgroundColor = '#ea580c';
-    dom.weatherConditionDesc.textContent = state.language === 'te' ? 'అధిక తేమ వాతావరణం • శిలీంధ్ర వ్యాధులు వ్యాపించే అవకాశం ఉంది' : 'Humid Weather • High Fungal Outbreak Risk';
+    if (riskBadge) {
+      riskBadge.textContent = state.language === 'te' ? '⚠️ తీవ్ర శిలీంధ్ర తెగులు ప్రమాదం' : '⚠️ High Fungal Risk';
+      riskBadge.style.backgroundColor = '#ea580c';
+    }
+    if (condDesc) {
+      condDesc.textContent = state.language === 'te' ? 'అధిక తేమ వాతావరణం • శిలీంధ్ర వ్యాధులు వ్యాపించే అవకాశం ఉంది' : 'Humid Weather • High Fungal Outbreak Risk';
+    }
 
-    dom.weatherDiseaseList.innerHTML = state.language === 'te' ? `
-      • <strong>పుచ్చకాయ నల్ల మచ్చ తెగులు (Watermelon Anthracnose)</strong> (అధిక తేమ వల్ల ఆకులపై నల్ల మచ్చలు ఏర్పడటం)<br>
-      • <strong>వరి అగ్గి తెగులు (Rice Blast)</strong> (రాత్రి వేళల్లో చల్లదనం, తేమ వల్ల బూడిద రంగు మచ్చలు)<br>
-      • <strong>అరటి సిగటోకా తెగులు (Banana Sigatoka)</strong> (గాలిలో అధిక తేమ వల్ల ఆకులు ఎండిపోవడం)
-    ` : `
-      • <strong>Watermelon Anthracnose</strong> (High humidity & wet leaves trigger black leaf spots)<br>
-      • <strong>Chilli Black Thrips & Leaf Curl</strong> (Warm temperatures favor thrips vector reproduction)<br>
-      • <strong>Rice Paddy Blast</strong> (Moderate nights & high moisture encourage sporangia germination)
-    `;
+    if (diseaseList) {
+      diseaseList.innerHTML = state.language === 'te' ? `
+        • <strong>పుచ్చకాయ నల్ల మచ్చ తెగులు (Watermelon Anthracnose)</strong> (అధిక తేమ వల్ల ఆకులపై నల్ల మచ్చలు ఏర్పడటం)<br>
+        • <strong>వరి అగ్గి తెగులు (Rice Blast)</strong> (రాత్రి వేళల్లో చల్లదనం, తేమ వల్ల బూడిద రంగు మచ్చలు)<br>
+        • <strong>అరటి సిగటోకా తెగులు (Banana Sigatoka)</strong> (గాలిలో అధిక తేమ వల్ల ఆకులు ఎండిపోవడం)
+      ` : `
+        • <strong>Watermelon Anthracnose</strong> (High humidity & wet leaves trigger black leaf spots)<br>
+        • <strong>Chilli Black Thrips & Leaf Curl</strong> (Warm temperatures favor thrips vector reproduction)<br>
+        • <strong>Rice Paddy Blast</strong> (Moderate nights & high moisture encourage sporangia germination)
+      `;
+    }
 
-    dom.weatherAdvisoryText.textContent = state.language === 'te' ? `
-      ఉదయాన్నే మంచు ఆరక ముందే కాపర్ ఆక్సిక్లోరైడ్ (Blitox 3g/L) లేదా వేప నూనె (5% NSKE) పిచికారీ చేయండి. పొలంలో నీరు నిల్వ ఉండకుండా కాలువలను శుభ్రం చేయండి.
-    ` : `
-      Apply preventative spray of Copper Oxychloride 50% WP (Blitox @ 3g/L) or Neem Seed Kernel Extract (5% NSKE) before heavy morning dew to prevent fungal spore germination. Ensure field drainage lines are cleared.
-    `;
+    if (advisoryText) {
+      advisoryText.textContent = state.language === 'te' ? `
+        ఉదయాన్నే మంచు ఆరక ముందే కాపర్ ఆక్సిక్లోరైడ్ (Blitox 3g/L) లేదా వేప నూనె (5% NSKE) పిచికారీ చేయండి. పొలంలో నీరు నిల్వ ఉండకుండా కాలువలను శుభ్రం చేయండి.
+      ` : `
+        Apply preventative spray of Copper Oxychloride 50% WP (Blitox @ 3g/L) or Neem Seed Kernel Extract (5% NSKE) before heavy morning dew to prevent fungal spore germination. Ensure field drainage lines are cleared.
+      `;
+    }
   } else {
-    dom.weatherRiskBadge.textContent = state.language === 'te' ? '⚠️ రసం పీల్చే పురుగుల ప్రమాదం' : '⚠️ Sucking Pest Risk';
-    dom.weatherRiskBadge.style.backgroundColor = '#b45309';
-    dom.weatherConditionDesc.textContent = state.language === 'te' ? 'ఎండ & పొడి వాతావరణం • తామర పురుగుల ఉధృతి' : 'Dry Sunny Weather • Thrips & Mite Vector Risk';
+    if (riskBadge) {
+      riskBadge.textContent = state.language === 'te' ? '⚠️ రసం పీల్చే పురుగుల ప్రమాదం' : '⚠️ Sucking Pest Risk';
+      riskBadge.style.backgroundColor = '#b45309';
+    }
+    if (condDesc) {
+      condDesc.textContent = state.language === 'te' ? 'ఎండ & పొడి వాతావరణం • తామర పురుగుల ఉధృతి' : 'Dry Sunny Weather • Thrips & Mite Vector Risk';
+    }
 
-    dom.weatherDiseaseList.innerHTML = state.language === 'te' ? `
-      • <strong>మిరప నల్ల తామర పురుగు & ఆకు ముడుత (Chilli Black Thrips)</strong><br>
-      • <strong>ప్రత్తి గులాబీ రంగు పురుగు (Cotton Pink Bollworm)</strong><br>
-      • <strong>బెండ పసుపు మోజాయిక్ తెగులు (Okra Yellow Vein Virus)</strong>
-    ` : `
-      • <strong>Chilli Black Thrips & Leaf Curl</strong><br>
-      • <strong>Cotton Pink Bollworm</strong><br>
-      • <strong>Okra Yellow Vein Mosaic Virus</strong>
-    `;
+    if (diseaseList) {
+      diseaseList.innerHTML = state.language === 'te' ? `
+        • <strong>మిరప నల్ల తామర పురుగు & ఆకు ముడుత (Chilli Black Thrips)</strong><br>
+        • <strong>ప్రత్తి గులాబీ రంగు పురుగు (Cotton Pink Bollworm)</strong><br>
+        • <strong>బెండ పసుపు మోజాయిక్ తెగులు (Okra Yellow Vein Virus)</strong>
+      ` : `
+        • <strong>Chilli Black Thrips & Leaf Curl</strong><br>
+        • <strong>Cotton Pink Bollworm</strong><br>
+        • <strong>Okra Yellow Vein Mosaic Virus</strong>
+      `;
+    }
 
-    dom.weatherAdvisoryText.textContent = state.language === 'te' ? `
-      ఎకరాకు 30 పసుపు, నీలి రంగు జిగురు అట్టలను అమర్చండి. ఫిప్రోనిల్ (1.5ml/L) లేదా డెలిగేట్ పిచికారీ చేయండి.
-    ` : `
-      Install 30 Yellow and Blue sticky traps per acre. Spray Fipronil 5% SC (1.5ml/L) or Spinetoram (1ml/L) targeting leaf undersides.
-    `;
+    if (advisoryText) {
+      advisoryText.textContent = state.language === 'te' ? `
+        ఎకరాకు 30 పసుపు, నీలి రంగు జిగురు అట్టలను అమర్చండి. ఫిప్రోనిల్ (1.5ml/L) లేదా డెలిగేట్ పిచికారీ చేయండి.
+      ` : `
+        Install 30 Yellow and Blue sticky traps per acre. Spray Fipronil 5% SC (1.5ml/L) or Spinetoram (1ml/L) targeting leaf undersides.
+      `;
+    }
   }
 }
 
