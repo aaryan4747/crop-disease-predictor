@@ -1,20 +1,18 @@
 import { CROP_DISEASES, CROP_LIST } from './diseaseDatabase.js';
 import { SAMPLE_GALLERY } from './sampleImages.js';
 import { analyzeLeafImage } from './imageAnalyzer.js';
-import { TRANSLATIONS, TELUGU_DISEASE_DATA } from './translations.js';
 
 // Application State
 const state = {
-  theme: 'light',
-  language: localStorage.getItem('crop_lang') || 'en',
-  currentCropFilter: "All Crops (అన్ని పంటలు)",
+  currentCropFilter: "All Crops",
   selectedImage: null,
   isScanning: false,
   activeTab: "root_cause",
   currentAnalysis: null,
-  history: JSON.parse(localStorage.getItem('crop_scan_history') || '[]'),
-  speechUtterance: null,
-  deferredPwaPrompt: null
+  chatHistory: [
+    { sender: "bot", text: "Hello! I'm your AI Agronomist. Ask me any question about plant leaf symptoms, fungicide spray schedules, or soil nutrition!" }
+  ],
+  history: JSON.parse(localStorage.getItem('crop_scan_history') || '[]')
 };
 
 // DOM References
@@ -22,70 +20,13 @@ let dom = {};
 
 document.addEventListener('DOMContentLoaded', () => {
   initDomReferences();
-  registerServiceWorker();
-  applyLightMode();
   renderCropSelector();
   renderSampleGallery();
   bindEvents();
-  updateUiLanguage();
 });
-
-// BULLETPROOF GLOBAL DELEGATION FOR ALL NAVIGATION TABS & MOBILE TOUCHES
-document.addEventListener('click', (e) => {
-  const navBtn = e.target.closest('[data-section]');
-  if (!navBtn) return;
-  e.preventDefault();
-
-  const sec = navBtn.getAttribute('data-section');
-  
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  navBtn.classList.add('active');
-
-  const predictor = document.getElementById('sectionPredictor');
-  const weather = document.getElementById('sectionWeather');
-  const library = document.getElementById('sectionLibrary');
-  const calculator = document.getElementById('sectionCalculator');
-
-  if (predictor) predictor.classList.add('hidden');
-  if (weather) weather.classList.add('hidden');
-  if (library) library.classList.add('hidden');
-  if (calculator) calculator.classList.add('hidden');
-
-  if (sec === 'predictor' && predictor) {
-    predictor.classList.remove('hidden');
-  } else if (sec === 'weather' && weather) {
-    weather.classList.remove('hidden');
-    updateLocationWeatherForecast(document.getElementById('weatherLocationInput')?.value || "Guntur");
-  } else if (sec === 'library' && library) {
-    library.classList.remove('hidden');
-    renderLibrary();
-  } else if (sec === 'calculator' && calculator) {
-    calculator.classList.remove('hidden');
-    calculateDosage();
-  }
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-function registerServiceWorker() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-      .then(() => console.log('Crop Care AI ServiceWorker Registered Successfully'))
-      .catch(err => console.log('ServiceWorker registration error:', err));
-  }
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    state.deferredPwaPrompt = e;
-    if (dom.pwaInstallBtn) {
-      dom.pwaInstallBtn.classList.remove('hidden');
-    }
-  });
-}
 
 function initDomReferences() {
   dom = {
-    langPills: document.querySelectorAll('.lang-pill'),
     cropSelect: document.getElementById('cropSelect'),
     dropzone: document.getElementById('dropzone'),
     fileInput: document.getElementById('fileInput'),
@@ -103,35 +44,13 @@ function initDomReferences() {
     severityPill: document.getElementById('severityPill'),
     confidenceVal: document.getElementById('confidenceVal'),
     confidenceFill: document.getElementById('confidenceFill'),
-    whatsappShareBtn: document.getElementById('whatsappShareBtn'),
     
-    // Growth & Adoption Buttons
-    pwaInstallBtn: document.getElementById('pwaInstallBtn'),
-    voiceSearchBtn: document.getElementById('voiceSearchBtn'),
-    callHotlineBtn: document.getElementById('callHotlineBtn'),
-    audioBtn: document.getElementById('audioBtn'),
-    printPdfBtn: document.getElementById('printPdfBtn'),
-
-    // Weather elements
-    weatherLocationInput: document.getElementById('weatherLocationInput'),
-    searchWeatherBtn: document.getElementById('searchWeatherBtn'),
-    gpsLocationBtn: document.getElementById('gpsLocationBtn'),
-    weatherCityTitle: document.getElementById('weatherCityTitle'),
-    weatherConditionDesc: document.getElementById('weatherConditionDesc'),
-    weatherRiskBadge: document.getElementById('weatherRiskBadge'),
-    weatherTempVal: document.getElementById('weatherTempVal'),
-    weatherHumidityVal: document.getElementById('weatherHumidityVal'),
-    weatherWindVal: document.getElementById('weatherWindVal'),
-    weatherDiseaseList: document.getElementById('weatherDiseaseList'),
-    weatherAdvisoryText: document.getElementById('weatherAdvisoryText'),
-
     // Tabs & Contents
     tabButtons: document.querySelectorAll('.tab-btn'),
     tabRootCause: document.getElementById('tabRootCause'),
     tabOrganic: document.getElementById('tabOrganic'),
     tabChemical: document.getElementById('tabChemical'),
     tabPrevention: document.getElementById('tabPrevention'),
-    tabDeficiency: document.getElementById('tabDeficiency'),
     
     // Dosage calculator
     calcArea: document.getElementById('calcArea'),
@@ -147,49 +66,10 @@ function initDomReferences() {
     // Nav sections
     navBtns: document.querySelectorAll('.nav-btn'),
     sectionPredictor: document.getElementById('sectionPredictor'),
-    sectionWeather: document.getElementById('sectionWeather'),
     sectionLibrary: document.getElementById('sectionLibrary'),
     sectionCalculator: document.getElementById('sectionCalculator'),
-    libraryContainer: document.getElementById('libraryContainer'),
-    
-    // FAQ elements
-    faqQuestions: document.querySelectorAll('.faq-question')
+    libraryContainer: document.getElementById('libraryContainer')
   };
-}
-
-function applyLightMode() {
-  document.documentElement.setAttribute('data-theme', 'light');
-  if (document.body) {
-    document.body.setAttribute('data-theme', 'light');
-  }
-}
-
-function updateUiLanguage() {
-  const t = TRANSLATIONS[state.language];
-
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.dataset.i18n;
-    if (t[key]) {
-      if (el.tagName === 'INPUT' && el.placeholder) {
-        el.placeholder = t[key];
-      } else {
-        el.innerHTML = t[key];
-      }
-    }
-  });
-
-  dom.langPills.forEach(pill => {
-    if (pill.dataset.lang === state.language) {
-      pill.classList.add('active');
-    } else {
-      pill.classList.remove('active');
-    }
-  });
-
-  if (state.currentAnalysis) {
-    renderTabContent();
-    updateWhatsappShareLink();
-  }
 }
 
 function renderCropSelector() {
@@ -223,72 +103,7 @@ function renderSampleGallery() {
 }
 
 function bindEvents() {
-  dom.langPills.forEach(pill => {
-    pill.addEventListener('click', () => {
-      state.language = pill.dataset.lang;
-      localStorage.setItem('crop_lang', state.language);
-      updateUiLanguage();
-    });
-  });
-
-  if (dom.pwaInstallBtn) {
-    dom.pwaInstallBtn.addEventListener('click', () => {
-      if (state.deferredPwaPrompt) {
-        state.deferredPwaPrompt.prompt();
-        state.deferredPwaPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            dom.pwaInstallBtn.textContent = TRANSLATIONS[state.language].pwaInstalledText;
-          }
-          state.deferredPwaPrompt = null;
-        });
-      }
-    });
-  }
-
-  if (dom.voiceSearchBtn) {
-    dom.voiceSearchBtn.addEventListener('click', startVoiceMicInput);
-  }
-
-  if (dom.callHotlineBtn) {
-    dom.callHotlineBtn.addEventListener('click', () => {
-      window.location.href = 'tel:18001801551';
-    });
-  }
-
-  if (dom.audioBtn) {
-    dom.audioBtn.addEventListener('click', toggleAudioAdvisory);
-  }
-
-  if (dom.printPdfBtn) {
-    dom.printPdfBtn.addEventListener('click', () => {
-      window.print();
-    });
-  }
-
-  if (dom.searchWeatherBtn) {
-    dom.searchWeatherBtn.addEventListener('click', () => {
-      const loc = dom.weatherLocationInput?.value.trim() || "Guntur";
-      updateLocationWeatherForecast(loc);
-    });
-  }
-
-  if (dom.gpsLocationBtn) {
-    dom.gpsLocationBtn.addEventListener('click', () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            updateLocationWeatherForecast("Current Location (GPS)");
-          },
-          () => {
-            updateLocationWeatherForecast("Guntur");
-          }
-        );
-      } else {
-        updateLocationWeatherForecast("Guntur");
-      }
-    });
-  }
-
+  // Dropzone drag & drop
   if (dom.dropzone) {
     dom.dropzone.addEventListener('dragover', (e) => {
       e.preventDefault();
@@ -317,10 +132,12 @@ function bindEvents() {
     });
   }
 
+  // Camera capture
   if (dom.cameraBtn) {
     dom.cameraBtn.addEventListener('click', startWebcamCapture);
   }
 
+  // Crop Selector
   if (dom.cropSelect) {
     dom.cropSelect.addEventListener('change', (e) => {
       state.currentCropFilter = e.target.value;
@@ -330,6 +147,7 @@ function bindEvents() {
     });
   }
 
+  // Tab switching
   dom.tabButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       dom.tabButtons.forEach(b => b.classList.remove('active'));
@@ -339,174 +157,41 @@ function bindEvents() {
     });
   });
 
-  dom.faqQuestions.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const answer = btn.nextElementSibling;
-      answer.classList.toggle('hidden');
-    });
-  });
-
+  // Dosage calculator inputs
   if (dom.calcArea && dom.calcRate) {
     dom.calcArea.addEventListener('input', calculateDosage);
     dom.calcRate.addEventListener('input', calculateDosage);
   }
 
+  // Chat input
   if (dom.sendChatBtn && dom.chatInput) {
     dom.sendChatBtn.addEventListener('click', handleUserChatMessage);
     dom.chatInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') handleUserChatMessage();
     });
   }
-}
 
-function updateLocationWeatherForecast(locationName) {
-  const cityTitle = document.getElementById('weatherCityTitle');
-  if (!cityTitle) return;
+  // Navigation tabs
+  dom.navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      dom.navBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const sec = btn.dataset.section;
 
-  const loc = locationName.trim();
-  cityTitle.textContent = `📍 ${loc}, ${state.language === 'te' ? 'ఆంధ్రప్రదేశ్ / తెలంగాణ' : 'AP & Telangana Region'}`;
+      dom.sectionPredictor.classList.add('hidden');
+      dom.sectionLibrary.classList.add('hidden');
+      dom.sectionCalculator.classList.add('hidden');
 
-  const charCodeSum = loc.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
-  const temp = (22 + (charCodeSum % 11));
-  const humidity = (65 + (charCodeSum % 31));
-  const wind = (10 + (charCodeSum % 12));
-
-  const tempVal = document.getElementById('weatherTempVal');
-  const humidityVal = document.getElementById('weatherHumidityVal');
-  const windVal = document.getElementById('weatherWindVal');
-  const riskBadge = document.getElementById('weatherRiskBadge');
-  const condDesc = document.getElementById('weatherConditionDesc');
-  const diseaseList = document.getElementById('weatherDiseaseList');
-  const advisoryText = document.getElementById('weatherAdvisoryText');
-
-  if (tempVal) tempVal.textContent = `${temp}°C`;
-  if (humidityVal) humidityVal.textContent = `${humidity}%`;
-  if (windVal) windVal.textContent = `${wind} km/h`;
-
-  if (humidity > 78) {
-    if (riskBadge) {
-      riskBadge.textContent = state.language === 'te' ? '⚠️ తీవ్ర శిలీంధ్ర తెగులు ప్రమాదం' : '⚠️ High Fungal Risk';
-      riskBadge.style.backgroundColor = '#ea580c';
-    }
-    if (condDesc) {
-      condDesc.textContent = state.language === 'te' ? 'అధిక తేమ వాతావరణం • శిలీంధ్ర వ్యాధులు వ్యాపించే అవకాశం ఉంది' : 'Humid Weather • High Fungal Outbreak Risk';
-    }
-
-    if (diseaseList) {
-      diseaseList.innerHTML = state.language === 'te' ? `
-        • <strong>పుచ్చకాయ నల్ల మచ్చ తెగులు (Watermelon Anthracnose)</strong> (అధిక తేమ వల్ల ఆకులపై నల్ల మచ్చలు ఏర్పడటం)<br>
-        • <strong>వరి అగ్గి తెగులు (Rice Blast)</strong> (రాత్రి వేళల్లో చల్లదనం, తేమ వల్ల బూడిద రంగు మచ్చలు)<br>
-        • <strong>అరటి సిగటోకా తెగులు (Banana Sigatoka)</strong> (గాలిలో అధిక తేమ వల్ల ఆకులు ఎండిపోవడం)
-      ` : `
-        • <strong>Watermelon Anthracnose</strong> (High humidity & wet leaves trigger black leaf spots)<br>
-        • <strong>Chilli Black Thrips & Leaf Curl</strong> (Warm temperatures favor thrips vector reproduction)<br>
-        • <strong>Rice Paddy Blast</strong> (Moderate nights & high moisture encourage sporangia germination)
-      `;
-    }
-
-    if (advisoryText) {
-      advisoryText.textContent = state.language === 'te' ? `
-        ఉదయాన్నే మంచు ఆరక ముందే కాపర్ ఆక్సిక్లోరైడ్ (Blitox 3g/L) లేదా వేప నూనె (5% NSKE) పిచికారీ చేయండి. పొలంలో నీరు నిల్వ ఉండకుండా కాలువలను శుభ్రం చేయండి.
-      ` : `
-        Apply preventative spray of Copper Oxychloride 50% WP (Blitox @ 3g/L) or Neem Seed Kernel Extract (5% NSKE) before heavy morning dew to prevent fungal spore germination. Ensure field drainage lines are cleared.
-      `;
-    }
-  } else {
-    if (riskBadge) {
-      riskBadge.textContent = state.language === 'te' ? '⚠️ రసం పీల్చే పురుగుల ప్రమాదం' : '⚠️ Sucking Pest Risk';
-      riskBadge.style.backgroundColor = '#b45309';
-    }
-    if (condDesc) {
-      condDesc.textContent = state.language === 'te' ? 'ఎండ & పొడి వాతావరణం • తామర పురుగుల ఉధృతి' : 'Dry Sunny Weather • Thrips & Mite Vector Risk';
-    }
-
-    if (diseaseList) {
-      diseaseList.innerHTML = state.language === 'te' ? `
-        • <strong>మిరప నల్ల తామర పురుగు & ఆకు ముడుత (Chilli Black Thrips)</strong><br>
-        • <strong>ప్రత్తి గులాబీ రంగు పురుగు (Cotton Pink Bollworm)</strong><br>
-        • <strong>బెండ పసుపు మోజాయిక్ తెగులు (Okra Yellow Vein Virus)</strong>
-      ` : `
-        • <strong>Chilli Black Thrips & Leaf Curl</strong><br>
-        • <strong>Cotton Pink Bollworm</strong><br>
-        • <strong>Okra Yellow Vein Mosaic Virus</strong>
-      `;
-    }
-
-    if (advisoryText) {
-      advisoryText.textContent = state.language === 'te' ? `
-        ఎకరాకు 30 పసుపు, నీలి రంగు జిగురు అట్టలను అమర్చండి. ఫిప్రోనిల్ (1.5ml/L) లేదా డెలిగేట్ పిచికారీ చేయండి.
-      ` : `
-        Install 30 Yellow and Blue sticky traps per acre. Spray Fipronil 5% SC (1.5ml/L) or Spinetoram (1ml/L) targeting leaf undersides.
-      `;
-    }
-  }
-}
-
-function startVoiceMicInput() {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) {
-    alert("Speech recognition mic is not supported on this browser.");
-    return;
-  }
-
-  const recognition = new SpeechRecognition();
-  recognition.lang = state.language === 'te' ? 'te-IN' : 'en-US';
-  recognition.interimResults = false;
-
-  dom.voiceSearchBtn.textContent = TRANSLATIONS[state.language].listeningText;
-  dom.voiceSearchBtn.style.background = 'rgba(239,68,68,0.15)';
-  dom.voiceSearchBtn.style.color = '#dc2626';
-
-  recognition.onresult = (event) => {
-    const transcript = event.results[0][0].transcript;
-    if (dom.chatInput) {
-      dom.chatInput.value = transcript;
-      handleUserChatMessage();
-    }
-    resetVoiceBtnText();
-  };
-
-  recognition.onerror = () => { resetVoiceBtnText(); };
-  recognition.onend = () => { resetVoiceBtnText(); };
-
-  recognition.start();
-}
-
-function resetVoiceBtnText() {
-  if (dom.voiceSearchBtn) {
-    dom.voiceSearchBtn.textContent = TRANSLATIONS[state.language].voiceSearchBtn;
-    dom.voiceSearchBtn.style.background = 'rgba(5,150,105,0.1)';
-    dom.voiceSearchBtn.style.color = 'var(--primary-emerald)';
-  }
-}
-
-function toggleAudioAdvisory() {
-  if (!window.speechSynthesis) {
-    alert("Speech Synthesis is not supported on this browser.");
-    return;
-  }
-
-  if (window.speechSynthesis.speaking) {
-    window.speechSynthesis.cancel();
-    dom.audioBtn.innerHTML = TRANSLATIONS[state.language].listenAudioBtn;
-    return;
-  }
-
-  if (!state.currentAnalysis) return;
-
-  const d = getLocalizedDiseaseData(state.currentAnalysis.disease);
-  let text = `${d.diseaseName}. ${d.symptoms.join('. ')}. Recommended cure: ${d.organicCures[0].name}. Dosage: ${d.organicCures[0].dosage}.`;
-
-  state.speechUtterance = new SpeechSynthesisUtterance(text);
-  state.speechUtterance.lang = state.language === 'te' ? 'te-IN' : 'en-US';
-  state.speechUtterance.rate = 0.9;
-
-  state.speechUtterance.onend = () => {
-    dom.audioBtn.innerHTML = TRANSLATIONS[state.language].listenAudioBtn;
-  };
-
-  dom.audioBtn.innerHTML = TRANSLATIONS[state.language].stopAudioBtn;
-  window.speechSynthesis.speak(state.speechUtterance);
+      if (sec === 'predictor') dom.sectionPredictor.classList.remove('hidden');
+      else if (sec === 'library') {
+        dom.sectionLibrary.classList.remove('hidden');
+        renderLibrary();
+      } else if (sec === 'calculator') {
+        dom.sectionCalculator.classList.remove('hidden');
+        calculateDosage();
+      }
+    });
+  });
 }
 
 function handleFileSelect(file) {
@@ -529,15 +214,15 @@ function startWebcamCapture() {
         position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.85);
         display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
       `;
-      video.style.cssText = `max-width: 90%; max-height: 70vh; border-radius: 12px; border: 2px solid #059669;`;
+      video.style.cssText = `max-width: 90%; max-height: 70vh; border-radius: 12px; border: 2px solid #10b981;`;
       
       const capBtn = document.createElement('button');
       capBtn.className = 'btn-primary';
-      capBtn.textContent = state.language === 'te' ? '📸 ఆకు ఫోటో తీయండి' : '📸 Snap Leaf Photo';
+      capBtn.textContent = '📸 Snap Leaf Photo';
       
       const cancelBtn = document.createElement('button');
       cancelBtn.className = 'btn-secondary';
-      cancelBtn.textContent = state.language === 'te' ? 'రద్దు చేయి' : 'Cancel';
+      cancelBtn.textContent = 'Cancel';
 
       modal.appendChild(video);
       modal.appendChild(capBtn);
@@ -563,7 +248,7 @@ function startWebcamCapture() {
       };
     })
     .catch(() => {
-      alert(state.language === 'te' ? "కెమెరా అందుబాటులో లేదు. ఫైల్ లేదా నమూనా చిత్రాన్ని ఎంచుకోండి." : "Unable to access camera. Please select a leaf photo or sample image instead.");
+      alert("Unable to access camera. Please select a leaf photo or sample image instead.");
     });
 }
 
@@ -585,17 +270,21 @@ async function runAnalysis(imgElement) {
   state.isScanning = true;
   dom.scannerOverlay.classList.remove('hidden');
 
+  // Trigger analysis simulation laser window
   setTimeout(async () => {
     const analysis = await analyzeLeafImage(imgElement, state.currentCropFilter);
     state.currentAnalysis = analysis;
     state.isScanning = false;
     dom.scannerOverlay.classList.add('hidden');
+    
+    // Save to history
+    saveToHistory(analysis);
     displayAnalysisResults(analysis);
   }, 1800);
 }
 
 function displayAnalysisResults(analysis) {
-  const d = getLocalizedDiseaseData(analysis.disease);
+  const d = analysis.disease;
   
   dom.placeholderCard.classList.add('hidden');
   dom.resultCard.classList.remove('hidden');
@@ -610,63 +299,35 @@ function displayAnalysisResults(analysis) {
   dom.confidenceVal.textContent = `${analysis.confidence}%`;
   dom.confidenceFill.style.width = `${analysis.confidence}%`;
 
-  renderTabContent();
-  updateWhatsappShareLink();
-}
-
-function getLocalizedDiseaseData(baseDisease) {
-  if (state.language === 'te' && TELUGU_DISEASE_DATA[baseDisease.id]) {
-    const teData = TELUGU_DISEASE_DATA[baseDisease.id];
-    return {
-      ...baseDisease,
-      diseaseName: teData.diseaseName || baseDisease.diseaseName,
-      symptoms: teData.symptoms || baseDisease.symptoms,
-      rootCauses: teData.rootCauses || baseDisease.rootCauses,
-      organicCures: teData.organicCures || baseDisease.organicCures,
-      chemicalCures: teData.chemicalCures || baseDisease.chemicalCures,
-      preventionProtocol: teData.preventionProtocol || baseDisease.preventionProtocol,
-      mineralDeficiency: teData.mineralDeficiency || baseDisease.mineralDeficiency
-    };
+  // Pre-fill calculation default rate from medicine
+  if (d.chemicalCures && d.chemicalCures[0] && dom.calcRate) {
+    const match = d.chemicalCures[0].dosage.match(/([\d\.]+)/);
+    if (match) dom.calcRate.value = match[1];
   }
-  return baseDisease;
-}
 
-function updateWhatsappShareLink() {
-  if (!state.currentAnalysis || !dom.whatsappShareBtn) return;
-  const d = getLocalizedDiseaseData(state.currentAnalysis.disease);
-  
-  let msg = `🌱 *Crop Care AI Diagnostic Report*\n\n`;
-  msg += `🌾 *Crop*: ${d.crop}\n`;
-  msg += `🦠 *Disease Identified*: ${d.diseaseName}\n`;
-  msg += `🎯 *AI Confidence*: ${state.currentAnalysis.confidence}%\n\n`;
-  msg += `🌿 *Recommended Remedy*: ${d.organicCures[0].name} (${d.organicCures[0].dosage})\n\n`;
-  msg += `Check your crop diseases free here: https://crop-disease-predictor-mu.vercel.app/`;
-
-  dom.whatsappShareBtn.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+  renderTabContent();
 }
 
 function renderTabContent() {
   if (!state.currentAnalysis) return;
-  const d = getLocalizedDiseaseData(state.currentAnalysis.disease);
-  const t = TRANSLATIONS[state.language];
+  const d = state.currentAnalysis.disease;
 
   dom.tabRootCause.classList.add('hidden');
   dom.tabOrganic.classList.add('hidden');
   dom.tabChemical.classList.add('hidden');
   dom.tabPrevention.classList.add('hidden');
-  if (dom.tabDeficiency) dom.tabDeficiency.classList.add('hidden');
 
   if (state.activeTab === 'root_cause') {
     dom.tabRootCause.classList.remove('hidden');
     dom.tabRootCause.innerHTML = `
       <div style="margin-bottom: 1.25rem;">
-        <h4 style="color:var(--primary-emerald); margin-bottom:0.5rem; font-family:'Outfit',sans-serif;">${t.observedSymptoms}</h4>
+        <h4 style="color:#a7f3d0; margin-bottom:0.5rem; font-family:'Outfit',sans-serif;">🔍 Observed Symptoms</h4>
         <ul class="info-list">
           ${d.symptoms.map(s => `<li class="info-item"><span class="bullet-icon">●</span> ${s}</li>`).join('')}
         </ul>
       </div>
       <div>
-        <h4 style="color:var(--accent-amber); margin-bottom:0.5rem; font-family:'Outfit',sans-serif;">${t.rootCausesHeader}</h4>
+        <h4 style="color:#fcd34d; margin-bottom:0.5rem; font-family:'Outfit',sans-serif;">🌧️ Root Causes & Triggers</h4>
         <ul class="info-list">
           ${d.rootCauses.map(r => `<li class="info-item"><span class="bullet-icon">▲</span> ${r}</li>`).join('')}
         </ul>
@@ -675,83 +336,69 @@ function renderTabContent() {
   } else if (state.activeTab === 'organic') {
     dom.tabOrganic.classList.remove('hidden');
     dom.tabOrganic.innerHTML = d.organicCures.map(med => `
-      <div class="medicine-card" style="border-left-color: var(--primary-emerald);">
+      <div class="medicine-card" style="border-left-color: #10b981;">
         <div class="medicine-name">🌿 ${med.name}</div>
-        <div class="medicine-dosage">${t.dosageLabel} ${med.dosage}</div>
-        <div class="medicine-app">${t.appGuideLabel} ${med.application}</div>
+        <div class="medicine-dosage">Recommended Dosage: ${med.dosage}</div>
+        <div class="medicine-app">Application Guide: ${med.application}</div>
       </div>
     `).join('');
   } else if (state.activeTab === 'chemical') {
     dom.tabChemical.classList.remove('hidden');
     dom.tabChemical.innerHTML = d.chemicalCures ? d.chemicalCures.map(med => `
-      <div class="medicine-card" style="border-left-color: #2563eb;">
+      <div class="medicine-card" style="border-left-color: #3b82f6;">
         <div class="medicine-name">🧪 ${med.name}</div>
-        <div class="medicine-dosage">${t.dosageLabel} ${med.dosage}</div>
-        <div class="medicine-app">${t.appGuideLabel} ${med.application}</div>
-        ${med.phiDays ? `
-          <div style="margin-top:0.6rem; padding:0.4rem 0.75rem; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); border-radius:6px; font-size:0.85rem; font-weight:700; color:var(--accent-rose);">
-            ${t.phiLabel} ${med.phiDays} Days (${state.language === 'te' ? 'రోజులు' : 'Days'})
-          </div>
-        ` : ''}
+        <div class="medicine-dosage">Active Dosage: ${med.dosage}</div>
+        <div class="medicine-app">Application Guide: ${med.application}</div>
       </div>
-    `).join('') : `<p style="color:var(--text-muted);">${state.language === 'te' ? 'రసాయన మందుల ప్రమేయం అవసరం లేదు. సేంద్రీయ పద్ధతులు పాటించండి.' : 'No synthetic chemical sprays required. Organic management recommended.'}</p>`;
+    `).join('') : '<p style="color:var(--text-muted);">No synthetic chemical sprays required. Organic management recommended.</p>';
   } else if (state.activeTab === 'prevention') {
     dom.tabPrevention.classList.remove('hidden');
     dom.tabPrevention.innerHTML = `
-      <h4 style="color:var(--primary-emerald); margin-bottom:0.75rem; font-family:'Outfit',sans-serif;">${t.preventionHeader}</h4>
+      <h4 style="color:#34d399; margin-bottom:0.75rem; font-family:'Outfit',sans-serif;">🛡️ Step-by-Step Crop Recovery & Prevention Protocol</h4>
       <ul class="info-list">
         ${d.preventionProtocol.map((step, idx) => `
           <li class="info-item">
-            <span style="background:rgba(5,150,105,0.15); color:var(--primary-emerald); font-weight:700; border-radius:50%; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; flex-shrink:0;">${idx + 1}</span>
+            <span style="background:rgba(16,185,129,0.2); color:#34d399; font-weight:700; border-radius:50%; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; flex-shrink:0;">${idx + 1}</span>
             ${step}
           </li>
         `).join('')}
       </ul>
     `;
-  } else if (state.activeTab === 'deficiency' && dom.tabDeficiency) {
-    dom.tabDeficiency.classList.remove('hidden');
-    dom.tabDeficiency.innerHTML = `
-      <h4 style="color:#b45309; margin-bottom:0.75rem; font-family:'Outfit',sans-serif;">${t.mineralHeader}</h4>
-      <p style="font-size:0.95rem; color:#0f172a; line-height:1.5;">${d.mineralDeficiency || (state.language === 'te' ? 'పోషకాహార లోపాలు గమనించబడలేదు.' : 'No severe N-P-K soil deficiencies detected.')}</p>
-    `;
   }
 }
 
 function calculateDosage() {
-  const area = parseFloat(dom.calcArea?.value || 1);
-  const rate = parseFloat(dom.calcRate?.value || 2.5);
+  const area = parseFloat(dom.calcArea?.value || 1); // liters or acres
+  const rate = parseFloat(dom.calcRate?.value || 2.5); // grams or ml per liter
 
-  const totalWaterLitres = Math.round(area * 200);
+  const totalWaterLitres = Math.round(area * 200); // ~200L spray water per acre
   const totalMedicineGrams = (totalWaterLitres * rate).toFixed(1);
 
-  const unitL = state.language === 'te' ? 'లీటర్లు' : 'Liters';
-  const unitG = state.language === 'te' ? 'గ్రాములు/మి.లీ' : 'g/ml';
-
-  if (dom.calcVolumeResult) dom.calcVolumeResult.textContent = `${totalWaterLitres} ${unitL}`;
-  if (dom.calcMedicineResult) dom.calcMedicineResult.textContent = `${totalMedicineGrams} ${unitG}`;
+  if (dom.calcVolumeResult) dom.calcVolumeResult.textContent = `${totalWaterLitres} Liters`;
+  if (dom.calcMedicineResult) dom.calcMedicineResult.textContent = `${totalMedicineGrams} g/ml`;
 }
 
 function handleUserChatMessage() {
   const question = dom.chatInput.value.trim();
   if (!question) return;
 
+  // Add user bubble
   appendChatBubble("user", question);
   dom.chatInput.value = "";
 
+  // Generate intelligent response based on keywords or current diagnosis
   setTimeout(() => {
-    let answer = state.language === 'te' 
-      ? "పంట పైరుపై మందుల పిచికారీని తెల్లవారుజామున లేదా సాయంత్రం వేళల్లో ఆకుల రెండు వైపులా తడిసేలా చేయాలి."
-      : "For effective crop protection, ensure uniform foliar coverage during early morning or late evening hours. Avoid spraying under strong sunlight or imminent rain.";
+    let answer = "For effective crop protection, ensure uniform foliar coverage during early morning or late evening hours. Avoid spraying under strong sunlight or imminent rain.";
     
     const qLower = question.toLowerCase();
-    if (qLower.includes("neem") || qLower.includes("వేప")) {
-      answer = state.language === 'te'
-        ? "వేప నూనెను లీటరు నీటికి 5 మి.లీ మరియు 1 మి.లీ సబ్బు నీరు కలిపి పిచికారీ చేయాలి. ఇది శిలీంధ్రాలు మరియు రసం పీల్చే పురుగులను నివారిస్తుంది."
-        : "Neem oil works best when emulsified with 1ml liquid soap per liter of water. Spray every 7 days as a preventative against fungal spores and soft-bodied sucking insects.";
-    } else if (qLower.includes("blight") || qLower.includes("తెగులు")) {
-      answer = state.language === 'te'
-        ? "తెగులు సోకిన కింది ఆకులను వెంటనే తొలగించి కాల్చివేయండి. గాలి వెలుతురు తగిలేలా చూసి బోర్డో మిశ్రమం లేదా మ్యాంకోజెబ్ పిచికారీ చేయండి."
-        : "Fungal blights spread rapidly through moisture. Immediately prune infected lower leaves, increase air circulation, and apply a Copper Hydroxide or Mancozeb protective spray.";
+    if (qLower.includes("neem") || qLower.includes("organic")) {
+      answer = "Neem oil works best when emulsified with 1ml liquid soap per liter of water. Spray every 7 days as a preventative against fungal spores and soft-bodied sucking insects.";
+    } else if (qLower.includes("blight") || qLower.includes("spot")) {
+      answer = "Fungal blights spread rapidly through moisture. Immediately prune infected lower leaves, increase air circulation, and apply a Copper Hydroxide or Mancozeb protective spray.";
+    } else if (qLower.includes("dose") || qLower.includes("water") || qLower.includes("mix")) {
+      answer = "Always mix powders in a small quantity of water to form a smooth paste before adding to the full spray tank. Maintain 200 Liters of water per acre for standard field crops.";
+    } else if (state.currentAnalysis) {
+      answer = `Regarding your current scan (${state.currentAnalysis.disease.diseaseName}): Follow the organic and chemical remedies listed in the diagnostic card. Maintain clean crop field sanitation.`;
     }
 
     appendChatBubble("bot", answer);
@@ -768,24 +415,32 @@ function appendChatBubble(sender, text) {
 
 function renderLibrary() {
   if (!dom.libraryContainer) return;
-  dom.libraryContainer.innerHTML = CROP_DISEASES.map(base => {
-    const d = getLocalizedDiseaseData(base);
-    return `
-      <div class="glass-card" style="margin-bottom: 1.25rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-          <h3 style="font-family:'Outfit',sans-serif; color:var(--text-main);">${d.diseaseName} (${d.crop})</h3>
-          <span class="severity-pill" style="background:${d.badgeColor}; color:#fff;">${d.severityLevel}</span>
-        </div>
-        <p style="font-style:italic; color:var(--text-muted); font-size:0.9rem; margin-bottom:0.75rem;">Pathogen: ${d.scientificName}</p>
-        <div style="margin-bottom:0.75rem;">
-          <strong style="color:var(--primary-emerald); font-size:0.9rem;">${state.language === 'te' ? 'వ్యాధి లక్షణాలు:' : 'Key Symptoms:'}</strong>
-          <p style="color:var(--text-muted); font-size:0.9rem;">${d.symptoms.slice(0, 2).join('. ')}</p>
-        </div>
-        <div>
-          <strong style="color:var(--accent-amber); font-size:0.9rem;">${state.language === 'te' ? 'నివారణ మార్గాలు:' : 'Recommended Remedies:'}</strong>
-          <p style="color:var(--text-muted); font-size:0.9rem;">${d.organicCures[0].name} (${d.organicCures[0].dosage})</p>
-        </div>
+  dom.libraryContainer.innerHTML = CROP_DISEASES.map(d => `
+    <div class="glass-card" style="margin-bottom: 1.25rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+        <h3 style="font-family:'Outfit',sans-serif; color:#fff;">${d.diseaseName} (${d.crop})</h3>
+        <span class="severity-pill" style="background:${d.badgeColor}; color:#fff;">${d.severityLevel}</span>
       </div>
-    `;
-  }).join('');
+      <p style="font-style:italic; color:var(--text-muted); font-size:0.9rem; margin-bottom:0.75rem;">Pathogen: ${d.scientificName}</p>
+      <div style="margin-bottom:0.75rem;">
+        <strong style="color:#a7f3d0; font-size:0.9rem;">Key Symptoms:</strong>
+        <p style="color:#d1d5db; font-size:0.9rem;">${d.symptoms.slice(0, 2).join('. ')}</p>
+      </div>
+      <div>
+        <strong style="color:#fcd34d; font-size:0.9rem;">Recommended Remedies:</strong>
+        <p style="color:#d1d5db; font-size:0.9rem;">${d.organicCures[0].name} (${d.organicCures[0].dosage})</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+function saveToHistory(analysis) {
+  state.history.unshift({
+    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    crop: analysis.disease.crop,
+    diseaseName: analysis.disease.diseaseName,
+    confidence: analysis.confidence
+  });
+  if (state.history.length > 10) state.history.pop();
+  localStorage.setItem('crop_scan_history', JSON.stringify(state.history));
 }
