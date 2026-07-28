@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,7 +51,7 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
+<body data-theme="light">
 
   <!-- Top Announcement / Certification Ribbon -->
   <div class="top-announcement-bar">
@@ -88,12 +88,6 @@
         <button class="lang-pill active" data-lang="en">🇬🇧 English</button>
         <button class="lang-pill" data-lang="te">🇮🇳 తెలుగు</button>
       </div>
-
-      <!-- Dark / Light Theme Toggle Button -->
-      <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Dark/Light Mode">
-        <span id="themeIcon">🌙</span>
-        <span id="themeText">Dark</span>
-      </button>
     </div>
   </nav>
 
@@ -165,7 +159,7 @@
           
           <div style="display:flex; gap:0.5rem; justify-content:center;">
             <button class="btn-secondary" type="button" data-i18n="browseFilesBtn">Browse Files</button>
-            <button id="cameraBtn" class="btn-secondary" type="button" style="background:rgba(16,185,129,0.15); border-color:var(--border-glass-active);" data-i18n="useCameraBtn">
+            <button id="cameraBtn" class="btn-secondary" type="button" style="background:rgba(5,150,105,0.12); border-color:var(--border-glass-active);" data-i18n="useCameraBtn">
               📷 Use Camera
             </button>
           </div>
@@ -200,7 +194,7 @@
         
         <!-- Placeholder Empty Card -->
         <div id="placeholderCard" class="glass-card" style="text-align:center; padding:3.5rem 1.5rem;">
-          <div style="width:72px; height:72px; background:rgba(16,185,129,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1.25rem; color:var(--primary-emerald);">
+          <div style="width:72px; height:72px; background:rgba(5,150,105,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1.25rem; color:var(--primary-emerald);">
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
           </div>
           <h3 style="font-family:'Outfit',sans-serif; font-size:1.4rem; margin-bottom:0.5rem;" data-i18n="awaitingTitle">Awaiting Leaf Image</h3>
@@ -298,15 +292,15 @@
           </div>
           <div class="matrix-body">
             <div class="matrix-col">
-              <h4 style="color:#a7f3d0;" data-i18n="symptomsHeader">🔍 Symptoms</h4>
+              <h4 style="color:#047857;" data-i18n="symptomsHeader">🔍 Symptoms</h4>
               <p data-i18n="cropRiceSym">Spindle-shaped diamond spots with ash-gray center on leaves; breaking stem nodes.</p>
             </div>
             <div class="matrix-col">
-              <h4 style="color:#34d399;" data-i18n="organicHeader">🌿 Organic Remedy</h4>
+              <h4 style="color:#059669;" data-i18n="organicHeader">🌿 Organic Remedy</h4>
               <p data-i18n="cropRiceOrg">Pseudomonas fluorescens (10g/L water) foliar spray.</p>
             </div>
             <div class="matrix-col">
-              <h4 style="color:#f59e0b;" data-i18n="chemicalHeader">🧪 Chemical Medicine</h4>
+              <h4 style="color:#b45309;" data-i18n="chemicalHeader">🧪 Chemical Medicine</h4>
               <p data-i18n="cropRiceChem">Tricyclazole 75% WP (Baan / Beam) @ 0.6g/L water.</p>
             </div>
           </div>
@@ -323,15 +317,15 @@
           </div>
           <div class="matrix-body">
             <div class="matrix-col">
-              <h4 style="color:#a7f3d0;" data-i18n="symptomsHeader">🔍 Symptoms</h4>
+              <h4 style="color:#047857;" data-i18n="symptomsHeader">🔍 Symptoms</h4>
               <p data-i18n="cropChilliSym">Upward boat-shaped curling, stunted growth, and black dying branch tips.</p>
             </div>
             <div class="matrix-col">
-              <h4 style="color:#34d399;" data-i18n="organicHeader">🌿 Organic Remedy</h4>
+              <h4 style="color:#059669;" data-i18n="organicHeader">🌿 Organic Remedy</h4>
               <p data-i18n="cropChilliOrg">5% Neem Seed Kernel Extract (NSKE 50ml/L) + 1ml soap.</p>
             </div>
             <div class="matrix-col">
-              <h4 style="color:#f59e0b;" data-i18n="chemicalHeader">🧪 Chemical Medicine</h4>
+              <h4 style="color:#b45309;" data-i18n="chemicalHeader">🧪 Chemical Medicine</h4>
               <p data-i18n="cropChilliChem">Fipronil 5% SC (1.5ml/L) or Amistar Top (1ml/L).</p>
             </div>
           </div>
@@ -348,15 +342,15 @@
           </div>
           <div class="matrix-body">
             <div class="matrix-col">
-              <h4 style="color:#a7f3d0;" data-i18n="symptomsHeader">🔍 Symptoms</h4>
+              <h4 style="color:#047857;" data-i18n="symptomsHeader">🔍 Symptoms</h4>
               <p data-i18n="cropWatermelonSym">Dark brown circular spots on leaves and sunken rind spots on watermelon fruit.</p>
             </div>
             <div class="matrix-col">
-              <h4 style="color:#34d399;" data-i18n="organicHeader">🌿 Organic Remedy</h4>
+              <h4 style="color:#059669;" data-i18n="organicHeader">🌿 Organic Remedy</h4>
               <p data-i18n="cropWatermelonOrg">Trichoderma viride root drench + Copper Hydroxide (2.5g/L).</p>
             </div>
             <div class="matrix-col">
-              <h4 style="color:#f59e0b;" data-i18n="chemicalHeader">🧪 Chemical Medicine</h4>
+              <h4 style="color:#b45309;" data-i18n="chemicalHeader">🧪 Chemical Medicine</h4>
               <p data-i18n="cropWatermelonChem">Azoxystrobin 23% SC (Amistar) @ 1ml/L water.</p>
             </div>
           </div>
@@ -373,15 +367,15 @@
           </div>
           <div class="matrix-body">
             <div class="matrix-col">
-              <h4 style="color:#a7f3d0;" data-i18n="symptomsHeader">🔍 Symptoms</h4>
+              <h4 style="color:#047857;" data-i18n="symptomsHeader">🔍 Symptoms</h4>
               <p data-i18n="cropCottonSym">Brown circular spots with red borders on leaves leading to shot-hole leaf drops.</p>
             </div>
             <div class="matrix-col">
-              <h4 style="color:#34d399;" data-i18n="organicHeader">🌿 Organic Remedy</h4>
+              <h4 style="color:#059669;" data-i18n="organicHeader">🌿 Organic Remedy</h4>
               <p data-i18n="cropCottonOrg">Fermented Cow Urine + Buttermilk spray (50ml/L water).</p>
             </div>
             <div class="matrix-col">
-              <h4 style="color:#f59e0b;" data-i18n="chemicalHeader">🧪 Chemical Medicine</h4>
+              <h4 style="color:#b45309;" data-i18n="chemicalHeader">🧪 Chemical Medicine</h4>
               <p data-i18n="cropCottonChem">Copper Oxychloride (Blitox 3g/L) or Propiconazole (1ml/L).</p>
             </div>
           </div>
@@ -398,15 +392,15 @@
           </div>
           <div class="matrix-body">
             <div class="matrix-col">
-              <h4 style="color:#a7f3d0;" data-i18n="symptomsHeader">🔍 Symptoms</h4>
+              <h4 style="color:#047857;" data-i18n="symptomsHeader">🔍 Symptoms</h4>
               <p data-i18n="cropGroundnutSym">Dark circular leaf spots with yellow halo causing severe leaf shedding.</p>
             </div>
             <div class="matrix-col">
-              <h4 style="color:#34d399;" data-i18n="organicHeader">🌿 Organic Remedy</h4>
+              <h4 style="color:#059669;" data-i18n="organicHeader">🌿 Organic Remedy</h4>
               <p data-i18n="cropGroundnutOrg">Trichoderma viride + Vermicompost soil application.</p>
             </div>
             <div class="matrix-col">
-              <h4 style="color:#f59e0b;" data-i18n="chemicalHeader">🧪 Chemical Medicine</h4>
+              <h4 style="color:#b45309;" data-i18n="chemicalHeader">🧪 Chemical Medicine</h4>
               <p data-i18n="cropGroundnutChem">SAAF (2g/L) or Nativo (Tebuconazole + Trifloxystrobin @ 0.75g/L).</p>
             </div>
           </div>
@@ -423,15 +417,15 @@
           </div>
           <div class="matrix-body">
             <div class="matrix-col">
-              <h4 style="color:#a7f3d0;" data-i18n="symptomsHeader">🔍 Symptoms</h4>
+              <h4 style="color:#047857;" data-i18n="symptomsHeader">🔍 Symptoms</h4>
               <p data-i18n="cropBananaSym">Yellow-green streaks parallel to leaf veins turning dark brown & dry.</p>
             </div>
             <div class="matrix-col">
-              <h4 style="color:#34d399;" data-i18n="organicHeader">🌿 Organic Remedy</h4>
+              <h4 style="color:#059669;" data-i18n="organicHeader">🌿 Organic Remedy</h4>
               <p data-i18n="cropBananaOrg">Horticultural Mineral Oil spray (10ml/L) + De-trashing.</p>
             </div>
             <div class="matrix-col">
-              <h4 style="color:#f59e0b;" data-i18n="chemicalHeader">🧪 Chemical Medicine</h4>
+              <h4 style="color:#b45309;" data-i18n="chemicalHeader">🧪 Chemical Medicine</h4>
               <p data-i18n="cropBananaChem">Tilt (Propiconazole 1ml/L + 10ml Mineral oil).</p>
             </div>
           </div>
@@ -474,7 +468,7 @@
           <div id="calcVolumeResult" class="calc-val">200 Liters</div>
           
           <div style="margin-top:0.75rem; font-size:0.9rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;" data-i18n="calcMedResultLabel">Total Required Medicine / Fungicide Quantity</div>
-          <div id="calcMedicineResult" class="calc-val" style="color:#f59e0b;">500 g/ml</div>
+          <div id="calcMedicineResult" class="calc-val" style="color:#b45309;">500 g/ml</div>
         </div>
       </div>
     </section>
