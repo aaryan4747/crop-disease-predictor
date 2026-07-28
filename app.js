@@ -391,7 +391,6 @@ function updateLocationWeatherForecast(locationName) {
     if (condDesc) {
       condDesc.textContent = state.language === 'te' ? 'అధిక తేమ వాతావరణం • శిలీంధ్ర వ్యాధులు వ్యాపించే అవకాశం ఉంది' : 'Humid Weather • High Fungal Outbreak Risk';
     }
-
     if (diseaseList) {
       diseaseList.innerHTML = state.language === 'te' ? `
         • <strong>పుచ్చకాయ నల్ల మచ్చ తెగులు (Watermelon Anthracnose)</strong> (అధిక తేమ వల్ల ఆకులపై నల్ల మచ్చలు ఏర్పడటం)<br>
@@ -403,7 +402,6 @@ function updateLocationWeatherForecast(locationName) {
         • <strong>Rice Paddy Blast</strong> (Moderate nights & high moisture encourage sporangia germination)
       `;
     }
-
     if (advisoryText) {
       advisoryText.textContent = state.language === 'te' ? `
         ఉదయాన్నే మంచు ఆరక ముందే కాపర్ ఆక్సిక్లోరైడ్ (Blitox 3g/L) లేదా వేప నూనె (5% NSKE) పిచికారీ చేయండి. పొలంలో నీరు నిల్వ ఉండకుండా కాలువలను శుభ్రం చేయండి.
@@ -419,7 +417,6 @@ function updateLocationWeatherForecast(locationName) {
     if (condDesc) {
       condDesc.textContent = state.language === 'te' ? 'ఎండ & పొడి వాతావరణం • తామర పురుగుల ఉధృతి' : 'Dry Sunny Weather • Thrips & Mite Vector Risk';
     }
-
     if (diseaseList) {
       diseaseList.innerHTML = state.language === 'te' ? `
         • <strong>మిరప నల్ల తామర పురుగు & ఆకు ముడుత (Chilli Black Thrips)</strong><br>
@@ -431,7 +428,6 @@ function updateLocationWeatherForecast(locationName) {
         • <strong>Okra Yellow Vein Mosaic Virus</strong>
       `;
     }
-
     if (advisoryText) {
       advisoryText.textContent = state.language === 'te' ? `
         ఎకరాకు 30 పసుపు, నీలి రంగు జిగురు అట్టలను అమర్చండి. ఫిప్రోనిల్ (1.5ml/L) లేదా డెలిగేట్ పిచికారీ చేయండి.
