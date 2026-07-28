@@ -13,7 +13,8 @@ const state = {
   activeTab: "root_cause",
   currentAnalysis: null,
   history: JSON.parse(localStorage.getItem('crop_scan_history') || '[]'),
-  speechUtterance: null
+  speechUtterance: null,
+  deferredPwaPrompt: null
 };
 
 // DOM References
@@ -21,12 +22,29 @@ let dom = {};
 
 document.addEventListener('DOMContentLoaded', () => {
   initDomReferences();
+  registerServiceWorker();
   applyLightMode();
   renderCropSelector();
   renderSampleGallery();
   bindEvents();
   updateUiLanguage();
 });
+
+function registerServiceWorker() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+      .then(() => console.log('Crop Care AI ServiceWorker Registered Successfully'))
+      .catch(err => console.log('ServiceWorker registration error:', err));
+  }
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    state.deferredPwaPrompt = e;
+    if (dom.pwaInstallBtn) {
+      dom.pwaInstallBtn.classList.remove('hidden');
+    }
+  });
+}
 
 function initDomReferences() {
   dom = {
@@ -50,7 +68,10 @@ function initDomReferences() {
     confidenceFill: document.getElementById('confidenceFill'),
     whatsappShareBtn: document.getElementById('whatsappShareBtn'),
     
-    // Competitor Gap Action Buttons
+    // Growth & Adoption Buttons
+    pwaInstallBtn: document.getElementById('pwaInstallBtn'),
+    voiceSearchBtn: document.getElementById('voiceSearchBtn'),
+    callHotlineBtn: document.getElementById('callHotlineBtn'),
     audioBtn: document.getElementById('audioBtn'),
     printPdfBtn: document.getElementById('printPdfBtn'),
 
@@ -163,12 +184,39 @@ function bindEvents() {
     });
   });
 
-  // Competitor Gap 1: Voice Audio Narrator
+  // Growth Feature 1: PWA Install to Home Screen
+  if (dom.pwaInstallBtn) {
+    dom.pwaInstallBtn.addEventListener('click', () => {
+      if (state.deferredPwaPrompt) {
+        state.deferredPwaPrompt.prompt();
+        state.deferredPwaPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            dom.pwaInstallBtn.textContent = TRANSLATIONS[state.language].pwaInstalledText;
+          }
+          state.deferredPwaPrompt = null;
+        });
+      }
+    });
+  }
+
+  // Growth Feature 2: Voice Speech-to-Text Search Mic
+  if (dom.voiceSearchBtn) {
+    dom.voiceSearchBtn.addEventListener('click', startVoiceMicInput);
+  }
+
+  // Growth Feature 3: Direct Toll-Free Call Kisan Hotline
+  if (dom.callHotlineBtn) {
+    dom.callHotlineBtn.addEventListener('click', () => {
+      window.location.href = 'tel:18001801551';
+    });
+  }
+
+  // Audio Voice Advisory
   if (dom.audioBtn) {
     dom.audioBtn.addEventListener('click', toggleAudioAdvisory);
   }
 
-  // Competitor Gap 3: Printable PDF Report
+  // Printable PDF Report
   if (dom.printPdfBtn) {
     dom.printPdfBtn.addEventListener('click', () => {
       window.print();
@@ -274,7 +322,51 @@ function bindEvents() {
   });
 }
 
-// Competitor Gap 1: Voice Audio Advisory Functionality
+// Growth Feature 2: Speech Recognition Voice Mic Handler
+function startVoiceMicInput() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    alert("Speech recognition mic is not supported on this browser.");
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = state.language === 'te' ? 'te-IN' : 'en-US';
+  recognition.interimResults = false;
+
+  dom.voiceSearchBtn.textContent = TRANSLATIONS[state.language].listeningText;
+  dom.voiceSearchBtn.style.background = 'rgba(239,68,68,0.15)';
+  dom.voiceSearchBtn.style.color = '#dc2626';
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    if (dom.chatInput) {
+      dom.chatInput.value = transcript;
+      handleUserChatMessage();
+    }
+    resetVoiceBtnText();
+  };
+
+  recognition.onerror = () => {
+    resetVoiceBtnText();
+  };
+
+  recognition.onend = () => {
+    resetVoiceBtnText();
+  };
+
+  recognition.start();
+}
+
+function resetVoiceBtnText() {
+  if (dom.voiceSearchBtn) {
+    dom.voiceSearchBtn.textContent = TRANSLATIONS[state.language].voiceSearchBtn;
+    dom.voiceSearchBtn.style.background = 'rgba(5,150,105,0.1)';
+    dom.voiceSearchBtn.style.color = 'var(--primary-emerald)';
+  }
+}
+
+// Voice Audio Advisory Functionality
 function toggleAudioAdvisory() {
   if (!window.speechSynthesis) {
     alert("Speech Synthesis is not supported on this browser.");
