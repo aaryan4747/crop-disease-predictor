@@ -5,8 +5,9 @@ import { TRANSLATIONS, TELUGU_DISEASE_DATA } from './translations.js';
 
 // Application State
 const state = {
+  theme: localStorage.getItem('crop_theme') || 'dark',
   language: localStorage.getItem('crop_lang') || 'en',
-  currentCropFilter: "All Crops",
+  currentCropFilter: "All Crops (అన్ని పంటలు)",
   selectedImage: null,
   isScanning: false,
   activeTab: "root_cause",
@@ -19,6 +20,7 @@ let dom = {};
 
 document.addEventListener('DOMContentLoaded', () => {
   initDomReferences();
+  applyTheme(state.theme);
   renderCropSelector();
   renderSampleGallery();
   bindEvents();
@@ -27,6 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initDomReferences() {
   dom = {
+    themeToggleBtn: document.getElementById('themeToggleBtn'),
+    themeIcon: document.getElementById('themeIcon'),
+    themeText: document.getElementById('themeText'),
     langPills: document.querySelectorAll('.lang-pill'),
     cropSelect: document.getElementById('cropSelect'),
     dropzone: document.getElementById('dropzone'),
@@ -75,6 +80,22 @@ function initDomReferences() {
     // FAQ elements
     faqQuestions: document.querySelectorAll('.faq-question')
   };
+}
+
+function applyTheme(theme) {
+  state.theme = theme;
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('crop_theme', theme);
+
+  if (dom.themeIcon && dom.themeText) {
+    if (theme === 'light') {
+      dom.themeIcon.textContent = '☀️';
+      dom.themeText.textContent = 'Light';
+    } else {
+      dom.themeIcon.textContent = '🌙';
+      dom.themeText.textContent = 'Dark';
+    }
+  }
 }
 
 function updateUiLanguage() {
@@ -139,6 +160,14 @@ function renderSampleGallery() {
 }
 
 function bindEvents() {
+  // Theme Toggle Button
+  if (dom.themeToggleBtn) {
+    dom.themeToggleBtn.addEventListener('click', () => {
+      const newTheme = state.theme === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+    });
+  }
+
   // Language Switcher Pills
   dom.langPills.forEach(pill => {
     pill.addEventListener('click', () => {
@@ -396,13 +425,13 @@ function renderTabContent() {
     dom.tabRootCause.classList.remove('hidden');
     dom.tabRootCause.innerHTML = `
       <div style="margin-bottom: 1.25rem;">
-        <h4 style="color:#a7f3d0; margin-bottom:0.5rem; font-family:'Outfit',sans-serif;">${t.observedSymptoms}</h4>
+        <h4 style="color:var(--primary-emerald); margin-bottom:0.5rem; font-family:'Outfit',sans-serif;">${t.observedSymptoms}</h4>
         <ul class="info-list">
           ${d.symptoms.map(s => `<li class="info-item"><span class="bullet-icon">●</span> ${s}</li>`).join('')}
         </ul>
       </div>
       <div>
-        <h4 style="color:#fcd34d; margin-bottom:0.5rem; font-family:'Outfit',sans-serif;">${t.rootCausesHeader}</h4>
+        <h4 style="color:var(--accent-amber); margin-bottom:0.5rem; font-family:'Outfit',sans-serif;">${t.rootCausesHeader}</h4>
         <ul class="info-list">
           ${d.rootCauses.map(r => `<li class="info-item"><span class="bullet-icon">▲</span> ${r}</li>`).join('')}
         </ul>
@@ -411,7 +440,7 @@ function renderTabContent() {
   } else if (state.activeTab === 'organic') {
     dom.tabOrganic.classList.remove('hidden');
     dom.tabOrganic.innerHTML = d.organicCures.map(med => `
-      <div class="medicine-card" style="border-left-color: #10b981;">
+      <div class="medicine-card" style="border-left-color: var(--primary-emerald);">
         <div class="medicine-name">🌿 ${med.name}</div>
         <div class="medicine-dosage">${t.dosageLabel} ${med.dosage}</div>
         <div class="medicine-app">${t.appGuideLabel} ${med.application}</div>
@@ -429,11 +458,11 @@ function renderTabContent() {
   } else if (state.activeTab === 'prevention') {
     dom.tabPrevention.classList.remove('hidden');
     dom.tabPrevention.innerHTML = `
-      <h4 style="color:#34d399; margin-bottom:0.75rem; font-family:'Outfit',sans-serif;">${t.preventionHeader}</h4>
+      <h4 style="color:var(--primary-emerald); margin-bottom:0.75rem; font-family:'Outfit',sans-serif;">${t.preventionHeader}</h4>
       <ul class="info-list">
         ${d.preventionProtocol.map((step, idx) => `
           <li class="info-item">
-            <span style="background:rgba(16,185,129,0.2); color:#34d399; font-weight:700; border-radius:50%; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; flex-shrink:0;">${idx + 1}</span>
+            <span style="background:rgba(16,185,129,0.2); color:var(--primary-emerald); font-weight:700; border-radius:50%; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; flex-shrink:0;">${idx + 1}</span>
             ${step}
           </li>
         `).join('')}
@@ -498,17 +527,17 @@ function renderLibrary() {
     return `
       <div class="glass-card" style="margin-bottom: 1.25rem;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-          <h3 style="font-family:'Outfit',sans-serif; color:#fff;">${d.diseaseName} (${d.crop})</h3>
+          <h3 style="font-family:'Outfit',sans-serif; color:var(--text-main);">${d.diseaseName} (${d.crop})</h3>
           <span class="severity-pill" style="background:${d.badgeColor}; color:#fff;">${d.severityLevel}</span>
         </div>
         <p style="font-style:italic; color:var(--text-muted); font-size:0.9rem; margin-bottom:0.75rem;">Pathogen: ${d.scientificName}</p>
         <div style="margin-bottom:0.75rem;">
-          <strong style="color:#a7f3d0; font-size:0.9rem;">${state.language === 'te' ? 'వ్యాధి లక్షణాలు:' : 'Key Symptoms:'}</strong>
-          <p style="color:#d1d5db; font-size:0.9rem;">${d.symptoms.slice(0, 2).join('. ')}</p>
+          <strong style="color:var(--primary-emerald); font-size:0.9rem;">${state.language === 'te' ? 'వ్యాధి లక్షణాలు:' : 'Key Symptoms:'}</strong>
+          <p style="color:var(--text-muted); font-size:0.9rem;">${d.symptoms.slice(0, 2).join('. ')}</p>
         </div>
         <div>
-          <strong style="color:#fcd34d; font-size:0.9rem;">${state.language === 'te' ? 'నివారణ మార్గాలు:' : 'Recommended Remedies:'}</strong>
-          <p style="color:#d1d5db; font-size:0.9rem;">${d.organicCures[0].name} (${d.organicCures[0].dosage})</p>
+          <strong style="color:var(--accent-amber); font-size:0.9rem;">${state.language === 'te' ? 'నివారణ మార్గాలు:' : 'Recommended Remedies:'}</strong>
+          <p style="color:var(--text-muted); font-size:0.9rem;">${d.organicCures[0].name} (${d.organicCures[0].dosage})</p>
         </div>
       </div>
     `;
