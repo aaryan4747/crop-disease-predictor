@@ -12,7 +12,8 @@ const state = {
   isScanning: false,
   activeTab: "root_cause",
   currentAnalysis: null,
-  history: JSON.parse(localStorage.getItem('crop_scan_history') || '[]')
+  history: JSON.parse(localStorage.getItem('crop_scan_history') || '[]'),
+  speechUtterance: null
 };
 
 // DOM References
@@ -49,12 +50,17 @@ function initDomReferences() {
     confidenceFill: document.getElementById('confidenceFill'),
     whatsappShareBtn: document.getElementById('whatsappShareBtn'),
     
+    // Competitor Gap Action Buttons
+    audioBtn: document.getElementById('audioBtn'),
+    printPdfBtn: document.getElementById('printPdfBtn'),
+
     // Tabs & Contents
     tabButtons: document.querySelectorAll('.tab-btn'),
     tabRootCause: document.getElementById('tabRootCause'),
     tabOrganic: document.getElementById('tabOrganic'),
     tabChemical: document.getElementById('tabChemical'),
     tabPrevention: document.getElementById('tabPrevention'),
+    tabDeficiency: document.getElementById('tabDeficiency'),
     
     // Dosage calculator
     calcArea: document.getElementById('calcArea'),
@@ -157,6 +163,18 @@ function bindEvents() {
     });
   });
 
+  // Competitor Gap 1: Voice Audio Narrator
+  if (dom.audioBtn) {
+    dom.audioBtn.addEventListener('click', toggleAudioAdvisory);
+  }
+
+  // Competitor Gap 3: Printable PDF Report
+  if (dom.printPdfBtn) {
+    dom.printPdfBtn.addEventListener('click', () => {
+      window.print();
+    });
+  }
+
   // Dropzone drag & drop
   if (dom.dropzone) {
     dom.dropzone.addEventListener('dragover', (e) => {
@@ -254,6 +272,36 @@ function bindEvents() {
       }
     });
   });
+}
+
+// Competitor Gap 1: Voice Audio Advisory Functionality
+function toggleAudioAdvisory() {
+  if (!window.speechSynthesis) {
+    alert("Speech Synthesis is not supported on this browser.");
+    return;
+  }
+
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+    dom.audioBtn.innerHTML = TRANSLATIONS[state.language].listenAudioBtn;
+    return;
+  }
+
+  if (!state.currentAnalysis) return;
+
+  const d = getLocalizedDiseaseData(state.currentAnalysis.disease);
+  let text = `${d.diseaseName}. ${d.symptoms.join('. ')}. Recommended cure: ${d.organicCures[0].name}. Dosage: ${d.organicCures[0].dosage}.`;
+
+  state.speechUtterance = new SpeechSynthesisUtterance(text);
+  state.speechUtterance.lang = state.language === 'te' ? 'te-IN' : 'en-US';
+  state.speechUtterance.rate = 0.9;
+
+  state.speechUtterance.onend = () => {
+    dom.audioBtn.innerHTML = TRANSLATIONS[state.language].listenAudioBtn;
+  };
+
+  dom.audioBtn.innerHTML = TRANSLATIONS[state.language].stopAudioBtn;
+  window.speechSynthesis.speak(state.speechUtterance);
 }
 
 function handleFileSelect(file) {
@@ -371,7 +419,8 @@ function getLocalizedDiseaseData(baseDisease) {
       rootCauses: teData.rootCauses || baseDisease.rootCauses,
       organicCures: teData.organicCures || baseDisease.organicCures,
       chemicalCures: teData.chemicalCures || baseDisease.chemicalCures,
-      preventionProtocol: teData.preventionProtocol || baseDisease.preventionProtocol
+      preventionProtocol: teData.preventionProtocol || baseDisease.preventionProtocol,
+      mineralDeficiency: teData.mineralDeficiency || baseDisease.mineralDeficiency
     };
   }
   return baseDisease;
@@ -400,6 +449,7 @@ function renderTabContent() {
   dom.tabOrganic.classList.add('hidden');
   dom.tabChemical.classList.add('hidden');
   dom.tabPrevention.classList.add('hidden');
+  if (dom.tabDeficiency) dom.tabDeficiency.classList.add('hidden');
 
   if (state.activeTab === 'root_cause') {
     dom.tabRootCause.classList.remove('hidden');
@@ -433,6 +483,11 @@ function renderTabContent() {
         <div class="medicine-name">🧪 ${med.name}</div>
         <div class="medicine-dosage">${t.dosageLabel} ${med.dosage}</div>
         <div class="medicine-app">${t.appGuideLabel} ${med.application}</div>
+        ${med.phiDays ? `
+          <div style="margin-top:0.6rem; padding:0.4rem 0.75rem; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); border-radius:6px; font-size:0.85rem; font-weight:700; color:var(--accent-rose);">
+            ${t.phiLabel} ${med.phiDays} Days (${state.language === 'te' ? 'రోజులు' : 'Days'})
+          </div>
+        ` : ''}
       </div>
     `).join('') : `<p style="color:var(--text-muted);">${state.language === 'te' ? 'రసాయన మందుల ప్రమేయం అవసరం లేదు. సేంద్రీయ పద్ధతులు పాటించండి.' : 'No synthetic chemical sprays required. Organic management recommended.'}</p>`;
   } else if (state.activeTab === 'prevention') {
@@ -447,6 +502,12 @@ function renderTabContent() {
           </li>
         `).join('')}
       </ul>
+    `;
+  } else if (state.activeTab === 'deficiency' && dom.tabDeficiency) {
+    dom.tabDeficiency.classList.remove('hidden');
+    dom.tabDeficiency.innerHTML = `
+      <h4 style="color:#b45309; margin-bottom:0.75rem; font-family:'Outfit',sans-serif;">${t.mineralHeader}</h4>
+      <p style="font-size:0.95rem; color:#0f172a; line-height:1.5;">${d.mineralDeficiency || (state.language === 'te' ? 'పోషకాహార లోపాలు గమనించబడలేదు.' : 'No severe N-P-K soil deficiencies detected.')}</p>
     `;
   }
 }
