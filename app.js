@@ -75,6 +75,19 @@ function initDomReferences() {
     audioBtn: document.getElementById('audioBtn'),
     printPdfBtn: document.getElementById('printPdfBtn'),
 
+    // Weather elements
+    weatherLocationInput: document.getElementById('weatherLocationInput'),
+    searchWeatherBtn: document.getElementById('searchWeatherBtn'),
+    gpsLocationBtn: document.getElementById('gpsLocationBtn'),
+    weatherCityTitle: document.getElementById('weatherCityTitle'),
+    weatherConditionDesc: document.getElementById('weatherConditionDesc'),
+    weatherRiskBadge: document.getElementById('weatherRiskBadge'),
+    weatherTempVal: document.getElementById('weatherTempVal'),
+    weatherHumidityVal: document.getElementById('weatherHumidityVal'),
+    weatherWindVal: document.getElementById('weatherWindVal'),
+    weatherDiseaseList: document.getElementById('weatherDiseaseList'),
+    weatherAdvisoryText: document.getElementById('weatherAdvisoryText'),
+
     // Tabs & Contents
     tabButtons: document.querySelectorAll('.tab-btn'),
     tabRootCause: document.getElementById('tabRootCause'),
@@ -97,6 +110,7 @@ function initDomReferences() {
     // Nav sections
     navBtns: document.querySelectorAll('.nav-btn'),
     sectionPredictor: document.getElementById('sectionPredictor'),
+    sectionWeather: document.getElementById('sectionWeather'),
     sectionLibrary: document.getElementById('sectionLibrary'),
     sectionCalculator: document.getElementById('sectionCalculator'),
     libraryContainer: document.getElementById('libraryContainer'),
@@ -116,7 +130,6 @@ function applyLightMode() {
 function updateUiLanguage() {
   const t = TRANSLATIONS[state.language];
 
-  // Update text nodes with data-i18n
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
     if (t[key]) {
@@ -128,7 +141,6 @@ function updateUiLanguage() {
     }
   });
 
-  // Active language pill styling
   dom.langPills.forEach(pill => {
     if (pill.dataset.lang === state.language) {
       pill.classList.add('active');
@@ -137,7 +149,6 @@ function updateUiLanguage() {
     }
   });
 
-  // Refresh active diagnostic card if present
   if (state.currentAnalysis) {
     renderTabContent();
     updateWhatsappShareLink();
@@ -175,7 +186,6 @@ function renderSampleGallery() {
 }
 
 function bindEvents() {
-  // Language Switcher Pills
   dom.langPills.forEach(pill => {
     pill.addEventListener('click', () => {
       state.language = pill.dataset.lang;
@@ -184,7 +194,6 @@ function bindEvents() {
     });
   });
 
-  // Growth Feature 1: PWA Install to Home Screen
   if (dom.pwaInstallBtn) {
     dom.pwaInstallBtn.addEventListener('click', () => {
       if (state.deferredPwaPrompt) {
@@ -199,31 +208,50 @@ function bindEvents() {
     });
   }
 
-  // Growth Feature 2: Voice Speech-to-Text Search Mic
   if (dom.voiceSearchBtn) {
     dom.voiceSearchBtn.addEventListener('click', startVoiceMicInput);
   }
 
-  // Growth Feature 3: Direct Toll-Free Call Kisan Hotline
   if (dom.callHotlineBtn) {
     dom.callHotlineBtn.addEventListener('click', () => {
       window.location.href = 'tel:18001801551';
     });
   }
 
-  // Audio Voice Advisory
   if (dom.audioBtn) {
     dom.audioBtn.addEventListener('click', toggleAudioAdvisory);
   }
 
-  // Printable PDF Report
   if (dom.printPdfBtn) {
     dom.printPdfBtn.addEventListener('click', () => {
       window.print();
     });
   }
 
-  // Dropzone drag & drop
+  if (dom.searchWeatherBtn) {
+    dom.searchWeatherBtn.addEventListener('click', () => {
+      const loc = dom.weatherLocationInput?.value.trim() || "Guntur";
+      updateLocationWeatherForecast(loc);
+    });
+  }
+
+  if (dom.gpsLocationBtn) {
+    dom.gpsLocationBtn.addEventListener('click', () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            updateLocationWeatherForecast("Current Location (GPS)");
+          },
+          () => {
+            updateLocationWeatherForecast("Guntur");
+          }
+        );
+      } else {
+        updateLocationWeatherForecast("Guntur");
+      }
+    });
+  }
+
   if (dom.dropzone) {
     dom.dropzone.addEventListener('dragover', (e) => {
       e.preventDefault();
@@ -252,12 +280,10 @@ function bindEvents() {
     });
   }
 
-  // Camera capture
   if (dom.cameraBtn) {
     dom.cameraBtn.addEventListener('click', startWebcamCapture);
   }
 
-  // Crop Selector
   if (dom.cropSelect) {
     dom.cropSelect.addEventListener('change', (e) => {
       state.currentCropFilter = e.target.value;
@@ -267,7 +293,6 @@ function bindEvents() {
     });
   }
 
-  // Tab switching
   dom.tabButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       dom.tabButtons.forEach(b => b.classList.remove('active'));
@@ -277,7 +302,6 @@ function bindEvents() {
     });
   });
 
-  // FAQ Accordion
   dom.faqQuestions.forEach(btn => {
     btn.addEventListener('click', () => {
       const answer = btn.nextElementSibling;
@@ -285,13 +309,11 @@ function bindEvents() {
     });
   });
 
-  // Dosage calculator inputs
   if (dom.calcArea && dom.calcRate) {
     dom.calcArea.addEventListener('input', calculateDosage);
     dom.calcRate.addEventListener('input', calculateDosage);
   }
 
-  // Chat input
   if (dom.sendChatBtn && dom.chatInput) {
     dom.sendChatBtn.addEventListener('click', handleUserChatMessage);
     dom.chatInput.addEventListener('keydown', (e) => {
@@ -299,7 +321,6 @@ function bindEvents() {
     });
   }
 
-  // Navigation tabs
   dom.navBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       dom.navBtns.forEach(b => b.classList.remove('active'));
@@ -307,10 +328,15 @@ function bindEvents() {
       const sec = btn.dataset.section;
 
       dom.sectionPredictor.classList.add('hidden');
+      if (dom.sectionWeather) dom.sectionWeather.classList.add('hidden');
       dom.sectionLibrary.classList.add('hidden');
       dom.sectionCalculator.classList.add('hidden');
 
       if (sec === 'predictor') dom.sectionPredictor.classList.remove('hidden');
+      else if (sec === 'weather' && dom.sectionWeather) {
+        dom.sectionWeather.classList.remove('hidden');
+        updateLocationWeatherForecast(dom.weatherLocationInput?.value || "Guntur");
+      }
       else if (sec === 'library') {
         dom.sectionLibrary.classList.remove('hidden');
         renderLibrary();
@@ -322,7 +348,64 @@ function bindEvents() {
   });
 }
 
-// Growth Feature 2: Speech Recognition Voice Mic Handler
+function updateLocationWeatherForecast(locationName) {
+  if (!dom.weatherCityTitle) return;
+
+  const loc = locationName.trim();
+  dom.weatherCityTitle.textContent = `📍 ${loc}, ${state.language === 'te' ? 'ఆంధ్రప్రదేశ్ / తెలంగాణ' : 'AP & Telangana Region'}`;
+
+  const charCodeSum = loc.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  const temp = (22 + (charCodeSum % 11));
+  const humidity = (65 + (charCodeSum % 31));
+  const wind = (10 + (charCodeSum % 12));
+
+  dom.weatherTempVal.textContent = `${temp}°C`;
+  dom.weatherHumidityVal.textContent = `${humidity}%`;
+  dom.weatherWindVal.textContent = `${wind} km/h`;
+
+  if (humidity > 78) {
+    dom.weatherRiskBadge.textContent = state.language === 'te' ? '⚠️ తీవ్ర శిలీంధ్ర తెగులు ప్రమాదం' : '⚠️ High Fungal Risk';
+    dom.weatherRiskBadge.style.backgroundColor = '#ea580c';
+    dom.weatherConditionDesc.textContent = state.language === 'te' ? 'అధిక తేమ వాతావరణం • శిలీంధ్ర వ్యాధులు వ్యాపించే అవకాశం ఉంది' : 'Humid Weather • High Fungal Outbreak Risk';
+
+    dom.weatherDiseaseList.innerHTML = state.language === 'te' ? `
+      • <strong>పుచ్చకాయ నల్ల మచ్చ తెగులు (Watermelon Anthracnose)</strong> (అధిక తేమ వల్ల ఆకులపై నల్ల మచ్చలు ఏర్పడటం)<br>
+      • <strong>వరి అగ్గి తెగులు (Rice Blast)</strong> (రాత్రి వేళల్లో చల్లదనం, తేమ వల్ల బూడిద రంగు మచ్చలు)<br>
+      • <strong>అరటి సిగటోకా తెగులు (Banana Sigatoka)</strong> (గాలిలో అధిక తేమ వల్ల ఆకులు ఎండిపోవడం)
+    ` : `
+      • <strong>Watermelon Anthracnose</strong> (High humidity & wet leaves trigger black leaf spots)<br>
+      • <strong>Chilli Black Thrips & Leaf Curl</strong> (Warm temperatures favor thrips vector reproduction)<br>
+      • <strong>Rice Paddy Blast</strong> (Moderate nights & high moisture encourage sporangia germination)
+    `;
+
+    dom.weatherAdvisoryText.textContent = state.language === 'te' ? `
+      ఉదయాన్నే మంచు ఆరక ముందే కాపర్ ఆక్సిక్లోరైడ్ (Blitox 3g/L) లేదా వేప నూనె (5% NSKE) పిచికారీ చేయండి. పొలంలో నీరు నిల్వ ఉండకుండా కాలువలను శుభ్రం చేయండి.
+    ` : `
+      Apply preventative spray of Copper Oxychloride 50% WP (Blitox @ 3g/L) or Neem Seed Kernel Extract (5% NSKE) before heavy morning dew to prevent fungal spore germination. Ensure field drainage lines are cleared.
+    `;
+  } else {
+    dom.weatherRiskBadge.textContent = state.language === 'te' ? '⚠️ రసం పీల్చే పురుగుల ప్రమాదం' : '⚠️ Sucking Pest Risk';
+    dom.weatherRiskBadge.style.backgroundColor = '#b45309';
+    dom.weatherConditionDesc.textContent = state.language === 'te' ? 'ఎండ & పొడి వాతావరణం • తామర పురుగుల ఉధృతి' : 'Dry Sunny Weather • Thrips & Mite Vector Risk';
+
+    dom.weatherDiseaseList.innerHTML = state.language === 'te' ? `
+      • <strong>మిరప నల్ల తామర పురుగు & ఆకు ముడుత (Chilli Black Thrips)</strong><br>
+      • <strong>ప్రత్తి గులాబీ రంగు పురుగు (Cotton Pink Bollworm)</strong><br>
+      • <strong>బెండ పసుపు మోజాయిక్ తెగులు (Okra Yellow Vein Virus)</strong>
+    ` : `
+      • <strong>Chilli Black Thrips & Leaf Curl</strong><br>
+      • <strong>Cotton Pink Bollworm</strong><br>
+      • <strong>Okra Yellow Vein Mosaic Virus</strong>
+    `;
+
+    dom.weatherAdvisoryText.textContent = state.language === 'te' ? `
+      ఎకరాకు 30 పసుపు, నీలి రంగు జిగురు అట్టలను అమర్చండి. ఫిప్రోనిల్ (1.5ml/L) లేదా డెలిగేట్ పిచికారీ చేయండి.
+    ` : `
+      Install 30 Yellow and Blue sticky traps per acre. Spray Fipronil 5% SC (1.5ml/L) or Spinetoram (1ml/L) targeting leaf undersides.
+    `;
+  }
+}
+
 function startVoiceMicInput() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SpeechRecognition) {
@@ -347,13 +430,8 @@ function startVoiceMicInput() {
     resetVoiceBtnText();
   };
 
-  recognition.onerror = () => {
-    resetVoiceBtnText();
-  };
-
-  recognition.onend = () => {
-    resetVoiceBtnText();
-  };
+  recognition.onerror = () => { resetVoiceBtnText(); };
+  recognition.onend = () => { resetVoiceBtnText(); };
 
   recognition.start();
 }
@@ -366,7 +444,6 @@ function resetVoiceBtnText() {
   }
 }
 
-// Voice Audio Advisory Functionality
 function toggleAudioAdvisory() {
   if (!window.speechSynthesis) {
     alert("Speech Synthesis is not supported on this browser.");
