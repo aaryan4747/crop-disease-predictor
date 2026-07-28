@@ -10,6 +10,10 @@
   <!-- Google Search Console Ownership Verification -->
   <meta name="google-site-verification" content="wS9PQiCwvbXUmCTtpxBFryZlX6bB713wdFIqLz3-KxU" />
 
+  <!-- Progressive Web App (PWA) Manifest for 1-Click Mobile Installation -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#059669">
+
   <!-- Primary Meta Tags -->
   <title>Crop Care AI - Professional Agronomy Disease Diagnostic & Medicine Platform</title>
   <meta name="title" content="Crop Care AI - Professional Agronomy Disease Diagnostic & Medicine Platform">
@@ -56,6 +60,9 @@
   <!-- Top Announcement / Certification Ribbon -->
   <div class="top-announcement-bar">
     <span>🛡️ Certified Digital Agronomy Engine • Standardized with ICAR & FAO Plant Pathology Guidelines</span>
+    <button id="callHotlineBtn" style="margin-left:1rem; background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.4); color:#ffffff; padding:0.15rem 0.6rem; border-radius:12px; font-size:0.75rem; cursor:pointer;" data-i18n="callHotlineBtn">
+      📞 Call Kisan Helpline (1800-180-1551)
+    </button>
   </div>
 
   <!-- Navigation Bar -->
@@ -99,6 +106,13 @@
       <div class="hero-tag" data-i18n="heroTag">🌱 Enterprise Agricultural AI • 98.4% Pathology Precision</div>
       <h1 class="hero-title" data-i18n="heroTitle">Crop Disease Predictor & <span>Cure Medicine Guide</span></h1>
       <p class="hero-desc" data-i18n="heroDesc">Upload or snap any plant leaf photo to instantly detect diseases, analyze root causes, and get exact organic & chemical treatment dosages.</p>
+      
+      <!-- PWA Mobile Install Banner -->
+      <div style="margin-top:1.25rem;">
+        <button id="pwaInstallBtn" class="btn-primary hidden" style="max-width:340px; margin:0 auto;" data-i18n="pwaInstallBtn">
+          📲 Install App to Phone Screen (0 MB)
+        </button>
+      </div>
     </header>
 
     <!-- Professional Enterprise Metrics Bar -->
@@ -212,7 +226,7 @@
             <span id="severityPill" class="severity-pill">Severe</span>
           </div>
 
-          <!-- Competitor Gap 1 & Gap 3: Voice Audio Narrator & Printable PDF Bar -->
+          <!-- Action Buttons Bar -->
           <div style="display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap;">
             <button id="audioBtn" class="btn-secondary" style="font-size:0.85rem; padding:0.45rem 0.9rem;" data-i18n="listenAudioBtn">
               🔊 Listen Audio Advisory
@@ -251,19 +265,27 @@
             <div id="tabDeficiency" class="hidden"></div>
           </div>
 
-          <!-- WhatsApp Share Button -->
+          <!-- WhatsApp Group Share Button -->
           <a id="whatsappShareBtn" href="#" target="_blank" class="btn-whatsapp">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-1.137 4.155 4.182-1.096z"/></svg>
-            <span data-i18n="shareWhatsappBtn">📱 Share Report on WhatsApp</span>
+            <span data-i18n="shareWhatsappBtn">📱 Share Report on Farmer WhatsApp Groups</span>
           </a>
         </div>
 
         <!-- AI Agronomist Chat Widget -->
         <div class="glass-card">
-          <h3 class="card-title" style="font-size:1.15rem; margin-bottom:0.75rem;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            <span data-i18n="chatTitle">Ask AI Agronomist Assistant</span>
-          </h3>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+            <h3 class="card-title" style="font-size:1.15rem; margin-bottom:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <span data-i18n="chatTitle">Ask AI Agronomist Assistant</span>
+            </h3>
+
+            <!-- Speech-to-Text Voice Query Button -->
+            <button id="voiceSearchBtn" class="btn-secondary" style="font-size:0.8rem; padding:0.35rem 0.75rem; background:rgba(5,150,105,0.1); border-color:var(--border-glass-active); color:var(--primary-emerald);" data-i18n="voiceSearchBtn">
+              🎙️ Speak Question (Voice Mic)
+            </button>
+          </div>
+
           <div class="chat-window">
             <div id="chatMessages" class="chat-messages">
               <div class="chat-bubble bot" data-i18n="chatWelcome">
@@ -545,13 +567,16 @@
         <ul style="list-style:none; display:flex; flex-direction:column; gap:0.4rem; font-size:0.88rem; color:var(--text-muted);">
           <li><a href="sitemap.xml" style="color:var(--primary-emerald); text-decoration:none;">Search Sitemap XML</a></li>
           <li><a href="robots.txt" style="color:var(--primary-emerald); text-decoration:none;">Robots Crawl File</a></li>
+          <li><a href="manifest.json" style="color:var(--primary-emerald); text-decoration:none;">PWA Manifest File</a></li>
           <li><a href="https://crop-disease-predictor-mu.vercel.app/" style="color:var(--text-muted); text-decoration:none;">Verified Live Host</a></li>
         </ul>
       </div>
 
       <div>
         <h4 style="font-family:'Outfit',sans-serif; font-size:0.95rem; margin-bottom:0.75rem;">Kisan Helpline & Support</h4>
-        <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:0.4rem;">Kisan Call Center: 1800-180-1551 (Toll-Free)</p>
+        <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:0.4rem;">
+          <a href="tel:18001801551" style="color:var(--primary-emerald); font-weight:700; text-decoration:none;">Kisan Call Center: 1800-180-1551 (Toll-Free)</a>
+        </p>
         <p style="color:var(--text-muted); font-size:0.88rem;">Certified Agronomy Standard Engine 2026</p>
       </div>
     </div>
