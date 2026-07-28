@@ -1,100 +1,85 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
-
-/* Pure White Agronomy Light Theme (Default) */
 :root {
-  --bg-dark: #f8fafc;
-  --bg-nav: rgba(255, 255, 255, 0.98);
-  --bg-card: #ffffff;
-  --bg-card-hover: #f8fafc;
-  --bg-box: #f1f5f9;
-  --border-glass: #e2e8f0;
-  --border-glass-active: rgba(5, 150, 105, 0.5);
-  
   --primary-emerald: #059669;
-  --primary-glow: rgba(5, 150, 105, 0.25);
-  --accent-lime: #4d7c0f;
-  --accent-amber: #b45309;
-  --accent-rose: #be123c;
+  --primary-emerald-hover: #047857;
+  --accent-amber: #d97706;
+  --accent-rose: #e11d48;
   
+  --bg-gradient: linear-gradient(135deg, #f0fdf4 0%, #ffffff 50%, #ecfdf5 100%);
+  --bg-card: #ffffff;
+  --bg-box: #f8fafc;
+
   --text-main: #0f172a;
   --text-muted: #475569;
   --text-dim: #64748b;
-  
-  --radius-lg: 20px;
-  --radius-md: 14px;
+
+  --border-glass: rgba(5, 150, 105, 0.15);
+  --border-glass-active: rgba(5, 150, 105, 0.35);
+
+  --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 10px 30px -4px rgba(5, 150, 105, 0.12);
+
   --radius-sm: 8px;
-  
-  --shadow-glow: 0 10px 30px -10px rgba(5, 150, 105, 0.15);
-  --transition-fast: 0.2s ease;
-  --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="light"], body {
+  --bg-gradient: linear-gradient(135deg, #f0fdf4 0%, #ffffff 50%, #ecfdf5 100%) !important;
+  --bg-card: #ffffff !important;
+  --bg-box: #f8fafc !important;
+
+  --text-main: #0f172a !important;
+  --text-muted: #475569 !important;
+  --text-dim: #64748b !important;
+
+  --border-glass: #cbd5e1 !important;
+  --border-glass-active: #059669 !important;
+  background: var(--bg-gradient) !important;
+  color: var(--text-main) !important;
 }
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: #f8fafc;
-  color: #0f172a;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-main);
   min-height: 100vh;
   line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
-}
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-emerald);
-}
-
-/* Top Announcement / Certification Ribbon */
+/* Top Announcement Bar */
 .top-announcement-bar {
-  background: linear-gradient(90deg, #064e3b, #047857, #064e3b);
-  color: #a7f3d0;
-  font-size: 0.8rem;
+  background: linear-gradient(90deg, #047857, #059669);
+  color: #ffffff;
+  padding: 0.45rem 1rem;
+  font-size: 0.82rem;
   font-weight: 600;
   text-align: center;
-  padding: 0.35rem 1rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  border-bottom: 1px solid rgba(52, 211, 153, 0.2);
+  letter-spacing: 0.02em;
 }
 
-/* Header Navbar */
+/* Navbar */
 .navbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--bg-nav);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border-glass);
-  padding: 0.85rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-}
-
-@media (max-width: 768px) {
-  .navbar {
-    padding: 0.75rem 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+  padding: 1.1rem 2rem;
+  background: #ffffff;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #cbd5e1;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
 }
 
 .brand {
@@ -106,12 +91,12 @@ body {
 .brand-icon {
   width: 42px;
   height: 42px;
-  background: linear-gradient(135deg, #10b981, #047857);
-  border-radius: 12px;
+  background: linear-gradient(135deg, #059669, #10b981);
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
 }
 
 .brand-title {
@@ -151,6 +136,12 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.nav-btn * {
+  pointer-events: none;
 }
 
 .nav-btn:hover {
@@ -164,7 +155,23 @@ body {
   border-color: var(--border-glass-active);
 }
 
-/* Prominent Language Switcher Bar */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+  .nav-btn {
+    padding: 0.45rem 0.75rem;
+    font-size: 0.85rem;
+  }
+}
+
 .lang-selector-bar {
   display: inline-flex;
   background: var(--bg-box);
@@ -197,14 +204,12 @@ body {
   box-shadow: 0 2px 12px rgba(16, 185, 129, 0.45);
 }
 
-/* App Container Layout */
 .main-container {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2.25rem 1.5rem 4rem;
 }
 
-/* Hero Section */
 .hero-banner {
   text-align: center;
   margin-bottom: 2rem;
@@ -255,7 +260,6 @@ body {
   font-size: 1.12rem;
 }
 
-/* Professional Enterprise Metrics Bar */
 .metrics-bar {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -299,7 +303,6 @@ body {
   letter-spacing: 0.03em;
 }
 
-/* Dedicated Crop Disease & Cure Matrix */
 .crop-matrix-section {
   width: 100%;
 }
@@ -396,7 +399,6 @@ body {
   line-height: 1.45;
 }
 
-/* Weather Risk Alert Card */
 .weather-alert-card {
   background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(239, 68, 68, 0.08));
   border: 1px solid rgba(245, 158, 11, 0.35);
@@ -445,7 +447,6 @@ body {
   color: var(--accent-amber);
 }
 
-/* Main Grid Layout */
 .workspace-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -459,7 +460,6 @@ body {
   }
 }
 
-/* Glass Card Component */
 .glass-card {
   background: #ffffff;
   border: 1px solid #cbd5e1;
@@ -488,7 +488,6 @@ body {
   color: var(--primary-emerald);
 }
 
-/* Dropzone */
 .dropzone {
   border: 2px dashed #059669;
   border-radius: var(--radius-md);
@@ -549,7 +548,6 @@ body {
   box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
 }
 
-/* Image Preview & Scanning Laser */
 .preview-container {
   position: relative;
   width: 100%;
@@ -631,7 +629,6 @@ body {
   100% { transform: scale(0.9); opacity: 0.7; }
 }
 
-/* Sample Leaf Gallery */
 .sample-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -683,7 +680,6 @@ body {
   color: var(--text-muted);
 }
 
-/* Diagnosis Result Display */
 .result-header {
   display: flex;
   justify-content: space-between;
@@ -745,7 +741,6 @@ body {
   transition: width 1s ease-out;
 }
 
-/* WhatsApp Share Button */
 .btn-whatsapp {
   background: linear-gradient(135deg, #25d366, #128c7e);
   color: #fff;
@@ -772,7 +767,6 @@ body {
   box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
 }
 
-/* Tabs Navigation within Diagnosis */
 .tab-row {
   display: flex;
   gap: 0.5rem;
@@ -830,7 +824,6 @@ body {
   margin-top: 0.2rem;
 }
 
-/* Medicine Card */
 .medicine-card {
   background: #ffffff;
   border-left: 4px solid var(--primary-emerald);
@@ -860,7 +853,6 @@ body {
   color: var(--text-muted);
 }
 
-/* Action Buttons */
 .btn-primary {
   background: linear-gradient(135deg, #10b981, #059669);
   color: #fff;
@@ -906,12 +898,17 @@ body {
   border-color: var(--border-glass-active);
 }
 
-/* Dosage Calculator */
 .calc-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
   margin-bottom: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .calc-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .calc-result-box {
@@ -930,7 +927,6 @@ body {
   color: var(--primary-emerald);
 }
 
-/* Chat Widget */
 .chat-window {
   display: flex;
   flex-direction: column;
@@ -994,7 +990,6 @@ body {
   border-color: var(--primary-emerald);
 }
 
-/* FAQ Section Accordion */
 .faq-section {
   margin-top: 3.5rem;
 }
@@ -1036,7 +1031,6 @@ body {
   line-height: 1.6;
 }
 
-/* Professional Footer */
 .footer {
   background: #f1f5f9;
   border-top: 1px solid #cbd5e1;
@@ -1058,7 +1052,6 @@ body {
   }
 }
 
-/* Hidden elements */
 .hidden {
   display: none !important;
 }
