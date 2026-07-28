@@ -1,4 +1,4 @@
-const CACHE_NAME = 'crop-care-ai-v3';
+const CACHE_NAME = 'crop-care-ai-v4';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -32,6 +32,7 @@ self.addEventListener('activate', (e) => {
       );
     })
   );
+  self.clients.claim();
 });
 
 self.addEventListener('fetch', (e) => {
