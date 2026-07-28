@@ -6,6 +6,7 @@ export const TRANSLATIONS = {
     heroDesc: "Upload or snap any plant leaf photo to instantly detect diseases, analyze root causes, and get exact organic & chemical treatment dosages.",
     
     navPredictor: "Diagnostic Hub",
+    navWeather: "🌤️ Location Weather",
     navLibrary: "Disease Index",
     navCalculator: "Dosage Calculator",
     
@@ -92,6 +93,17 @@ export const TRANSLATIONS = {
     sendBtn: "Send",
     chatWelcome: "Hello! I'm your AI Agronomist. Ask me any question about Watermelon, Banana, Papaya, Okra, Brinjal, Onion, Rice, Chilli, or Cotton diseases!",
     
+    weatherSectionHeader: "Location Weather & Disease Risk Forecast",
+    weatherSectionSub: "Enter your location, district, or town to forecast local weather conditions and predict potential fungal, bacterial, or insect disease outbreaks.",
+    weatherLocationPlaceholder: "Enter City/District (e.g. Guntur, Warangal, Vijayawada, Kurnool, Hyderabad, Anantapur)",
+    searchWeatherBtn: "🔍 Check Weather Risk",
+    gpsLocationBtn: "📍 Use My GPS Location",
+    tempLabel: "Temperature",
+    humidityLabel: "Humidity",
+    windLabel: "Wind Speed",
+    predictedDiseasesHeader: "🦠 Predicted High-Risk Crop Diseases for this Location",
+    preemptiveAdvisoryHeader: "🛡️ Preemptive Agronomist Spray Advisory",
+
     libraryHeader: "Fruits, Vegetables & Crops Pathology Index",
     librarySub: "Explore common plant diseases, pathogens, symptoms, and approved cures across major fruits, vegetables, and crops.",
     
@@ -129,6 +141,7 @@ export const TRANSLATIONS = {
     heroDesc: "వ్యాధులను తక్షణమే గుర్తించడానికి, మూల కారణాలను విశ్లేషించడానికి మరియు సేంద్రీయ & రసాయన మందుల ఖచ్చితమైన మోతాదును పొందడానికి ఆకు ఫోటోను అప్‌లోడ్ చేయండి.",
     
     navPredictor: "రోగ నిర్ధారణ కేంద్రం",
+    navWeather: "🌤️ ప్రాంతీయ వాతావరణం",
     navLibrary: "వ్యాధి గ్రంథాలయం",
     navCalculator: "మందుల మోతాదు లెక్కింపు",
     
@@ -215,6 +228,17 @@ export const TRANSLATIONS = {
     sendBtn: "పంపండి",
     chatWelcome: "నమస్కారం! నేను మీ AI వ్యవసాయ నిపుణుడిని. పుచ్చకాయ, అరటి, బొప్పాయి, బెండ, వంకాయ, ఉల్లి లేదా మామిడి తెగుళ్ల గురించి నన్ను ఏమైనా అడగండి!",
     
+    weatherSectionHeader: "ప్రాంతీయ వాతావరణం & పంట తెగుళ్ల ముందస్తు అంచనా",
+    weatherSectionSub: "మీ గ్రామం లేదా జిల్లా పేరును నమోదు చేసి ప్రాంతీయ వాతావరణం మరియు వచ్చే వ్యాధుల ముందస్తు ప్రమాదాన్ని తెలుసుకోండి.",
+    weatherLocationPlaceholder: "గ్రామం/జిల్లా పేరును నమోదు చేయండి (ఉదా: గుంటూరు, వరంగల్, విజయవాడ, కర్నూలు)",
+    searchWeatherBtn: "🔍 వాతావరణ తెగులు ప్రమాదాన్ని తనిఖీ చేయండి",
+    gpsLocationBtn: "📍 నా ప్రస్తుత స్థానాన్ని (GPS) ఉపయోగించండి",
+    tempLabel: "ఉష్ణోగ్రత",
+    humidityLabel: "గాలిలో తేమ",
+    windLabel: "గాలి వేగం",
+    predictedDiseasesHeader: "🦠 ఈ ప్రాంతంలో వ్యాపించే అవకాశం ఉన్న ప్రధాన పంట తెగుళ్లు",
+    preemptiveAdvisoryHeader: "🛡️ ముందస్తు వ్యవసాయ నిపుణుల పిచికారీ సలహా",
+
     libraryHeader: "పండ్లు, కూరగాయలు & పంటల వ్యాధుల సమాచారం",
     librarySub: "మన ప్రాంతంలో పండించే పండ్లు, కూరగాయలు మరియు పంటలలో కనిపించే వ్యాధులు, వాటి నివారణ మార్గాలను తెలుసుకోండి.",
     
@@ -244,125 +268,5 @@ export const TRANSLATIONS = {
     faqA2: "లీటరు నీటికి 1 మి.లీ అమిస్టార్ (Azoxystrobin) లేదా 2.5 గ్రా కాపర్ ఆక్సిక్లోరైడ్ పిచికారీ చేయాలి. స్ప్రింక్లర్లకు బదులుగా బిందు సేద్యం వాడాలి.",
     faqQ3: "యాప్ డౌన్‌లోడ్ చేయకుండా ఫోన్‌లో నేరుగా ఉపయోగించవచ్చా?",
     faqA3: "అవును! ఎలాంటి యాప్ డౌన్‌లోడ్ లేకుండానే మీ మొబైల్ బ్రౌజర్‌లో నేరుగా వాడవచ్చు."
-  }
-};
-
-export const TELUGU_DISEASE_DATA = {
-  watermelon_anthracnose: {
-    diseaseName: "పుచ్చకాయ నల్ల మచ్చ & వాడిపోయే తెగులు (Watermelon Anthracnose & Wilt)",
-    symptoms: [
-      "ఆకులపై నీరు పట్టినట్లు గోధుమ లేదా నల్లటి గుండ్రటి మచ్చలు ఏర్పడటం",
-      "పుచ్చకాయ కాయల పైన గుంట పడిన నల్లటి మచ్చలు ఏర్పడటం",
-      "కాయ తోడుకునే దశలో ఉన్నట్టుండి తీగలు వాడిపోవడం"
-    ],
-    rootCauses: [
-      "వేడి తేమతో కూడిన వాతావరణం (24°C-30°C) మరియు వర్షాలు పడటం"
-    ],
-    organicCures: [
-      {
-        name: "ట్రైకోడెర్మా విరిడే (Trichoderma viride)",
-        dosage: "లీటరు నీటికి 5 గ్రాముల మొదళ్ల తడిపింపు",
-        application: "పూత పూసే ముందు చెట్ల మొదళ్ల వద్ద ద్రావణం పోయాలి."
-      }
-    ],
-    chemicalCures: [
-      {
-        name: "అమిస్టార్ (Azoxystrobin 23% SC)",
-        dosage: "లీటరు నీటికి 1 మి.లీ",
-        application: "కాయ దశలో ప్రతి 10-14 రోజులకు పిచికారీ చేయాలి.",
-        phiDays: 7
-      }
-    ],
-    preventionProtocol: [
-      "బిందు సేద్యం (Drip Irrigation) మరియు మల్చింగ్ షీట్ వాడాలి."
-    ],
-    mineralDeficiency: "జింక్ (Zinc) మరియు పొటాషియం (K) లోపం వల్ల పండ్లలో తీపి తగ్గడం మరియు మచ్చలు త్వరగా వ్యాపించడం."
-  },
-  chilli_leaf_curl: {
-    diseaseName: "మిరప నల్ల తామర పురుగు & ఆకు ముడుత తెగులు",
-    symptoms: [
-      "లేత ఆకులు దోనె ఆకారంలో ఊర్ధ్వ ముడుత పడటం",
-      "పువ్వులు రాలిపోయి కాయలు వంకర్లు తిరగడం",
-      "కొమ్మ చివర్లు నల్లబడి ఎండు తెగులు సోకడం"
-    ],
-    rootCauses: [
-      "నల్ల తామర పురుగులు (Thrips parvispinus) తీవ్రంగా ఆశించడం"
-    ],
-    organicCures: [
-      {
-        name: "5% వేప గింజల కషాయం (NSKE 50ml/L)",
-        dosage: "లీటరుకు 50 మి.లీ + 1 మి.లీ సబ్బు నీరు",
-        application: "వారానికి ఒకసారి ఆకుల అడుగున పిచికారీ చేయాలి."
-      }
-    ],
-    chemicalCures: [
-      {
-        name: "డెలిగేట్ (Spinetoram 11.7% SC)",
-        dosage: "లీటరు నీటికి 1 మి.లీ",
-        application: "తామర పురుగుల ఉధృతిని బట్టి పిచికారీ చేయాలి.",
-        phiDays: 5
-      }
-    ],
-    preventionProtocol: [
-      "చేపిన నమూనాలో పొలం చుట్టూ 3 వరుసల జొన్న లేదా సజ్జ పంటను రక్షణ సరిహద్దుగా వేయాలి."
-    ],
-    mineralDeficiency: "నత్రజని (Nitrogen) అధికమై సకిలే పురుగులు ఎక్కువగా ఆకర్షించబడటం."
-  },
-  rice_bph: {
-    diseaseName: "వరి సుడి దోమ తెగులు (Paddy Brown Plant Hopper)",
-    symptoms: [
-      "పొలంలో సుడులు సుడులుగా పైరు పసుపు రంగులోకి మారి ఎండిపోవడం ('సుడి తెగులు')",
-      "దుబ్బుల మొదళ్ల వద్ద గోధుమ రంగు దోమల గుంపులు ఉండటం"
-    ],
-    rootCauses: [
-      "పైరు దట్టంగా ఉండి గాలి ఆడకపోవడం మరియు నీరు నిల్వ ఉండటం"
-    ],
-    organicCures: [
-      {
-        name: "పొలాన్ని 3-4 రోజులు తడి ఆరబెట్టడం (AWD Method)",
-        dosage: "నీటిని పూర్తిగా తొలగించడం",
-        application: "మొదళ్ల వద్ద తేమ తగ్గి దోమ ఉత్పత్తి ఆగుతుంది."
-      }
-    ],
-    chemicalCures: [
-      {
-        name: "చెస్ (Pymetrozine 50% WDG)",
-        dosage: "లీటరు నీటికి 0.6 గ్రాములు",
-        application: "పిచికారీని పైరు మొదళ్లకు తగిలేలా చేయాలి.",
-        phiDays: 19
-      }
-    ],
-    preventionProtocol: [
-      "నాట్లు వేసేటప్పుడు ప్రతి 2 మీటర్లకు 30 సెం.మీ బాటలు (కాలిబాటలు) తీయాలి."
-    ],
-    mineralDeficiency: "పొటాష్ (Potash) లోపం వల్ల కాండం బలహీనపడి దోమ ఉధృతి పెరగడం."
-  },
-  healthy_leaf: {
-    diseaseName: "ఆరోగ్యకరమైన ఆకు (Healthy Plant Leaf)",
-    symptoms: [
-      "ఆకు అంతటా ఏకరూప ఆకుపచ్చ రంగు కలిగి ఉండటం"
-    ],
-    rootCauses: [
-      "సరైన నీటి యాజమాన్యం మరియు ఎరువుల సమతుల్యత"
-    ],
-    organicCures: [
-      {
-        name: "సముద్రపు పాచి కషాయం (Seaweed Extract)",
-        dosage: "లీటరు నీటికి 2 మి.లీ",
-        application: "నెలకు ఒకసారి పిచికారీ చేయాలి."
-      }
-    ],
-    chemicalCures: [
-      {
-        name: "19-19-19 NPK కాంప్లెక్స్ ఎరువు",
-        dosage: "లీటరు నీటికి 3-5 గ్రాములు",
-        application: "ఆకుల ద్వారా పోషకాల పిచికారీ.",
-        phiDays: 0
-      }
-    ],
-    preventionProtocol: [
-      "సమతుల్య సేద్య పద్ధతులను కొనసాగించండి."
-    ],
-    mineralDeficiency: "పోషకాల లోపాలు ఏవీ లేవు (Optimal Soil Balance)."
   }
 };
