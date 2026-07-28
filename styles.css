@@ -29,27 +29,6 @@
   --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Light Mode Theme Overrides */
-html[data-theme="light"], body[data-theme="light"] {
-  --bg-dark: #f1f5f9;
-  --bg-nav: rgba(255, 255, 255, 0.95);
-  --bg-card: #ffffff;
-  --bg-card-hover: #f8fafc;
-  --bg-box: #f1f5f9;
-  --border-glass: rgba(16, 185, 129, 0.25);
-  --border-glass-active: rgba(16, 185, 129, 0.6);
-  
-  --primary-emerald: #059669;
-  --primary-glow: rgba(5, 150, 105, 0.25);
-  --accent-lime: #4d7c0f;
-  --accent-amber: #b45309;
-  --accent-rose: #be123c;
-  
-  --text-main: #0f172a;
-  --text-muted: #475569;
-  --text-dim: #64748b;
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -70,10 +49,82 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Light mode specific background fix */
-html[data-theme="light"] body {
-  background-color: #f1f5f9;
-  color: #0f172a;
+/* =========================================================
+   PURE WHITE LIGHT MODE (PURE WHITE BACKGROUND & HIGH CONTRAST)
+   ========================================================= */
+html[data-theme="light"], 
+body[data-theme="light"] {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] .navbar {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+html[data-theme="light"] .glass-card,
+html[data-theme="light"] .matrix-card,
+html[data-theme="light"] .metric-item,
+html[data-theme="light"] .faq-item,
+html[data-theme="light"] .footer {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+}
+
+html[data-theme="light"] .matrix-col,
+html[data-theme="light"] .custom-select,
+html[data-theme="light"] .sample-card,
+html[data-theme="light"] .tab-content-box,
+html[data-theme="light"] .weather-pill,
+html[data-theme="light"] .lang-selector-bar,
+html[data-theme="light"] .theme-toggle-btn,
+html[data-theme="light"] .chat-window,
+html[data-theme="light"] .chat-bubble.bot {
+  background: #f8fafc !important;
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] .hero-title,
+html[data-theme="light"] .card-title,
+html[data-theme="light"] .matrix-crop-title,
+html[data-theme="light"] .disease-name,
+html[data-theme="light"] .sample-name,
+html[data-theme="light"] .faq-question {
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] .hero-desc,
+html[data-theme="light"] .select-label,
+html[data-theme="light"] .metric-lbl,
+html[data-theme="light"] .matrix-col p,
+html[data-theme="light"] .scientific-name,
+html[data-theme="light"] .faq-answer,
+html[data-theme="light"] .nav-btn,
+html[data-theme="light"] .lang-pill,
+html[data-theme="light"] p {
+  color: #334155 !important;
+}
+
+html[data-theme="light"] .matrix-col h4 {
+  color: #047857 !important;
+}
+
+html[data-theme="light"] .dropzone {
+  background: #f0fdf4 !important;
+  border-color: #059669 !important;
+}
+
+html[data-theme="light"] .dropzone-icon {
+  background: rgba(5, 150, 105, 0.15) !important;
+  color: #059669 !important;
 }
 
 /* Scrollbar */
@@ -227,7 +278,7 @@ html[data-theme="light"] body {
 
 .lang-pill.active {
   background: linear-gradient(135deg, #10b981, #059669);
-  color: #fff;
+  color: #fff !important;
   box-shadow: 0 2px 12px rgba(16, 185, 129, 0.45);
 }
 
@@ -445,11 +496,6 @@ html[data-theme="light"] body {
   font-size: 0.92rem;
   font-weight: 700;
   margin-bottom: 0.25rem;
-}
-
-/* Light mode matrix column heading text visibility */
-html[data-theme="light"] .matrix-col h4 {
-  color: #047857 !important;
 }
 
 .matrix-col p {
