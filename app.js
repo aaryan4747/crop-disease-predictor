@@ -33,16 +33,42 @@ document.addEventListener('DOMContentLoaded', () => {
 let leafletMap = null;
 let leafletMarker = null;
 
-// BULLETPROOF GLOBAL DELEGATION FOR ALL NAVIGATION TABS & MOBILE TOUCHES
+// BULLETPROOF GLOBAL DELEGATION FOR ALL NAVIGATION TABS & MOBILE SIDEBAR TOUCHES
 document.addEventListener('click', (e) => {
+  const toggleBtn = e.target.closest('#menuToggleBtn');
+  const closeBtn = e.target.closest('#sidebarCloseBtn');
+  const overlay = e.target.closest('#sidebarOverlay');
   const navBtn = e.target.closest('[data-section]');
+
+  const drawer = document.getElementById('sidebarDrawer');
+  const drawerOverlay = document.getElementById('sidebarOverlay');
+
+  if (toggleBtn) {
+    e.preventDefault();
+    if (drawer) drawer.classList.add('active');
+    if (drawerOverlay) drawerOverlay.classList.add('active');
+    return;
+  }
+
+  if (closeBtn || overlay) {
+    e.preventDefault();
+    if (drawer) drawer.classList.remove('active');
+    if (drawerOverlay) drawerOverlay.classList.remove('active');
+    return;
+  }
+
   if (!navBtn) return;
   e.preventDefault();
 
   const sec = navBtn.getAttribute('data-section');
   
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  navBtn.classList.add('active');
+  document.querySelectorAll('.nav-btn, .sidebar-nav-btn').forEach(b => {
+    if (b.getAttribute('data-section') === sec) {
+      b.classList.add('active');
+    } else {
+      b.classList.remove('active');
+    }
+  });
 
   const predictor = document.getElementById('sectionPredictor');
   const weather = document.getElementById('sectionWeather');
@@ -70,6 +96,9 @@ document.addEventListener('click', (e) => {
     calculateDosage();
     calculateMotorIrrigation();
   }
+
+  if (drawer) drawer.classList.remove('active');
+  if (drawerOverlay) drawerOverlay.classList.remove('active');
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
