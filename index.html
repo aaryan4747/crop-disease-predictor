@@ -15,7 +15,7 @@
   <meta name="author" content="Crop Care AI Agronomy Team">
   <meta name="robots" content="index, follow">
 
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -98,6 +98,21 @@
         <span>🧪 Crop Medicines Directory (మందుల జాబితా)</span>
       </button>
 
+      <button class="sidebar-nav-btn" data-section="schedule">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>📅 Fertilizer Schedule & Timeline (ఎరువుల షెడ్యూల్)</span>
+      </button>
+
+      <button class="sidebar-nav-btn" data-section="mandi">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M3 10h18"/><path d="M5 6l7-3 7 3"/><path d="M4 10v11"/><path d="M20 10v11"/><path d="M8 14v3"/><path d="M12 14v3"/><path d="M16 14v3"/></svg>
+        <span>🏛️ Mandi Market Prices (పంట మార్కెట్ ధరలు)</span>
+      </button>
+
+      <button class="sidebar-nav-btn" data-section="prescription">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 1-2 2v16a2 2 0 0 1 2 2h12a2 2 0 0 1 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span>🧾 Dealer Prescription Receipt (మందుల షాప్ రసీదు)</span>
+      </button>
+
       <div class="sidebar-section-label" style="margin-top:1.5rem;">FARMER ASSISTANCE</div>
 
       <a href="tel:18001801551" class="sidebar-nav-btn" style="color:var(--primary-emerald); text-decoration:none;">
@@ -168,6 +183,42 @@
           <label class="select-label" for="cropSelect" data-i18n="selectCropLabel">Select Crop Category (Optional)</label>
           <select id="cropSelect" class="custom-select"></select>
         </div>
+
+        <!-- SCANNER MODE SELECTOR (SINGLE VS 3-ANGLE SCAN) -->
+        <div style="display:flex; gap:0.5rem; margin-bottom:1rem; background:#f1f5f9; padding:4px; border-radius:12px; border:1px solid #cbd5e1;">
+          <button id="scanModeSingleBtn" class="btn-secondary active-scan-mode" type="button" style="flex:1; font-size:0.82rem; padding:0.45rem; border:none; border-radius:8px; font-weight:700;">
+            🍃 Single Leaf Photo
+          </button>
+          <button id="scanModeMultiBtn" class="btn-secondary" type="button" style="flex:1; font-size:0.82rem; padding:0.45rem; border:none; border-radius:8px; font-weight:700;">
+            📸📸📸 3-Angle Scan (99.5% Precision)
+          </button>
+        </div>
+
+        <!-- MULTI-ANGLE 3-PHOTO SLOTS CONTAINER (HIDDEN BY DEFAULT) -->
+        <div id="multiAngleSlotsContainer" class="hidden" style="margin-bottom:1rem;">
+          <div style="font-size:0.82rem; font-weight:700; color:var(--primary-emerald); margin-bottom:0.5rem;">
+            📸 Upload 3 angles for 99.5% precision pest detection (Top, Underside & Plant):
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:0.5rem;">
+            <div id="slotTopLeaf" class="multi-photo-slot" style="background:#f8fafc; border:1.5px dashed #059669; border-radius:8px; padding:0.75rem 0.25rem; text-align:center; cursor:pointer;">
+              <div style="font-size:1.2rem;">🍃</div>
+              <div style="font-size:0.72rem; font-weight:700; color:#0f172a;">1. Leaf Top</div>
+              <div class="slot-status" style="font-size:0.68rem; color:var(--text-muted);">Tap to upload</div>
+            </div>
+            <div id="slotBottomLeaf" class="multi-photo-slot" style="background:#f8fafc; border:1.5px dashed #059669; border-radius:8px; padding:0.75rem 0.25rem; text-align:center; cursor:pointer;">
+              <div style="font-size:1.2rem;">🔬</div>
+              <div style="font-size:0.72rem; font-weight:700; color:#0f172a;">2. Underside</div>
+              <div class="slot-status" style="font-size:0.68rem; color:var(--text-muted);">Crucial for Thrips</div>
+            </div>
+            <div id="slotWholePlant" class="multi-photo-slot" style="background:#f8fafc; border:1.5px dashed #059669; border-radius:8px; padding:0.75rem 0.25rem; text-align:center; cursor:pointer;">
+              <div style="font-size:1.2rem;">🪴</div>
+              <div style="font-size:0.72rem; font-weight:700; color:#0f172a;">3. Whole Plant</div>
+              <div class="slot-status" style="font-size:0.68rem; color:var(--text-muted);">For Wilt & Stunting</div>
+            </div>
+          </div>
+          <input type="file" id="multiFileInput" accept="image/*" class="hidden" />
+        </div>
+
         <div id="dropzone" class="dropzone">
           <div class="dropzone-icon">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -301,7 +352,6 @@
           </button>
         </div>
 
-        <!-- Interactive Global Map Container -->
         <div style="position:relative; margin-bottom:1.25rem;">
           <div id="weatherMap" style="height:280px; width:100%; border-radius:var(--radius-md); border:1px solid #cbd5e1; z-index:1;"></div>
           <div style="position:absolute; top:10px; right:10px; z-index:10; background:rgba(255,255,255,0.9); padding:0.35rem 0.75rem; border-radius:20px; font-size:0.78rem; font-weight:700; color:var(--primary-emerald); border:1px solid var(--border-glass-active); box-shadow:0 2px 8px rgba(0,0,0,0.1);">
@@ -318,7 +368,6 @@
             <span id="weatherRiskBadge" class="severity-pill" style="background:#ea580c; color:#fff;">⚠️ High Fungal Risk</span>
           </div>
 
-          <!-- 4 METRIC STAT CARDS -->
           <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:0.85rem; margin:1.25rem 0;">
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-sm); padding:0.85rem; text-align:center;">
               <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700; text-transform:uppercase;" data-i18n="tempLabel">Temperature</div>
@@ -338,7 +387,6 @@
             </div>
           </div>
 
-          <!-- HIGH-ACCURACY TODAY'S RAIN & SPRAY SAFETY CARD -->
           <div id="weatherRainAlertCard" style="background:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border:1px solid #93c5fd; border-radius:var(--radius-sm); padding:1.1rem; margin-bottom:1.25rem;">
             <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.4rem;">
               <h4 id="weatherRainAlertTitle" style="font-family:'Outfit',sans-serif; color:#1e40af; font-size:1.05rem; font-weight:800; display:flex; align-items:center; gap:0.5rem;">
@@ -353,7 +401,6 @@
             </p>
           </div>
 
-          <!-- HOURLY RAIN TIMELINE (NEXT 24 HOURS) -->
           <div style="margin-bottom:1.25rem;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
               <h4 style="font-family:'Outfit',sans-serif; font-size:0.95rem; font-weight:700; color:#0f172a;">
@@ -361,29 +408,21 @@
               </h4>
               <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">Scroll right 👉</span>
             </div>
-            <div id="weatherHourlyTimeline" style="display:flex; gap:0.6rem; overflow-x:auto; padding-bottom:0.5rem; scroll-behavior:smooth;">
-              <!-- Dynamic hourly forecast cards injected via JavaScript -->
-            </div>
+            <div id="weatherHourlyTimeline" style="display:flex; gap:0.6rem; overflow-x:auto; padding-bottom:0.5rem; scroll-behavior:smooth;"></div>
           </div>
 
           <div style="background:rgba(234,88,12,0.08); border:1px solid rgba(234,88,12,0.3); border-radius:var(--radius-sm); padding:1.1rem; margin-bottom:1rem;">
             <h4 style="font-family:'Outfit',sans-serif; color:#b45309; margin-bottom:0.4rem; font-size:1.05rem;" data-i18n="predictedDiseasesHeader">
               🦠 Predicted High-Risk Crop Diseases for this Location
             </h4>
-            <p id="weatherDiseaseList" style="font-size:0.95rem; color:#0f172a; line-height:1.5;">
-              • <strong>Watermelon Anthracnose</strong> (High humidity & wet leaves trigger black leaf spots)<br>
-              • <strong>Chilli Black Thrips & Leaf Curl</strong> (Warm temperatures favor thrips vector reproduction)<br>
-              • <strong>Rice Paddy Blast</strong> (Moderate nights & high moisture encourage sporangia germination)
-            </p>
+            <p id="weatherDiseaseList" style="font-size:0.95rem; color:#0f172a; line-height:1.5;"></p>
           </div>
 
           <div style="background:rgba(5,150,105,0.08); border:1px solid var(--border-glass-active); border-radius:var(--radius-sm); padding:1.1rem;">
             <h4 style="font-family:'Outfit',sans-serif; color:var(--primary-emerald); margin-bottom:0.4rem; font-size:1.05rem;" data-i18n="preemptiveAdvisoryHeader">
               🛡️ Preemptive Agronomist Spray Advisory
             </h4>
-            <p id="weatherAdvisoryText" style="font-size:0.93rem; color:#0f172a; line-height:1.5;">
-              Apply preventative spray of <strong>Copper Oxychloride 50% WP (Blitox @ 3g/L)</strong> or <strong>Neem Seed Kernel Extract (5% NSKE)</strong> before heavy morning dew to prevent fungal spore germination. Ensure field drainage lines are cleared.
-            </p>
+            <p id="weatherAdvisoryText" style="font-size:0.93rem; color:#0f172a; line-height:1.5;"></p>
           </div>
         </div>
       </div>
@@ -446,51 +485,6 @@
               <div class="matrix-col"><h4 style="color:#b45309;" data-i18n="chemicalHeader">🧪 Chemical Medicine</h4><p data-i18n="cropWatermelonChem">Azoxystrobin 23% SC (Amistar) @ 1ml/L water.</p></div>
             </div>
           </div>
-
-          <div class="matrix-card">
-            <div class="matrix-crop-header">
-              <div class="matrix-crop-icon">☁️</div>
-              <div>
-                <h3 class="matrix-crop-title" data-i18n="cropCottonTitle">Cotton (ప్రత్తి)</h3>
-                <div class="matrix-disease-badge" data-i18n="cropCottonDisease">Alternaria Leaf Spot (ఆకు మచ్చ తెగులు)</div>
-              </div>
-            </div>
-            <div class="matrix-body">
-              <div class="matrix-col"><h4 style="color:#047857;" data-i18n="symptomsHeader">🔍 Symptoms</h4><p data-i18n="cropCottonSym">Brown circular spots with red borders on leaves leading to shot-hole leaf drops.</p></div>
-              <div class="matrix-col"><h4 style="color:#059669;" data-i18n="organicHeader">🌿 Organic Remedy</h4><p data-i18n="cropCottonOrg">Fermented Cow Urine + Buttermilk spray (50ml/L water).</p></div>
-              <div class="matrix-col"><h4 style="color:#b45309;" data-i18n="chemicalHeader">🧪 Chemical Medicine</h4><p data-i18n="cropCottonChem">Copper Oxychloride (Blitox 3g/L) or Propiconazole (1ml/L).</p></div>
-            </div>
-          </div>
-
-          <div class="matrix-card">
-            <div class="matrix-crop-header">
-              <div class="matrix-crop-icon">🥜</div>
-              <div>
-                <h3 class="matrix-crop-title" data-i18n="cropGroundnutTitle">Groundnut (వేరుశనగ)</h3>
-                <div class="matrix-disease-badge" data-i18n="cropGroundnutDisease">Tikka Leaf Spot (తిక్కా ఆకు మచ్చ)</div>
-              </div>
-            </div>
-            <div class="matrix-body">
-              <div class="matrix-col"><h4 style="color:#047857;" data-i18n="symptomsHeader">🔍 Symptoms</h4><p data-i18n="cropGroundnutSym">Dark circular leaf spots with yellow halo causing severe leaf shedding.</p></div>
-              <div class="matrix-col"><h4 style="color:#059669;" data-i18n="organicHeader">🌿 Organic Remedy</h4><p data-i18n="cropGroundnutOrg">Trichoderma viride + Vermicompost soil application.</p></div>
-              <div class="matrix-col"><h4 style="color:#b45309;" data-i18n="chemicalHeader">🧪 Chemical Medicine</h4><p data-i18n="cropGroundnutChem">SAAF (2g/L) or Nativo (Tebuconazole + Trifloxystrobin @ 0.75g/L).</p></div>
-            </div>
-          </div>
-
-          <div class="matrix-card">
-            <div class="matrix-crop-header">
-              <div class="matrix-crop-icon">🍌</div>
-              <div>
-                <h3 class="matrix-crop-title" data-i18n="cropBananaTitle">Banana (అరటి)</h3>
-                <div class="matrix-disease-badge" data-i18n="cropBananaDisease">Sigatoka Leaf Spot (సిగటోకా తెగులు)</div>
-              </div>
-            </div>
-            <div class="matrix-body">
-              <div class="matrix-col"><h4 style="color:#047857;" data-i18n="symptomsHeader">🔍 Symptoms</h4><p data-i18n="cropBananaSym">Yellow-green streaks parallel to leaf veins turning dark brown & dry.</p></div>
-              <div class="matrix-col"><h4 style="color:#059669;" data-i18n="organicHeader">🌿 Organic Remedy</h4><p data-i18n="cropBananaOrg">Horticultural Mineral Oil spray (10ml/L) + De-trashing.</p></div>
-              <div class="matrix-col"><h4 style="color:#b45309;" data-i18n="chemicalHeader">🧪 Chemical Medicine</h4><p data-i18n="cropBananaChem">Tilt (Propiconazole 1ml/L + 10ml Mineral oil).</p></div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -506,7 +500,7 @@
       <div class="glass-card" style="max-width:800px; margin:0 auto 1.5rem;">
         <h2 class="card-title">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/></svg>
-          <span data-i18n="calcHeader">Fungicide Spray &amp; Water Volume Calculator</span>
+          <span data-i18n="calcHeader">Fungicide Spray & Water Volume Calculator</span>
         </h2>
         <p style="color:var(--text-muted); margin-bottom:1.5rem;" data-i18n="calcSub">Calculate precise water spray volume and fungicide dilution required for your field size.</p>
 
@@ -522,21 +516,20 @@
         </div>
 
         <div class="calc-result-box">
-          <div style="font-size:0.9rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;" data-i18n="calcVolResultLabel">Required Tank Water &amp; Spray Volume</div>
+          <div style="font-size:0.9rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;" data-i18n="calcVolResultLabel">Required Tank Water & Spray Volume</div>
           <div id="calcVolumeResult" class="calc-val">200 Liters</div>
           <div style="margin-top:0.75rem; font-size:0.9rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;" data-i18n="calcMedResultLabel">Total Required Medicine / Fungicide Quantity</div>
           <div id="calcMedicineResult" class="calc-val" style="color:#b45309;">500 g/ml</div>
         </div>
       </div>
 
-      <!-- Motor Pump Irrigation & Run Time Calculator Card -->
       <div class="glass-card" style="max-width:800px; margin:0 auto;">
         <h2 class="card-title" style="color:var(--primary-emerald);">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          <span>⚡ Motor Pump Water &amp; Pumping Duration Calculator (మోటార్ పంపింగ్ సమయం)</span>
+          <span>⚡ Motor Pump Water & Pumping Duration Calculator (మోటార్ పంపింగ్ సమయం)</span>
         </h2>
         <p style="color:var(--text-muted); margin-bottom:1.5rem;">
-          Calculate total water required for your crop acreage, exact motor pump run time (Hours &amp; Mins), and recommended water flow pressure.
+          Calculate total water required for your crop acreage, exact motor pump run time (Hours & Mins), and recommended water flow pressure.
         </p>
 
         <div class="calc-grid">
@@ -557,7 +550,7 @@
             <input type="number" id="motorAcres" class="custom-select" value="1" min="0.1" step="0.5" />
           </div>
           <div>
-            <label class="select-label">Motor Pump Power (HP &amp; Type)</label>
+            <label class="select-label">Motor Pump Power (HP & Type)</label>
             <select id="motorHpSelect" class="custom-select">
               <option value="3hp">3 HP Motor (Flow: 250 Liters/min)</option>
               <option value="5hp" selected>5 HP Motor (Flow: 450 Liters/min)</option>
@@ -595,7 +588,7 @@
           <div style="margin-top:1.1rem; padding:0.9rem; background:#ffffff; border-radius:var(--radius-sm); border:1px solid var(--border-glass-active);">
             <div style="font-size:0.85rem; font-weight:700; color:var(--primary-emerald); margin-bottom:0.25rem;">💡 Agronomist Pumping Advisory</div>
             <div id="motorAdvisoryText" style="font-size:0.88rem; color:var(--text-main); line-height:1.4;">
-              Run your 5 HP Motor for 40 Minutes in the early morning. Using drip irrigation avoids wet leaf canopy, reducing Watermelon &amp; Chilli fungal leaf spots.
+              Run your 5 HP Motor for 40 Minutes in the early morning. Using drip irrigation avoids wet leaf canopy, reducing Watermelon & Chilli fungal leaf spots.
             </div>
           </div>
         </div>
@@ -609,10 +602,10 @@
           <div>
             <h2 class="card-title" style="font-size:1.8rem; margin-bottom:0.3rem; color:var(--primary-emerald);">
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.5 20.5l10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="M8.5 8.5l7 7"/></svg>
-              <span>🧪 Crop Medicines, Fungicides &amp; Fertilizers Directory (మందుల గైడ్)</span>
+              <span>🧪 Crop Medicines, Fungicides & Fertilizers Directory (మందుల గైడ్)</span>
             </h2>
             <p style="color:var(--text-muted); font-size:0.95rem;">
-              Verified spray dosages, plant/crop suitability, target disease cures, and PHI waiting days compiled from <strong>Coromandel Gromor, IFFCO, Bayer, Syngenta, UPL &amp; Rallis</strong>.
+              Verified spray dosages, plant/crop suitability, target disease cures, and PHI waiting days compiled from <strong>Coromandel Gromor, IFFCO, Bayer, Syngenta, UPL & Rallis</strong>.
             </p>
           </div>
 
@@ -622,16 +615,135 @@
               <option value="all">All Types (అన్నీ)</option>
               <option value="insecticide">Insecticides (పురుగు మందులు)</option>
               <option value="fungicide">Fungicides (తెగులు మందులు)</option>
-              <option value="fertilizer">Fertilizers &amp; PGR (ఎరువులు &amp; గ్రోత్)</option>
+              <option value="fertilizer">Fertilizers & PGR (ఎరువులు & గ్రోత్)</option>
               <option value="organic">Organic / Bio (సేంద్రీయ)</option>
             </select>
           </div>
         </div>
 
-        <!-- Medicines Grid Container -->
-        <div id="medicinesDirectoryGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:1.25rem;">
-          <!-- Dynamically populated via JavaScript -->
+        <div id="medicinesDirectoryGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:1.25rem;"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: Crop Fertigation & Fertilizer Timeline Schedule -->
+    <section id="sectionSchedule" class="hidden">
+      <div class="glass-card" style="max-width:850px; margin:0 auto;">
+        <h2 class="card-title" style="color:var(--primary-emerald);">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>📅 Crop Growth Stage & Fertigation Schedule Generator (ఎరువుల కాలపట్టిక)</span>
+        </h2>
+        <p style="color:var(--text-muted); margin-bottom:1.5rem;">
+          Select your crop, sowing date, and acreage to generate an ICAR & Coromandel Gromor standard fertigation schedule (Day 1 Basal, Day 15 Tillering, Day 30 Flowering, Day 60 Pod/Fruit Filling).
+        </p>
+
+        <div class="calc-grid">
+          <div>
+            <label class="select-label">Select Crop Type</label>
+            <select id="schedCropSelect" class="custom-select">
+              <option value="chilli">Chilli (మిరప)</option>
+              <option value="paddy" selected>Rice / Paddy (వరి)</option>
+              <option value="watermelon">Watermelon (పుచ్చకాయ)</option>
+              <option value="cotton">Cotton (ప్రత్తి)</option>
+              <option value="tomato">Tomato (టమాటో)</option>
+            </select>
+          </div>
+          <div>
+            <label class="select-label">Sowing / Transplanting Date</label>
+            <input type="date" id="schedSowDate" class="custom-select" value="2026-07-01" />
+          </div>
+          <div>
+            <label class="select-label">Field Size (Acres)</label>
+            <input type="number" id="schedAcres" class="custom-select" value="1" min="0.1" step="0.5" />
+          </div>
+          <div style="display:flex; align-items:flex-end;">
+            <button id="generateScheduleBtn" class="btn-primary" type="button" style="height:46px;">
+              ⚡ Generate Day-by-Day Timeline
+            </button>
+          </div>
         </div>
+
+        <div id="scheduleResultsContainer" style="margin-top:1.5rem;"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: Mandi Live Crop Market Prices & Profit Estimator -->
+    <section id="sectionMandi" class="hidden">
+      <div class="glass-card" style="max-width:900px; margin:0 auto;">
+        <h2 class="card-title" style="color:#b45309;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 21h18"/><path d="M3 10h18"/><path d="M5 6l7-3 7 3"/><path d="M4 10v11"/><path d="M20 10v11"/><path d="M8 14v3"/><path d="M12 14v3"/><path d="M16 14v3"/></svg>
+          <span>🏛️ Mandi Live Crop Market Prices & Profit Estimator (పంట మార్కెట్ ధరలు)</span>
+        </h2>
+        <p style="color:var(--text-muted); margin-bottom:1.5rem;">
+          Live AP & Telangana Agriculture Yard Mandi rates (Guntur Chilli, Warangal Cotton, Vijayawada Tomato, Nizamabad Rice) + Harvest Profit Calculator.
+        </p>
+
+        <div id="mandiPricesGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:1rem; margin-bottom:1.75rem;"></div>
+
+        <div style="background:#fff7ed; border:1px solid #ffedd5; border-radius:var(--radius-md); padding:1.25rem;">
+          <h3 style="font-family:'Outfit',sans-serif; font-size:1.15rem; color:#b45309; margin-bottom:1rem;">
+            💰 Calculate Your Field Harvest Revenue & Profit
+          </h3>
+          <div class="calc-grid">
+            <div>
+              <label class="select-label">Crop Yield (Quintals / Bags)</label>
+              <input type="number" id="mandiYieldInput" class="custom-select" value="25" min="1" />
+            </div>
+            <div>
+              <label class="select-label">Market Selling Price (₹ per Quintal)</label>
+              <input type="number" id="mandiPriceInput" class="custom-select" value="18500" min="100" />
+            </div>
+            <div>
+              <label class="select-label">Total Farming Cost (Fertilizer, Seed, Labor)</label>
+              <input type="number" id="mandiCostInput" class="custom-select" value="65000" min="0" />
+            </div>
+            <div>
+              <label class="select-label">Calculated Net Profit</label>
+              <div id="mandiNetProfitVal" style="font-family:'Outfit',sans-serif; font-size:1.6rem; font-weight:800; color:#059669; padding-top:0.3rem;">
+                ₹3,97,500 Net Profit
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: Fertilizer Shop Prescription Receipt Generator -->
+    <section id="sectionPrescription" class="hidden">
+      <div class="glass-card" style="max-width:800px; margin:0 auto;">
+        <h2 class="card-title" style="color:#2563eb;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 1-2 2v16a2 2 0 0 1 2 2h12a2 2 0 0 1 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span>🧾 Dealer Agronomy Prescription & WhatsApp Receipt (మందుల షాప్ రసీదు)</span>
+        </h2>
+        <p style="color:var(--text-muted); margin-bottom:1.5rem;">
+          Generate an official digital prescription receipt to hand directly to your local pesticide store dealer so you get exact ICAR & Coromandel certified remedies.
+        </p>
+
+        <div class="calc-grid">
+          <div>
+            <label class="select-label">Farmer Name (రైతు పేరు)</label>
+            <input type="text" id="rxFarmerName" class="custom-select" value="M. Koti Reddy" />
+          </div>
+          <div>
+            <label class="select-label">Village / District (గ్రామం / జిల్లా)</label>
+            <input type="text" id="rxVillage" class="custom-select" value="Ponnur, Guntur" />
+          </div>
+          <div>
+            <label class="select-label">Crop & Acreage</label>
+            <input type="text" id="rxCrop" class="custom-select" value="Chilli (మిరప) - 2 Acres" />
+          </div>
+          <div>
+            <label class="select-label">Diagnosed Crop Disease</label>
+            <input type="text" id="rxDisease" class="custom-select" value="Chilli Black Thrips & Leaf Curl (నల్ల తామర పురుగు)" />
+          </div>
+        </div>
+
+        <div style="margin-top:1.25rem;">
+          <button id="buildRxReceiptBtn" class="btn-primary" type="button">
+            🧾 Generate Printable Dealer Prescription Receipt
+          </button>
+        </div>
+
+        <div id="rxReceiptOutput" class="hidden" style="margin-top:1.5rem; background:#ffffff; border:2px solid #2563eb; border-radius:var(--radius-md); padding:1.5rem;"></div>
       </div>
     </section>
 
@@ -711,6 +823,6 @@
     </div>
   </footer>
 
-  <script type="module" src="app.js?v=4"></script>
+  <script type="module" src="app.js?v=6"></script>
 </body>
 </html>
