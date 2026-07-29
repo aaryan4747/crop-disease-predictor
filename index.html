@@ -93,6 +93,11 @@
         <span>⚡ Dosage & Motor Pump Calculator</span>
       </button>
 
+      <button class="sidebar-nav-btn" data-section="medicines">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.5 20.5l10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="M8.5 8.5l7 7"/></svg>
+        <span>🧪 Crop Medicines Directory (మందుల జాబితా)</span>
+      </button>
+
       <div class="sidebar-section-label" style="margin-top:1.5rem;">FARMER ASSISTANCE</div>
 
       <a href="tel:18001801551" class="sidebar-nav-btn" style="color:var(--primary-emerald); text-decoration:none;">
@@ -313,18 +318,51 @@
             <span id="weatherRiskBadge" class="severity-pill" style="background:#ea580c; color:#fff;">⚠️ High Fungal Risk</span>
           </div>
 
-          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; margin:1.25rem 0;">
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-sm); padding:1rem; text-align:center;">
-              <div style="font-size:0.8rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;" data-i18n="tempLabel">Temperature</div>
-              <div id="weatherTempVal" style="font-family:'Outfit',sans-serif; font-size:1.8rem; font-weight:800; color:var(--primary-emerald);">28°C</div>
+          <!-- 4 METRIC STAT CARDS -->
+          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:0.85rem; margin:1.25rem 0;">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-sm); padding:0.85rem; text-align:center;">
+              <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700; text-transform:uppercase;" data-i18n="tempLabel">Temperature</div>
+              <div id="weatherTempVal" style="font-family:'Outfit',sans-serif; font-size:1.6rem; font-weight:800; color:var(--primary-emerald);">28°C</div>
             </div>
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-sm); padding:1rem; text-align:center;">
-              <div style="font-size:0.8rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;" data-i18n="humidityLabel">Humidity</div>
-              <div id="weatherHumidityVal" style="font-family:'Outfit',sans-serif; font-size:1.8rem; font-weight:800; color:#2563eb;">84%</div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-sm); padding:0.85rem; text-align:center;">
+              <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700; text-transform:uppercase;" data-i18n="humidityLabel">Humidity</div>
+              <div id="weatherHumidityVal" style="font-family:'Outfit',sans-serif; font-size:1.6rem; font-weight:800; color:#2563eb;">84%</div>
             </div>
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-sm); padding:1rem; text-align:center;">
-              <div style="font-size:0.8rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;" data-i18n="windLabel">Wind Speed</div>
-              <div id="weatherWindVal" style="font-family:'Outfit',sans-serif; font-size:1.8rem; font-weight:800; color:#b45309;">14 km/h</div>
+            <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:var(--radius-sm); padding:0.85rem; text-align:center;">
+              <div style="font-size:0.75rem; color:#1e40af; font-weight:700; text-transform:uppercase;">🌧️ Rain Today</div>
+              <div id="weatherRainVal" style="font-family:'Outfit',sans-serif; font-size:1.6rem; font-weight:800; color:#1d4ed8;">85% (12 mm)</div>
+            </div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-sm); padding:0.85rem; text-align:center;">
+              <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700; text-transform:uppercase;" data-i18n="windLabel">Wind Speed</div>
+              <div id="weatherWindVal" style="font-family:'Outfit',sans-serif; font-size:1.6rem; font-weight:800; color:#b45309;">14 km/h</div>
+            </div>
+          </div>
+
+          <!-- HIGH-ACCURACY TODAY'S RAIN & SPRAY SAFETY CARD -->
+          <div id="weatherRainAlertCard" style="background:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border:1px solid #93c5fd; border-radius:var(--radius-sm); padding:1.1rem; margin-bottom:1.25rem;">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.4rem;">
+              <h4 id="weatherRainAlertTitle" style="font-family:'Outfit',sans-serif; color:#1e40af; font-size:1.05rem; font-weight:800; display:flex; align-items:center; gap:0.5rem;">
+                🌧️ High Accuracy Rain Forecast & Spray Safety
+              </h4>
+              <span id="weatherRainStatusPill" style="background:#2563eb; color:#fff; padding:0.25rem 0.75rem; border-radius:12px; font-size:0.78rem; font-weight:800;">
+                🌧️ Rain Expected Today
+              </span>
+            </div>
+            <p id="weatherRainAlertText" style="font-size:0.93rem; color:#1e293b; line-height:1.5;">
+              High accuracy satellite radar predicts an 85% chance of rain today (approx 12 mm rainfall). <strong>🛑 SPRAYING WARNING: Do NOT spray pesticides or liquid fertilizers today as rain will wash away the chemical spray.</strong>
+            </p>
+          </div>
+
+          <!-- HOURLY RAIN TIMELINE (NEXT 24 HOURS) -->
+          <div style="margin-bottom:1.25rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+              <h4 style="font-family:'Outfit',sans-serif; font-size:0.95rem; font-weight:700; color:#0f172a;">
+                ⏱️ Next 24-Hours Hourly Rain Forecast Timeline (వర్షపాత సమయ పట్టిక)
+              </h4>
+              <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">Scroll right 👉</span>
+            </div>
+            <div id="weatherHourlyTimeline" style="display:flex; gap:0.6rem; overflow-x:auto; padding-bottom:0.5rem; scroll-behavior:smooth;">
+              <!-- Dynamic hourly forecast cards injected via JavaScript -->
             </div>
           </div>
 
@@ -560,6 +598,39 @@
               Run your 5 HP Motor for 40 Minutes in the early morning. Using drip irrigation avoids wet leaf canopy, reducing Watermelon &amp; Chilli fungal leaf spots.
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Comprehensive Crop Medicines Directory -->
+    <section id="sectionMedicines" class="hidden">
+      <div class="glass-card" style="margin-bottom: 2rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
+          <div>
+            <h2 class="card-title" style="font-size:1.8rem; margin-bottom:0.3rem; color:var(--primary-emerald);">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.5 20.5l10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="M8.5 8.5l7 7"/></svg>
+              <span>🧪 Crop Medicines, Fungicides &amp; Fertilizers Directory (మందుల గైడ్)</span>
+            </h2>
+            <p style="color:var(--text-muted); font-size:0.95rem;">
+              Verified spray dosages, plant/crop suitability, target disease cures, and PHI waiting days compiled from <strong>Coromandel Gromor, IFFCO, Bayer, Syngenta, UPL &amp; Rallis</strong>.
+            </p>
+          </div>
+
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; width:100%; max-width:480px;">
+            <input type="text" id="medicineSearchInput" class="custom-select" style="flex:1; min-width:200px;" placeholder="🔍 Search medicine (e.g., Finio, Nativo, SAAF, Nano Urea, Blitox)..." />
+            <select id="medicineTypeFilter" class="custom-select" style="width:auto; min-width:140px;">
+              <option value="all">All Types (అన్నీ)</option>
+              <option value="insecticide">Insecticides (పురుగు మందులు)</option>
+              <option value="fungicide">Fungicides (తెగులు మందులు)</option>
+              <option value="fertilizer">Fertilizers &amp; PGR (ఎరువులు &amp; గ్రోత్)</option>
+              <option value="organic">Organic / Bio (సేంద్రీయ)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Medicines Grid Container -->
+        <div id="medicinesDirectoryGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:1.25rem;">
+          <!-- Dynamically populated via JavaScript -->
         </div>
       </div>
     </section>
