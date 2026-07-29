@@ -418,12 +418,12 @@
       <div id="libraryContainer"></div>
     </section>
 
-    <!-- SECTION 3: Dosage Calculator -->
+    <!-- SECTION 3: Dosage & Motor Water Calculator -->
     <section id="sectionCalculator" class="hidden">
-      <div class="glass-card" style="max-width:700px; margin:0 auto;">
+      <div class="glass-card" style="max-width:800px; margin:0 auto 1.5rem;">
         <h2 class="card-title">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/></svg>
-          <span data-i18n="calcHeader">Fungicide Spray & Water Volume Calculator</span>
+          <span data-i18n="calcHeader">Fungicide Spray &amp; Water Volume Calculator</span>
         </h2>
         <p style="color:var(--text-muted); margin-bottom:1.5rem;" data-i18n="calcSub">Calculate precise water spray volume and fungicide dilution required for your field size.</p>
 
@@ -439,10 +439,82 @@
         </div>
 
         <div class="calc-result-box">
-          <div style="font-size:0.9rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;" data-i18n="calcVolResultLabel">Required Tank Water & Spray Volume</div>
+          <div style="font-size:0.9rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;" data-i18n="calcVolResultLabel">Required Tank Water &amp; Spray Volume</div>
           <div id="calcVolumeResult" class="calc-val">200 Liters</div>
           <div style="margin-top:0.75rem; font-size:0.9rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;" data-i18n="calcMedResultLabel">Total Required Medicine / Fungicide Quantity</div>
           <div id="calcMedicineResult" class="calc-val" style="color:#b45309;">500 g/ml</div>
+        </div>
+      </div>
+
+      <!-- Motor Pump Irrigation & Run Time Calculator Card -->
+      <div class="glass-card" style="max-width:800px; margin:0 auto;">
+        <h2 class="card-title" style="color:var(--primary-emerald);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span>⚡ Motor Pump Water &amp; Pumping Duration Calculator (మోటార్ పంపింగ్ సమయం)</span>
+        </h2>
+        <p style="color:var(--text-muted); margin-bottom:1.5rem;">
+          Calculate total water required for your crop acreage, exact motor pump run time (Hours &amp; Mins), and recommended water flow pressure.
+        </p>
+
+        <div class="calc-grid">
+          <div>
+            <label class="select-label">Select Crop Type</label>
+            <select id="motorCropSelect" class="custom-select">
+              <option value="watermelon">Watermelon / Melon (పుచ్చకాయ)</option>
+              <option value="paddy">Rice / Paddy (వరి)</option>
+              <option value="chilli">Chilli / Pepper (మిరప)</option>
+              <option value="banana">Banana (అరటి)</option>
+              <option value="cotton">Cotton (ప్రత్తి)</option>
+              <option value="groundnut">Groundnut (వేరుశనగ)</option>
+              <option value="vegetable">Vegetables / Tomatoes (కూరగాయలు)</option>
+            </select>
+          </div>
+          <div>
+            <label class="select-label">Field Size (Acres)</label>
+            <input type="number" id="motorAcres" class="custom-select" value="1" min="0.1" step="0.5" />
+          </div>
+          <div>
+            <label class="select-label">Motor Pump Power (HP &amp; Type)</label>
+            <select id="motorHpSelect" class="custom-select">
+              <option value="3hp">3 HP Motor (Flow: 250 Liters/min)</option>
+              <option value="5hp" selected>5 HP Motor (Flow: 450 Liters/min)</option>
+              <option value="7.5hp">7.5 HP Motor (Flow: 700 Liters/min)</option>
+              <option value="10hp">10 HP Submersible (Flow: 1000 Liters/min)</option>
+              <option value="drip">Drip Irrigation System (Flow: 120 Liters/min/acre)</option>
+            </select>
+          </div>
+          <div>
+            <label class="select-label">Soil Type</label>
+            <select id="motorSoilSelect" class="custom-select">
+              <option value="black">Black Clay Soil (నల్లరేగడి - High Water Retention)</option>
+              <option value="loam" selected>Red Loam Soil (ఎర్ర నేల - Moderate Drainage)</option>
+              <option value="sandy">Sandy Soil (ఇసుక నేల - Fast Drainage)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="calc-result-box" style="background:linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-color:var(--border-glass-active);">
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; text-align:center;">
+            <div>
+              <div style="font-size:0.8rem; color:var(--text-muted); font-weight:700; text-transform:uppercase;">💧 Total Field Water</div>
+              <div id="totalWaterVolumeResult" style="font-family:'Outfit',sans-serif; font-size:1.6rem; font-weight:800; color:var(--primary-emerald);">18,000 Liters</div>
+            </div>
+            <div>
+              <div style="font-size:0.8rem; color:var(--text-muted); font-weight:700; text-transform:uppercase;">⏱️ Motor Run Duration</div>
+              <div id="motorDurationResult" style="font-family:'Outfit',sans-serif; font-size:1.6rem; font-weight:800; color:#2563eb;">40 Minutes</div>
+            </div>
+            <div>
+              <div style="font-size:0.8rem; color:var(--text-muted); font-weight:700; text-transform:uppercase;">⚡ Pump Flow Rate</div>
+              <div id="motorFlowRateResult" style="font-family:'Outfit',sans-serif; font-size:1.6rem; font-weight:800; color:#b45309;">450 L / min</div>
+            </div>
+          </div>
+
+          <div style="margin-top:1.1rem; padding:0.9rem; background:#ffffff; border-radius:var(--radius-sm); border:1px solid var(--border-glass-active);">
+            <div style="font-size:0.85rem; font-weight:700; color:var(--primary-emerald); margin-bottom:0.25rem;">💡 Agronomist Pumping Advisory</div>
+            <div id="motorAdvisoryText" style="font-size:0.88rem; color:var(--text-main); line-height:1.4;">
+              Run your 5 HP Motor for 40 Minutes in the early morning. Using drip irrigation avoids wet leaf canopy, reducing Watermelon &amp; Chilli fungal leaf spots.
+            </div>
+          </div>
         </div>
       </div>
     </section>
