@@ -70,6 +70,10 @@ document.addEventListener('click', (e) => {
     }
   });
 
+  const heroBanner = document.querySelector('.hero-banner');
+  const metricsBar = document.querySelector('.metrics-bar');
+  const weatherAlert = document.querySelector('.weather-alert-card');
+
   const predictor = document.getElementById('sectionPredictor');
   const weather = document.getElementById('sectionWeather');
   const library = document.getElementById('sectionLibrary');
@@ -80,19 +84,31 @@ document.addEventListener('click', (e) => {
   if (library) library.classList.add('hidden');
   if (calculator) calculator.classList.add('hidden');
 
-  if (sec === 'predictor' && predictor) {
-    predictor.classList.remove('hidden');
-  } else if (sec === 'weather' && weather) {
-    weather.classList.remove('hidden');
+  if (sec === 'predictor') {
+    if (heroBanner) heroBanner.classList.remove('hidden');
+    if (metricsBar) metricsBar.classList.remove('hidden');
+    if (weatherAlert) weatherAlert.classList.remove('hidden');
+    if (predictor) predictor.classList.remove('hidden');
+  } else if (sec === 'weather') {
+    if (heroBanner) heroBanner.classList.add('hidden');
+    if (metricsBar) metricsBar.classList.add('hidden');
+    if (weatherAlert) weatherAlert.classList.add('hidden');
+    if (weather) weather.classList.remove('hidden');
     updateLocationWeatherForecast(document.getElementById('weatherLocationInput')?.value || "Guntur");
     if (leafletMap) {
       setTimeout(() => leafletMap.invalidateSize(), 300);
     }
-  } else if (sec === 'library' && library) {
-    library.classList.remove('hidden');
+  } else if (sec === 'library') {
+    if (heroBanner) heroBanner.classList.add('hidden');
+    if (metricsBar) metricsBar.classList.add('hidden');
+    if (weatherAlert) weatherAlert.classList.add('hidden');
+    if (library) library.classList.remove('hidden');
     renderLibrary();
-  } else if (sec === 'calculator' && calculator) {
-    calculator.classList.remove('hidden');
+  } else if (sec === 'calculator') {
+    if (heroBanner) heroBanner.classList.add('hidden');
+    if (metricsBar) metricsBar.classList.add('hidden');
+    if (weatherAlert) weatherAlert.classList.add('hidden');
+    if (calculator) calculator.classList.remove('hidden');
     calculateDosage();
     calculateMotorIrrigation();
   }
