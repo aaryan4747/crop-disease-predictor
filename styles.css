@@ -759,6 +759,7 @@ body {
   font-size: 0.8rem;
   color: var(--text-muted);
   font-weight: 600;
+}
 
 .weather-alert-card {
   background: linear-gradient(135deg, rgba(234, 88, 12, 0.1) 0%, rgba(217, 119, 6, 0.05) 100%);
@@ -974,7 +975,7 @@ body {
   display: none !important;
 }
 
-/* 3-BARS HAMBURGER MENU BUTTON & SLIDE-OUT SIDEBAR DRAWER */
+/* 3-BARS HAMBURGER MENU BUTTON & LEFT SLIDE-OUT SIDEBAR DRAWER */
 .menu-toggle-btn {
   background: rgba(5, 150, 105, 0.12);
   border: 1px solid var(--border-glass-active);
@@ -1013,20 +1014,22 @@ body {
 .sidebar-drawer {
   position: fixed;
   top: 0;
-  right: -340px;
+  left: -340px;
+  right: auto;
   width: 320px;
   height: 100vh;
   background: #ffffff;
   z-index: 9999;
-  box-shadow: -6px 0 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 6px 0 30px rgba(0, 0, 0, 0.2);
   display: flex;
-  flex-direction: column;
-  transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-direction: column !important;
+  transition: left 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   overflow-y: auto;
 }
 
 .sidebar-drawer.active {
-  right: 0;
+  left: 0 !important;
+  right: auto !important;
 }
 
 .sidebar-header {
@@ -1056,8 +1059,9 @@ body {
 .sidebar-body {
   padding: 1.5rem;
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  flex-direction: column !important;
+  gap: 0.75rem;
+  width: 100%;
 }
 
 .sidebar-section-label {
@@ -1066,15 +1070,16 @@ body {
   color: var(--text-muted);
   letter-spacing: 0.08em;
   margin-bottom: 0.5rem;
+  text-transform: uppercase;
 }
 
 .sidebar-nav-btn {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.85rem 1rem;
+  padding: 0.9rem 1.1rem;
   border-radius: var(--radius-sm);
-  border: 1px solid transparent;
+  border: 1px solid #cbd5e1;
   background: #f8fafc;
   color: var(--text-main);
   font-family: 'Outfit', sans-serif;
@@ -1082,6 +1087,7 @@ body {
   font-size: 0.95rem;
   cursor: pointer;
   text-align: left;
+  width: 100% !important;
   transition: var(--transition-fast);
 }
 
@@ -1094,4 +1100,5 @@ body {
 .sidebar-nav-btn.active {
   background: var(--primary-emerald);
   color: #ffffff;
+  border-color: var(--primary-emerald);
 }
