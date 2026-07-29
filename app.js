@@ -68,6 +68,7 @@ document.addEventListener('click', (e) => {
   } else if (sec === 'calculator' && calculator) {
     calculator.classList.remove('hidden');
     calculateDosage();
+    calculateMotorIrrigation();
   }
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -139,11 +140,19 @@ function initDomReferences() {
     tabPrevention: document.getElementById('tabPrevention'),
     tabDeficiency: document.getElementById('tabDeficiency'),
     
-    // Dosage calculator
+    // Dosage & Motor calculator
     calcArea: document.getElementById('calcArea'),
     calcRate: document.getElementById('calcRate'),
     calcVolumeResult: document.getElementById('calcVolumeResult'),
     calcMedicineResult: document.getElementById('calcMedicineResult'),
+    motorCropSelect: document.getElementById('motorCropSelect'),
+    motorAcres: document.getElementById('motorAcres'),
+    motorHpSelect: document.getElementById('motorHpSelect'),
+    motorSoilSelect: document.getElementById('motorSoilSelect'),
+    totalWaterVolumeResult: document.getElementById('totalWaterVolumeResult'),
+    motorDurationResult: document.getElementById('motorDurationResult'),
+    motorFlowRateResult: document.getElementById('motorFlowRateResult'),
+    motorAdvisoryText: document.getElementById('motorAdvisoryText'),
     
     // Chat elements
     chatMessages: document.getElementById('chatMessages'),
@@ -373,6 +382,13 @@ function bindEvents() {
   if (dom.calcArea && dom.calcRate) {
     dom.calcArea.addEventListener('input', calculateDosage);
     dom.calcRate.addEventListener('input', calculateDosage);
+  }
+
+  if (dom.motorCropSelect && dom.motorAcres && dom.motorHpSelect && dom.motorSoilSelect) {
+    dom.motorCropSelect.addEventListener('change', calculateMotorIrrigation);
+    dom.motorAcres.addEventListener('input', calculateMotorIrrigation);
+    dom.motorHpSelect.addEventListener('change', calculateMotorIrrigation);
+    dom.motorSoilSelect.addEventListener('change', calculateMotorIrrigation);
   }
 
   if (dom.sendChatBtn && dom.chatInput) {
@@ -823,6 +839,58 @@ function calculateDosage() {
 
   if (dom.calcVolumeResult) dom.calcVolumeResult.textContent = `${totalWaterLitres} ${unitL}`;
   if (dom.calcMedicineResult) dom.calcMedicineResult.textContent = `${totalMedicineGrams} ${unitG}`;
+}
+
+function calculateMotorIrrigation() {
+  const crop = dom.motorCropSelect?.value || "watermelon";
+  const acres = parseFloat(dom.motorAcres?.value || 1);
+  const hp = dom.motorHpSelect?.value || "5hp";
+  const soil = dom.motorSoilSelect?.value || "loam";
+
+  let baseLitersPerAcre = 18000;
+  if (crop === 'paddy') baseLitersPerAcre = 45000;
+  else if (crop === 'chilli') baseLitersPerAcre = 14000;
+  else if (crop === 'banana') baseLitersPerAcre = 28000;
+  else if (crop === 'cotton') baseLitersPerAcre = 20000;
+  else if (crop === 'groundnut') baseLitersPerAcre = 16000;
+  else if (crop === 'vegetable') baseLitersPerAcre = 15000;
+
+  let soilMultiplier = 1.0;
+  if (soil === 'black') soilMultiplier = 0.85;
+  else if (soil === 'sandy') soilMultiplier = 1.25;
+
+  const totalWater = Math.round(baseLitersPerAcre * acres * soilMultiplier);
+
+  let litersPerMin = 450;
+  let pressureText = "2.5 Bar";
+  let hpName = "5 HP Motor";
+
+  if (hp === '3hp') { litersPerMin = 250; pressureText = "1.8 Bar"; hpName = "3 HP Motor"; }
+  else if (hp === '5hp') { litersPerMin = 450; pressureText = "2.5 Bar"; hpName = "5 HP Motor"; }
+  else if (hp === '7.5hp') { litersPerMin = 700; pressureText = "3.5 Bar"; hpName = "7.5 HP Motor"; }
+  else if (hp === '10hp') { litersPerMin = 1000; pressureText = "4.5 Bar"; hpName = "10 HP Submersible"; }
+  else if (hp === 'drip') { litersPerMin = 120; pressureText = "1.5 Bar (Drip Line)"; hpName = "Drip Line"; }
+
+  const totalMinutes = Math.round(totalWater / litersPerMin);
+  const hours = Math.floor(totalMinutes / 60);
+  const mins = totalMinutes % 60;
+
+  let durationStr = `${totalMinutes} Mins`;
+  if (hours > 0) {
+    durationStr = `${hours} Hr ${mins} Mins`;
+  }
+
+  if (dom.totalWaterVolumeResult) dom.totalWaterVolumeResult.textContent = `${totalWater.toLocaleString()} Liters`;
+  if (dom.motorDurationResult) dom.motorDurationResult.textContent = durationStr;
+  if (dom.motorFlowRateResult) dom.motorFlowRateResult.textContent = `${litersPerMin} L/min (${pressureText})`;
+
+  if (dom.motorAdvisoryText) {
+    if (state.language === 'te') {
+      dom.motorAdvisoryText.textContent = `మీ ${hpName} ను సుమారు ${durationStr} పాటు ఉదయాన్నే నడపండి. బిందు సేద్యం (Drip) వాడటం వల్ల ఆకులపై నీరు పడకుండా శిలీంధ్ర తెగుళ్లు అదుపులో ఉంటాయి.`;
+    } else {
+      dom.motorAdvisoryText.textContent = `Run your ${hpName} for ${durationStr} during early morning hours. Using drip irrigation avoids wet leaf canopy, reducing fungal leaf spots.`;
+    }
+  }
 }
 
 function handleUserChatMessage() {
