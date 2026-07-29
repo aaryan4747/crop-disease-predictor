@@ -490,19 +490,103 @@ async function updateLocationWeatherForecast(locationName, coords = null) {
       displayName = `${locResult.name}${locResult.admin1 ? ', ' + locResult.admin1 : ''}${locResult.country ? ', ' + locResult.country : ''}`;
     }
 
-    const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m`);
+    const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,precipitation,rain,weather_code,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,precipitation,rain,weather_code&timezone=auto`);
     const weatherData = await weatherRes.json();
     const current = weatherData.current;
+    const hourly = weatherData.hourly;
 
     const temp = Math.round(current.temperature_2m);
     const humidity = Math.round(current.relative_humidity_2m);
     const wind = Math.round(current.wind_speed_10m);
     const wCode = current.weather_code;
 
+    // Process Today's 24-Hour Rain Forecast Metrics
+    let maxRainProb = 0;
+    let totalRainMm = 0;
+    const currentHourIndex = new Date().getHours();
+    
+    if (hourly && hourly.precipitation_probability) {
+      const next24Probs = hourly.precipitation_probability.slice(currentHourIndex, currentHourIndex + 24);
+      const next24Mm = hourly.precipitation.slice(currentHourIndex, currentHourIndex + 24);
+      
+      maxRainProb = Math.max(...next24Probs, 0);
+      totalRainMm = next24Mm.reduce((a, b) => a + (b || 0), 0);
+    }
+
     if (cityTitle) cityTitle.textContent = `📍 ${displayName}`;
     if (tempVal) tempVal.textContent = `${temp}°C`;
     if (humidityVal) humidityVal.textContent = `${humidity}%`;
     if (windVal) windVal.textContent = `${wind} km/h`;
+
+    const rainVal = document.getElementById('weatherRainVal');
+    if (rainVal) {
+      rainVal.textContent = `${maxRainProb}% (${totalRainMm.toFixed(1)} mm)`;
+    }
+
+    // Update Today's High-Accuracy Rain & Spraying Safety Card
+    const rainStatusPill = document.getElementById('weatherRainStatusPill');
+    const rainAlertText = document.getElementById('weatherRainAlertText');
+
+    if (maxRainProb >= 50 || totalRainMm >= 2.0) {
+      if (rainStatusPill) {
+        rainStatusPill.textContent = state.language === 'te' ? `🌧️ నేడు వర్షపాతం పడే అవకాశం ఉండును (${maxRainProb}%)` : `🌧️ Rain Expected Today (${maxRainProb}%)`;
+        rainStatusPill.style.background = '#dc2626';
+      }
+      if (rainAlertText) {
+        rainAlertText.innerHTML = state.language === 'te'
+          ? `శాటిలైట్ రాడార్ లెక్కింపు ప్రకారం నేడు వర్షం పడే అవకాశం <strong>${maxRainProb}%</strong> ఉంది (సుమారు ${totalRainMm.toFixed(1)} mm వర్షపాతం). <strong>🛑 మందుల పిచికారీ హెచ్చరిక: నేడు పంటలకు క్రిమిసంహారక మందులు పిచికారీ చేయవద్దు. వర్షానికి మందు కొట్టుకుపోతుంది.</strong>`
+          : `High accuracy satellite radar predicts a <strong>${maxRainProb}% chance of rain</strong> today (approx ${totalRainMm.toFixed(1)} mm rainfall). <strong>🛑 SPRAYING WARNING: Do NOT spray pesticides or liquid fertilizers today as rain will wash away the chemical spray.</strong>`;
+      }
+    } else if (maxRainProb >= 20 || totalRainMm > 0.3) {
+      if (rainStatusPill) {
+        rainStatusPill.textContent = state.language === 'te' ? `🌤️ అక్కడక్కడ చిరుజల్లులు (${maxRainProb}%)` : `🌤️ Light Isolated Showers (${maxRainProb}%)`;
+        rainStatusPill.style.background = '#d97706';
+      }
+      if (rainAlertText) {
+        rainAlertText.innerHTML = state.language === 'te'
+          ? `నేడు కొన్ని ప్రాంతాల్లో తేలికపాటి చిరుజల్లులు పడే అవకాశం ఉండును (${totalRainMm.toFixed(1)} mm). <strong>⚠️ జాగ్రత్త: పొద్దున్నే ఎండగా ఉన్నప్పుడు మందులకు గంజి/జిగురు కలిపి మాత్రమే పిచికారీ చేయండి.</strong>`
+          : `Isolated light showers possible today (${totalRainMm.toFixed(1)} mm). <strong>⚠️ SPRAY CAUTION: Proceed with caution. Spray during clear morning hours using a silicone sticker solution.</strong>`;
+      }
+    } else {
+      if (rainStatusPill) {
+        rainStatusPill.textContent = state.language === 'te' ? `☀️ నేడు వర్షం లేదు (0-${maxRainProb}%)` : `☀️ No Rain Forecast Today (${maxRainProb}%)`;
+        rainStatusPill.style.background = '#059669';
+      }
+      if (rainAlertText) {
+        rainAlertText.innerHTML = state.language === 'te'
+          ? `ఖచ్చితమైన వాతావరణ రాడార్ ప్రకారం నేడు వర్షం పడే అవకాశం లేదు (${maxRainProb}% అవకాశం). <strong>🟢 సస్యరక్షణ పిచికారీకి అత్యంత అనుకూలమైన రోజు! నేడు ధైర్యంగా మందులు పిచికారీ చేసుకోవచ్చు.</strong>`
+          : `High accuracy weather radar confirms clear skies with minimal rain risk (${maxRainProb}% chance). <strong>🟢 SAFE SPRAYING DAY: Weather is clear today. Highly ideal for applying crop protective sprays & fertilizers.</strong>`;
+      }
+    }
+
+    // Render Next 24-Hours Hourly Timeline
+    const timelineElem = document.getElementById('weatherHourlyTimeline');
+    if (timelineElem && hourly && hourly.time) {
+      let timelineHtml = '';
+      for (let i = currentHourIndex; i < currentHourIndex + 24 && i < hourly.time.length; i++) {
+        const timeStr = new Date(hourly.time[i]).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const hTemp = Math.round(hourly.temperature_2m[i]);
+        const hProb = hourly.precipitation_probability ? hourly.precipitation_probability[i] : 0;
+        const hMm = hourly.precipitation ? hourly.precipitation[i] : 0;
+        const hCode = hourly.weather_code ? hourly.weather_code[i] : 0;
+
+        let icon = '☀️';
+        if (hCode >= 80 || hMm > 2.0) icon = '🌧️';
+        else if (hCode >= 51 || hProb > 40) icon = '🌦️';
+        else if (hCode >= 1 && hCode <= 3) icon = '⛅';
+
+        timelineHtml += `
+          <div style="flex:0 0 80px; background:#f8fafc; border:1px solid ${hProb >= 50 ? '#93c5fd' : '#cbd5e1'}; border-radius:10px; padding:0.6rem 0.4rem; text-align:center; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+            <div style="font-size:0.75rem; font-weight:700; color:var(--text-muted);">${timeStr}</div>
+            <div style="font-size:1.3rem; margin:0.2rem 0;">${icon}</div>
+            <div style="font-size:0.88rem; font-weight:800; color:#0f172a;">${hTemp}°C</div>
+            <div style="font-size:0.72rem; font-weight:800; color:${hProb >= 40 ? '#dc2626' : '#2563eb'}; margin-top:0.2rem;">💧 ${hProb}%</div>
+            <div style="font-size:0.68rem; color:var(--text-muted);">${hMm > 0 ? hMm.toFixed(1) + 'mm' : 'No Rain'}</div>
+          </div>
+        `;
+      }
+      timelineElem.innerHTML = timelineHtml;
+    }
 
     updateWeatherMapLocation(lat, lon, displayName);
 
@@ -578,14 +662,6 @@ async function updateLocationWeatherForecast(locationName, coords = null) {
         ` : `
           • <strong>Low disease incidence expected in current weather conditions.</strong><br>
           • <strong>Maintain balanced N-P-K fertigation and routine weed clearing.</strong>
-        `;
-      }
-
-      if (advisoryText) {
-        advisoryText.innerHTML = state.language === 'te' ? `
-          పంట సాధారణ పెరుగుదలలో ఉంది. వారానికి ఒకసారి పొలాన్ని పర్యవేక్షించి, బయో-ఫంగిసైడ్ పిచికారీ చేసుకోవచ్చు.
-        ` : `
-          Weather conditions are safe. Perform regular field monitoring and apply routine organic bio-stimulant or Neem oil spray every 10-14 days.
         `;
       }
     }
@@ -933,7 +1009,7 @@ function calculateMotorIrrigation() {
     if (state.language === 'te') {
       dom.motorAdvisoryText.textContent = `మీ ${hpName} ను సుమారు ${durationStr} పాటు ఉదయాన్నే నడపండి. బిందు సేద్యం (Drip) వాడటం వల్ల ఆకులపై నీరు పడకుండా శిలీంధ్ర తెగుళ్లు అదుపులో ఉంటాయి.`;
     } else {
-      dom.motorAdvisoryText.textContent = `Run your ${hpName} for ${durationStr} during early morning hours. Using drip irrigation avoids wet leaf canopy, reducing fungal leaf spots.`;
+      dom.motorAdvisoryText.textContent = `Run your ${hpName} for ${durationStr} during early morning hours. Using drip irrigation avoids wet leaf canopy, reducing Watermelon & Chilli fungal leaf spots.`;
     }
   }
 }
