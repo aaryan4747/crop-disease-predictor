@@ -78,11 +78,13 @@ document.addEventListener('click', (e) => {
   const weather = document.getElementById('sectionWeather');
   const library = document.getElementById('sectionLibrary');
   const calculator = document.getElementById('sectionCalculator');
+  const medicines = document.getElementById('sectionMedicines');
 
   if (predictor) predictor.classList.add('hidden');
   if (weather) weather.classList.add('hidden');
   if (library) library.classList.add('hidden');
   if (calculator) calculator.classList.add('hidden');
+  if (medicines) medicines.classList.add('hidden');
 
   if (sec === 'predictor') {
     if (heroBanner) heroBanner.classList.remove('hidden');
@@ -111,6 +113,12 @@ document.addEventListener('click', (e) => {
     if (calculator) calculator.classList.remove('hidden');
     calculateDosage();
     calculateMotorIrrigation();
+  } else if (sec === 'medicines') {
+    if (heroBanner) heroBanner.classList.add('hidden');
+    if (metricsBar) metricsBar.classList.add('hidden');
+    if (weatherAlert) weatherAlert.classList.add('hidden');
+    if (medicines) medicines.classList.remove('hidden');
+    renderMedicinesDirectory();
   }
 
   if (drawer) drawer.classList.remove('active');
@@ -210,6 +218,7 @@ function initDomReferences() {
     sectionWeather: document.getElementById('sectionWeather'),
     sectionLibrary: document.getElementById('sectionLibrary'),
     sectionCalculator: document.getElementById('sectionCalculator'),
+    sectionMedicines: document.getElementById('sectionMedicines'),
     libraryContainer: document.getElementById('libraryContainer'),
     
     // FAQ elements
@@ -1107,4 +1116,286 @@ function updateWeatherMapLocation(lat, lon, popupText) {
   setTimeout(() => {
     if (leafletMap) leafletMap.invalidateSize();
   }, 300);
+}
+
+// COMPREHENSIVE CROP MEDICINES & FERTILIZERS DIRECTORY
+const MEDICINES_DATABASE = [
+  {
+    id: "med_coromandel_finio",
+    name: "Coromandel Finio",
+    activeIngredient: "Diafenthiuron 47% + Pyriproxyfen 5% SE",
+    brand: "Coromandel Gromor",
+    category: "insecticide",
+    typeLabel: "🧪 Systemic Insecticide",
+    crops: ["Chilli (మిరప)", "Cotton (ప్రత్తి)", "Vegetables (కూరగాయలు)", "Brinjal (వంకాయ)"],
+    diseases: ["Black Thrips (నల్ల తామర పురుగు)", "Whiteflies (తెల్ల ఈగ)", "Leaf Curl Vector (ఆకు ముడుత)", "Aphids (పేనుబంక)"],
+    dosage: "1.25 ml per Liter of water + Spreadmax (0.5ml/L)",
+    phiDays: 7,
+    advisory: "KVK and Coromandel recommended dual-action spray. Destroys both thrips nymphs and adult vectors."
+  },
+  {
+    id: "med_coromandel_jatayu",
+    name: "Coromandel Jatayu",
+    activeIngredient: "Chlorothalonil 75% WP",
+    brand: "Coromandel Gromor",
+    category: "fungicide",
+    typeLabel: "🛡️ Contact Fungicide",
+    crops: ["Watermelon (పుచ్చకాయ)", "Potato (బంగాళదుంప)", "Tomato (టామోటా)", "Groundnut (వేరుశనగ)"],
+    diseases: ["Anthracnose (నల్లమచ్చ తెగులు)", "Tikka Leaf Spot (తిక్కా మచ్చ)", "Early & Late Blight", "Downy Mildew"],
+    dosage: "2.0 g per Liter of water",
+    phiDays: 7,
+    advisory: "Broad spectrum multi-site protective fungicide preventing spore germination before rains."
+  },
+  {
+    id: "med_coromandel_phendal",
+    name: "Coromandel Phendal",
+    activeIngredient: "Phenthoate 50% EC",
+    brand: "Coromandel Gromor",
+    category: "insecticide",
+    typeLabel: "⚡ Broad-Spectrum Insecticide",
+    crops: ["Rice / Paddy (వరి)", "Chilli (మిరప)", "Cotton (ప్రత్తి)", "Pulses (పప్పు ధాన్యాలు)"],
+    diseases: ["Stem Borer (కాండం తొలుచు పురుగు)", "Leaf Folder (ఆకు చుట్టు పురుగు)", "Pod Borer"],
+    dosage: "2.0 ml per Liter of water",
+    phiDays: 10,
+    advisory: "Rapid knockdown action with strong ovicidal effect on stem borer eggs."
+  },
+  {
+    id: "med_coromandel_fantac",
+    name: "Coromandel Fantac Plus",
+    activeIngredient: "Amino Acids & Vitamin Bio-Stimulant",
+    brand: "Coromandel Gromor",
+    category: "fertilizer",
+    typeLabel: "🌱 Plant Growth Booster (PGR)",
+    crops: ["All Crops", "Chilli", "Watermelon", "Banana", "Tomato"],
+    diseases: ["Flower & Fruit Dropping", "Stunted Growth Recovery", "Abiotic Stress"],
+    dosage: "1.0 ml per Liter of water",
+    phiDays: 0,
+    advisory: "Enhances flowering retention, chlorophyll density, and vegetative growth recovery."
+  },
+  {
+    id: "med_iffco_nano_urea",
+    name: "IFFCO Nano Urea (Liquid)",
+    activeIngredient: "Nanoscale Nitrogen Particles (4% N)",
+    brand: "IFFCO",
+    category: "fertilizer",
+    typeLabel: "⚡ Foliar Nano Fertilizer",
+    crops: ["Paddy (వరి)", "Maize (జొన్న)", "Wheat", "Cotton", "Vegetables"],
+    diseases: ["Nitrogen Deficiency", "Yellowing Leaves", "Stunted Vegetative Growth"],
+    dosage: "2.0 to 4.0 ml per Liter of water",
+    phiDays: 0,
+    advisory: "Foliar spray at 30 & 45 days after sowing. Replaces 1 bag of conventional granular urea."
+  },
+  {
+    id: "med_iffco_nano_dap",
+    name: "IFFCO Nano DAP (Liquid)",
+    activeIngredient: "Nanoscale Nitrogen (8%) & Phosphorus (16%)",
+    brand: "IFFCO",
+    category: "fertilizer",
+    typeLabel: "⚡ Nano Root Booster",
+    crops: ["Rice", "Chilli", "Groundnut", "Tomato", "Pulses"],
+    diseases: ["Phosphorus Deficiency", "Poor Root Architecture", "Delayed Flowering"],
+    dosage: "2.0 to 4.0 ml per Liter of water",
+    phiDays: 0,
+    advisory: "Spray during active tillering/branching stage. Also used for seed priming (5ml/kg seed)."
+  },
+  {
+    id: "med_iffco_sagarika",
+    name: "IFFCO Sagarika",
+    activeIngredient: "Red & Brown Seaweed Bio-Extract",
+    brand: "IFFCO",
+    category: "organic",
+    typeLabel: "🌿 Organic Bio-Stimulant",
+    crops: ["Watermelon", "Banana", "Chilli", "Rice", "Vegetables"],
+    diseases: ["Root Rot Recovery", "Nutrient Immobility", "Drought & Heat Stress"],
+    dosage: "2.5 to 5.0 ml per Liter of water",
+    phiDays: 0,
+    advisory: "100% natural organic seaweed extract that triggers auxin and cytokinin root cell division."
+  },
+  {
+    id: "med_bayer_nativo",
+    name: "Bayer Nativo",
+    activeIngredient: "Tebuconazole 50% + Trifloxystrobin 25% WG",
+    brand: "Bayer CropScience",
+    category: "fungicide",
+    typeLabel: "🧪 Systemic Dual Fungicide",
+    crops: ["Rice (వరి)", "Chilli (మిరప)", "Mango (మామిడి)", "Groundnut (వేరుశనగ)"],
+    diseases: ["Rice Blast (వరి అగ్గి తెగులు)", "Tikka Leaf Spot", "Anthracnose", "Powdery Mildew"],
+    dosage: "0.6 to 0.75 g per Liter of water",
+    phiDays: 15,
+    advisory: "Bayer patented dual systemic combination giving greening effect and long-lasting disease control."
+  },
+  {
+    id: "med_syngenta_ridomil",
+    name: "Syngenta Ridomil Gold",
+    activeIngredient: "Mefenoxam 4% + Mancozeb 64% WP",
+    brand: "Syngenta",
+    category: "fungicide",
+    typeLabel: "🛡️ Systemic & Contact Fungicide",
+    crops: ["Potato (బంగాళదుంప)", "Tomato (టమాటో)", "Watermelon (పుచ్చకాయ)", "Grapes"],
+    diseases: ["Late Blight (లేట్ బ్లైట్)", "Downy Mildew", "Phytophthora Root Damping Off"],
+    dosage: "2.0 to 2.5 g per Liter of water",
+    phiDays: 14,
+    advisory: "Industry benchmark for late blight and downy mildew. Protects new plant growth systemically."
+  },
+  {
+    id: "med_upl_saaf",
+    name: "UPL SAAF",
+    activeIngredient: "Carbendazim 12% + Mancozeb 63% WP",
+    brand: "UPL (United Phosphorus)",
+    category: "fungicide",
+    typeLabel: "🛡️ Systemic & Contact Combination",
+    crops: ["Groundnut", "Paddy", "Chilli", "Tomato", "Watermelon", "Cotton"],
+    diseases: ["Tikka Spot (తిక్కా మచ్చ)", "Anthracnose", "Seedling Damping Off", "Leaf Spot"],
+    dosage: "2.0 g per Liter of water",
+    phiDays: 12,
+    advisory: "Proven cost-effective combination fungicide for pre-harvest seed and foliar protection."
+  },
+  {
+    id: "med_rallis_blitox",
+    name: "Tata Rallis Blitox 50 WP",
+    activeIngredient: "Copper Oxychloride 50% WP",
+    brand: "Tata Rallis",
+    category: "fungicide",
+    typeLabel: "🛡️ Protective Copper Fungicide",
+    crops: ["Watermelon", "Tomato", "Chilli", "Potato", "Citrus", "Banana"],
+    diseases: ["Bacterial Leaf Spot", "Fruit Anthracnose", "Canker", "Leaf Blight"],
+    dosage: "3.0 g per Liter of water",
+    phiDays: 7,
+    advisory: "Copper ions release upon leaf wetness to destroy bacterial cell walls and fungal spores."
+  },
+  {
+    id: "med_delegate",
+    name: "Delegate / Spinetoram",
+    activeIngredient: "Spinetoram 11.7% SC",
+    brand: "Corteva Agriscience",
+    category: "insecticide",
+    typeLabel: "🧪 Specialized Thrips Insecticide",
+    crops: ["Chilli (మిరప)", "Cotton (ప్రత్తి)", "Soybean", "Onion (ఉల్లి)"],
+    diseases: ["Black Thrips (నల్ల తామర పురుగు)", "Fall Armyworm", "Fruit Borers"],
+    dosage: "1.0 ml per Liter of water",
+    phiDays: 5,
+    advisory: "Fast acting neurotoxin targeting nerve receptor sites of resistant black thrips."
+  },
+  {
+    id: "med_trichoderma",
+    name: "Trichoderma Viride Bio-Fungicide",
+    activeIngredient: "Trichoderma viride 1x10^8 CFU/g",
+    brand: "ICAR Certified Organic Bio",
+    category: "organic",
+    typeLabel: "🌿 Antagonistic Bio-Fungicide",
+    crops: ["All Crops", "Watermelon", "Chilli", "Banana", "Tomato"],
+    diseases: ["Fusarium Wilt", "Root Rot", "Stem Rot", "Seedling Damping Off"],
+    dosage: "5.0 to 10.0 g per Liter water (Root Drenching)",
+    phiDays: 0,
+    advisory: "Parasitizes pathogenic fungi in plant root zones. Best applied with vermicompost."
+  }
+];
+
+function renderMedicinesDirectory() {
+  const container = document.getElementById('medicinesDirectoryGrid');
+  const searchInput = document.getElementById('medicineSearchInput');
+  const typeFilter = document.getElementById('medicineTypeFilter');
+
+  if (!container) return;
+
+  function filterAndRender() {
+    const query = (searchInput?.value || '').toLowerCase().trim();
+    const filterType = typeFilter?.value || 'all';
+
+    const filtered = MEDICINES_DATABASE.filter(item => {
+      const matchesType = filterType === 'all' || item.category === filterType;
+      const matchesQuery = !query || 
+        item.name.toLowerCase().includes(query) ||
+        item.activeIngredient.toLowerCase().includes(query) ||
+        item.brand.toLowerCase().includes(query) ||
+        item.crops.some(c => c.toLowerCase().includes(query)) ||
+        item.diseases.some(d => d.toLowerCase().includes(query));
+
+      return matchesType && matchesQuery;
+    });
+
+    if (filtered.length === 0) {
+      container.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align:center; padding:3rem 1rem; color:var(--text-muted);">
+          <div style="font-size:2.5rem; margin-bottom:0.5rem;">🔍</div>
+          <h3>${state.language === 'te' ? 'ఎలాంటి మందులు కనుగొనబడలేదు' : 'No Medicines Found'}</h3>
+          <p>Please try searching for another crop name (e.g. Chilli, Paddy) or active chemical name (e.g. Finio, Nativo, SAAF).</p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = filtered.map(med => `
+      <div class="glass-card" style="background:#ffffff; border:1px solid #cbd5e1; border-top:4px solid ${getCategoryColor(med.category)}; padding:1.25rem; display:flex; flex-direction:column; justify-space-between;">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.5rem;">
+            <div>
+              <h3 style="font-family:'Outfit',sans-serif; font-size:1.2rem; font-weight:800; color:#0f172a;">${med.name}</h3>
+              <div style="font-size:0.8rem; font-weight:600; color:var(--primary-emerald);">${med.brand}</div>
+            </div>
+            <span class="severity-pill" style="background:${getCategoryBg(med.category)}; color:${getCategoryColor(med.category)}; font-size:0.75rem; font-weight:800;">
+              ${med.typeLabel}
+            </span>
+          </div>
+
+          <div style="font-size:0.85rem; color:var(--text-muted); font-style:italic; margin-bottom:0.85rem;">
+            Chemical: ${med.activeIngredient}
+          </div>
+
+          <div style="margin-bottom:0.75rem;">
+            <div style="font-size:0.8rem; font-weight:700; color:#0f172a; text-transform:uppercase; margin-bottom:0.25rem;">🌾 Suitable Crops / Plants</div>
+            <div style="display:flex; flex-wrap:wrap; gap:0.3rem;">
+              ${med.crops.map(c => `<span style="background:#f1f5f9; border:1px solid #e2e8f0; color:#334155; padding:0.15rem 0.5rem; border-radius:10px; font-size:0.78rem; font-weight:600;">${c}</span>`).join('')}
+            </div>
+          </div>
+
+          <div style="margin-bottom:0.75rem;">
+            <div style="font-size:0.8rem; font-weight:700; color:#b45309; text-transform:uppercase; margin-bottom:0.25rem;">🦠 Target Diseases &amp; Pests Cured</div>
+            <ul style="list-style:none; padding-left:0; font-size:0.85rem; color:#1e293b;">
+              ${med.diseases.map(d => `<li style="margin-bottom:0.2rem;">• ${d}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid #e2e8f0; pt:0.75rem; margin-top:0.75rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem; flex-wrap:wrap; gap:0.2rem;">
+            <div style="font-size:0.88rem; font-weight:800; color:var(--primary-emerald);">
+              ⚖️ Spray Dosage: ${med.dosage}
+            </div>
+            ${med.phiDays > 0 ? `
+              <span style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); color:#dc2626; padding:0.15rem 0.5rem; border-radius:6px; font-size:0.75rem; font-weight:800;">
+                PHI: ${med.phiDays} Days
+              </span>
+            ` : `
+              <span style="background:rgba(5,150,105,0.1); color:var(--primary-emerald); padding:0.15rem 0.5rem; border-radius:6px; font-size:0.75rem; font-weight:800;">
+                Safe Bio / PGR
+              </span>
+            `}
+          </div>
+          <div style="font-size:0.82rem; color:var(--text-muted); line-height:1.4; background:#f8fafc; padding:0.5rem; border-radius:6px; border:1px solid #e2e8f0;">
+            💡 ${med.advisory}
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function getCategoryColor(cat) {
+    if (cat === 'insecticide') return '#dc2626';
+    if (cat === 'fungicide') return '#2563eb';
+    if (cat === 'fertilizer') return '#059669';
+    return '#16a34a';
+  }
+
+  function getCategoryBg(cat) {
+    if (cat === 'insecticide') return 'rgba(220,38,38,0.1)';
+    if (cat === 'fungicide') return 'rgba(37,99,235,0.1)';
+    if (cat === 'fertilizer') return 'rgba(5,150,105,0.1)';
+    return 'rgba(22,163,74,0.1)';
+  }
+
+  filterAndRender();
+
+  if (searchInput) searchInput.oninput = filterAndRender;
+  if (typeFilter) typeFilter.onchange = filterAndRender;
 }
