@@ -1,9 +1,9 @@
 /**
- * Comprehensive Master Crop, Fruit & Vegetable Disease Database
- * Includes ICAR, FAO, Bayer, Syngenta, and Coromandel Certified Pathology Cures:
+ * Comprehensive Master Global Crop, Fruit, Vegetable & Spices Database
+ * Standardized with ICAR, FAO, and World Crops Database (world-crops.com) Standards:
  * - Pre-Harvest Interval (PHI) Toxic Waiting Days
  * - Soil N-P-K Mineral Deficiency Symptoms & Remedies
- * - Coverage for ALL major Fruits, Vegetables, and Regional Crops
+ * - Coverage for Cereals, Fruits, Vegetables, Pulses, Spices & Commercial Crops
  */
 
 export const CROP_DISEASES = [
@@ -117,8 +117,7 @@ export const CROP_DISEASES = [
       "Sudden vine wilting during fruit bulking stage"
     ],
     rootCauses: [
-      "Warm rainy weather (24°C-30°C) with prolonged leaf wetness",
-      "Infected soil crop debris spreading via irrigation water"
+      "Warm rainy weather (24°C-30°C) with prolonged leaf wetness"
     ],
     organicCures: [
       {
@@ -133,17 +132,10 @@ export const CROP_DISEASES = [
         dosage: "1ml Azoxystrobin or 2g Chlorothalonil per Liter of water",
         application: "Foliar spray prior to canopy closure.",
         phiDays: 7
-      },
-      {
-        name: "Teabuconazole + Trifloxystrobin (Nativo 0.75g/L)",
-        dosage: "0.75g per Liter of water",
-        application: "Broad spectrum systemic control for rind anthracnose spots.",
-        phiDays: 10
       }
     ],
     preventionProtocol: [
-      "Use drip irrigation lines under silver-black plastic mulch",
-      "Rotate watermelon with non-cucurbit crops for 2 years"
+      "Use drip irrigation lines under silver-black plastic mulch"
     ],
     mineralDeficiency: "Calcium (Ca) deficiency causes blossom end rot and rind cracking."
   },
@@ -160,12 +152,10 @@ export const CROP_DISEASES = [
     badgeColor: "#dc2626",
     symptoms: [
       "Spindle-shaped diamond spots with ash-gray center and brown margins on leaf",
-      "Node rot leading to stem breakage and empty white panicles ('Neck Blast')",
-      "Ovoid snake-skin like lesions on leaf sheaths near water level"
+      "Node rot leading to stem breakage and empty white panicles ('Neck Blast')"
     ],
     rootCauses: [
-      "Cool night temperatures (20°C-24°C) with high relative humidity (>90%) and dew",
-      "Excessive nitrogen application without potassium balance"
+      "Cool night temperatures (20°C-24°C) with high relative humidity (>90%) and dew"
     ],
     organicCures: [
       {
@@ -180,17 +170,10 @@ export const CROP_DISEASES = [
         dosage: "0.6g Tricyclazole or 0.75g Nativo per Liter of water",
         application: "Preventative spray at panicle initiation stage.",
         phiDays: 21
-      },
-      {
-        name: "Azoxystrobin + Difenoconazole (Amistar Top)",
-        dosage: "1.0ml per Liter of water",
-        application: "Systemic control for both sheath blight and leaf blast.",
-        phiDays: 14
       }
     ],
     preventionProtocol: [
-      "Avoid split nitrogen applications during cloudy cool weather",
-      "Treat seeds with Carbendazim 2g/kg before sowing"
+      "Avoid split nitrogen applications during cloudy cool weather"
     ],
     mineralDeficiency: "Silicon (Si) deficiency reduces leaf cuticle resistance to fungal hyphae."
   },
@@ -207,8 +190,7 @@ export const CROP_DISEASES = [
     badgeColor: "#ea580c",
     symptoms: [
       "Pale yellow-green streaks parallel to leaf veins turning dark brown",
-      "Large necrotic areas drying out leaf canopy reducing bunch size",
-      "Vascular yellowing and longitudinal splitting of pseudostem base"
+      "Large necrotic areas drying out leaf canopy reducing bunch size"
     ],
     rootCauses: [
       "High humidity (>80%), frequent rainfall, and stagnant field water"
@@ -229,8 +211,7 @@ export const CROP_DISEASES = [
       }
     ],
     preventionProtocol: [
-      "De-trash infected lower yellow leaves monthly and burn outside field",
-      "Ensure proper drainage channels to prevent root waterlogging"
+      "De-trash infected lower yellow leaves monthly and burn outside field"
     ],
     mineralDeficiency: "Potassium (K) deficiency causing leaf tip firing and reduced bunch weight."
   },
@@ -247,11 +228,10 @@ export const CROP_DISEASES = [
     badgeColor: "#dc2626",
     symptoms: [
       "Black angular necrotic spots on tender young mango leaves and shoots",
-      "White powdery growth on flowering panicles causing severe blossom drop",
-      "Tear-stain dark streaks and fruit rot on ripening mangoes"
+      "White powdery growth on flowering panicles causing severe blossom drop"
     ],
     rootCauses: [
-      "Cloudy humid weather and rain showers during flowering stage (Jan-March)"
+      "Cloudy humid weather and rain showers during flowering stage"
     ],
     organicCures: [
       {
@@ -269,8 +249,7 @@ export const CROP_DISEASES = [
       }
     ],
     preventionProtocol: [
-      "Prune criss-cross branches to allow sunlight penetration into canopy",
-      "Collect and burn fallen infected leaves and dried panicles"
+      "Prune criss-cross branches to allow sunlight penetration into canopy"
     ],
     mineralDeficiency: "Boron (B) deficiency causing internal fruit necrosis and seed cracking."
   },
@@ -287,8 +266,7 @@ export const CROP_DISEASES = [
     badgeColor: "#dc2626",
     symptoms: [
       "Rosetted pinkish flowers that fail to open properly",
-      "Bore holes in green bolls plugged with larval excreta",
-      "Concentric brown circular spots with purple margins on leaves"
+      "Bore holes in green bolls plugged with larval excreta"
     ],
     rootCauses: [
       "Staggered sowing and late season cotton crop extension"
@@ -311,10 +289,10 @@ export const CROP_DISEASES = [
     preventionProtocol: [
       "Destroy crop stubble and avoid ratoon cotton cultivation"
     ],
-    mineralDeficiency: "Magnesium (Mg) deficiency causes reddening of cotton leaves (Red Leaf Blight)."
+    mineralDeficiency: "Magnesium (Mg) deficiency causes reddening of cotton leaves."
   },
 
-  // 8. BRINJAL / EGGPLANT
+  // 8. BRINJAL
   {
     id: "brinjal_borer",
     crop: "Brinjal / Eggplant (వంకాయ)",
@@ -333,7 +311,7 @@ export const CROP_DISEASES = [
     ],
     organicCures: [
       {
-        name: "Pheromone Traps (Lucin-lure) + Bt (Bacillus thuringiensis)",
+        name: "Pheromone Traps (Lucin-lure) + Bt",
         dosage: "Install 12 Pheromone traps/acre + Bt @ 2g/L water",
         application: "Attracts male moths and destroys young larvae."
       }
@@ -352,7 +330,7 @@ export const CROP_DISEASES = [
     mineralDeficiency: "Potassium deficiency causing leaf tip marginal burning."
   },
 
-  // 9. OKRA / LADY'S FINGER
+  // 9. OKRA
   {
     id: "okra_yellow_vein",
     crop: "Okra / Lady's Finger (బెండకాయ)",
@@ -402,11 +380,10 @@ export const CROP_DISEASES = [
     badgeColor: "#ea580c",
     symptoms: [
       "Small white sunken spots on leaves developing purple centers",
-      "Leaves girdled, falling over, and drying prematurely before bulb maturity",
-      "Bulb neck rot during storage"
+      "Leaves girdled, falling over, and drying prematurely before bulb maturity"
     ],
     rootCauses: [
-      "High relative humidity (>80%) and warm humid winds (25°C-30°C)"
+      "High relative humidity (>80%) and warm humid winds"
     ],
     organicCures: [
       {
@@ -424,10 +401,9 @@ export const CROP_DISEASES = [
       }
     ],
     preventionProtocol: [
-      "Avoid close plant spacing; ensure proper field drainage",
-      "Do not overhead irrigate late in the evening"
+      "Avoid close plant spacing; ensure proper field drainage"
     ],
-    mineralDeficiency: "Potassium deficiency reduces onion bulb shelf life and neck firmness."
+    mineralDeficiency: "Potassium deficiency reduces onion bulb shelf life."
   },
 
   // 11. PAPAYA
@@ -464,13 +440,12 @@ export const CROP_DISEASES = [
       }
     ],
     preventionProtocol: [
-      "Plant border rows of Maize or Sorghum around papaya orchard",
-      "Uproot and destroy infected virus trees immediately"
+      "Plant border rows of Maize or Sorghum around papaya orchard"
     ],
     mineralDeficiency: "Boron (B) deficiency causes bumpy, deformed papaya fruits with latex bleeding."
   },
 
-  // 12. CITRUS / LEMON / ORANGE
+  // 12. CITRUS
   {
     id: "citrus_canker",
     crop: "Citrus / Lemon (నిమ్మ / నారింజ)",
@@ -482,8 +457,7 @@ export const CROP_DISEASES = [
     badgeColor: "#ea580c",
     symptoms: [
       "Raised corky brown scab lesions surrounded by yellow halos on leaves and fruits",
-      "Gum oozing from bark cracks at trunk base (Gummosis)",
-      "Twig dieback and premature fruit drop"
+      "Gum oozing from bark cracks at trunk base (Gummosis)"
     ],
     rootCauses: [
       "Bacterial ingress through leaf miner feeding wounds during rain storms"
@@ -504,8 +478,7 @@ export const CROP_DISEASES = [
       }
     ],
     preventionProtocol: [
-      "Control Citrus Leaf Miner insect using Abamectin to prevent entry wounds",
-      "Prune diseased twigs 15cm below infected point"
+      "Control Citrus Leaf Miner insect using Abamectin to prevent entry wounds"
     ],
     mineralDeficiency: "Zinc (Zn) deficiency causes mottle leaf (interveinal yellowing) in citrus."
   },
@@ -522,8 +495,7 @@ export const CROP_DISEASES = [
     badgeColor: "#dc2626",
     symptoms: [
       "Purplish-black water-soaked leaf margins drying to brown paper texture",
-      "Target-board concentric brown rings on potato leaves (Early Blight)",
-      "Reddish-brown tuber rot spreading into flesh during storage"
+      "Target-board concentric brown rings on potato leaves (Early Blight)"
     ],
     rootCauses: [
       "High humidity (>90%) with cool misty weather"
@@ -544,10 +516,9 @@ export const CROP_DISEASES = [
       }
     ],
     preventionProtocol: [
-      "Use certified disease-free seed tubers",
-      "Earthing up soil to cover exposed tubers from fungal spores"
+      "Use certified disease-free seed tubers"
     ],
-    mineralDeficiency: "Potassium (K) deficiency causes leaf tip bronzing and small tuber yield."
+    mineralDeficiency: "Potassium (K) deficiency causes leaf tip bronzing."
   },
 
   // 14. POMEGRANATE
@@ -562,8 +533,7 @@ export const CROP_DISEASES = [
     badgeColor: "#dc2626",
     symptoms: [
       "Dark brown water-soaked translucent oily spots on leaves and branches",
-      "L-shaped or Y-shaped cracks on pomegranate fruits oozing bacterial fluid",
-      "Severe defoliation and twig dieback"
+      "L-shaped or Y-shaped cracks on pomegranate fruits oozing bacterial fluid"
     ],
     rootCauses: [
       "Rain splashes, high humidity, and wind-blown bacterial droplets during monsoon"
@@ -584,13 +554,12 @@ export const CROP_DISEASES = [
       }
     ],
     preventionProtocol: [
-      "Paste cut ends with Bordeaux paste (10%) after pruning",
-      "Strict orchard sanitation and clean secateurs using alcohol"
+      "Paste cut ends with Bordeaux paste (10%) after pruning"
     ],
     mineralDeficiency: "Boron and Calcium deficiency causes fruit aril cracking."
   },
 
-  // 15. MAIZE / CORN
+  // 15. MAIZE
   {
     id: "maize_fall_armyworm",
     crop: "Maize / Corn (మొక్కజొన్న)",
@@ -602,8 +571,7 @@ export const CROP_DISEASES = [
     badgeColor: "#dc2626",
     symptoms: [
       "Ragged pinholes and extensive leaf whorl damage packed with frass",
-      "Larvae with Y-shaped mark on head feeding inside maize cob whorl",
-      "Golden-brown powdery rust pustules on upper and lower leaf surfaces"
+      "Larvae with Y-shaped mark on head feeding inside maize cob whorl"
     ],
     rootCauses: [
       "Warm dry weather favoring rapid armyworm moth migration"
@@ -612,7 +580,7 @@ export const CROP_DISEASES = [
       {
         name: "Metarhizium anisopliae or Sand-Neem Cake Whorl Application",
         dosage: "5g Metarhizium or 10g Sand-Neem cake mix into plant whorl",
-        application: "Directly drop into maize leaf whorls at 15-30 days crop stage."
+        application: "Directly drop into maize leaf whorls."
       }
     ],
     chemicalCures: [
@@ -624,13 +592,12 @@ export const CROP_DISEASES = [
       }
     ],
     preventionProtocol: [
-      "Intercrop maize with cowpea or desmodium to push-pull armyworm moths",
-      "Install 10 Fall Armyworm Pheromone traps per acre"
+      "Intercrop maize with cowpea to push-pull armyworm moths"
     ],
-    mineralDeficiency: "Zinc (Zn) deficiency causes 'White Bud' disease in maize (broad white band along midrib)."
+    mineralDeficiency: "Zinc (Zn) deficiency causes 'White Bud' disease in maize."
   },
 
-  // 16. GROUNDNUT / PEANUT
+  // 16. GROUNDNUT
   {
     id: "groundnut_tikka",
     crop: "Groundnut (వేరుశనగ)",
@@ -642,8 +609,7 @@ export const CROP_DISEASES = [
     badgeColor: "#ea580c",
     symptoms: [
       "Dark circular leaf spots with bright yellow halos causing leaf drop",
-      "White cottony fungal mycelium at soil collar region causing stem rot",
-      "Premature pod shedding during harvest"
+      "White cottony fungal mycelium at soil collar region causing stem rot"
     ],
     rootCauses: [
       "High humidity with warm soil temperatures (28°C-32°C)"
@@ -664,13 +630,91 @@ export const CROP_DISEASES = [
       }
     ],
     preventionProtocol: [
-      "Treat groundnut seeds with Mancozeb 3g/kg seed before sowing",
-      "Avoid continuous groundnut mono-cropping"
+      "Treat groundnut seeds with Mancozeb 3g/kg seed before sowing"
     ],
-    mineralDeficiency: "Calcium (Ca) deficiency causes 'Pop Pods' (empty groundnut shells without kernels)."
+    mineralDeficiency: "Calcium (Ca) deficiency causes 'Pop Pods' (empty groundnut shells)."
   },
 
-  // 17. HEALTHY LEAF (ALL CROPS)
+  // 17. PULSES & LEGUMES (CHICKPEA / RED GRAM)
+  {
+    id: "pulses_wilt_podborer",
+    crop: "Pulses / Red Gram / Chickpea (కందులు / శనగ)",
+    diseaseName: "Pulses Fusarium Wilt & Helicoverpa Pod Borer (కంది వడలు తెగులు & కాయ తొలుచు పురుగు)",
+    scientificName: "Fusarium udum & Helicoverpa armigera",
+    type: "Soil Fungal & Insect Pest Complex",
+    severityLevel: "Severe",
+    severityScore: 92,
+    badgeColor: "#dc2626",
+    symptoms: [
+      "Interveinal yellowing and sudden wilting of adult pigeon pea branches",
+      "Bore holes in green pods with larvae feeding with head inside pod",
+      "Black vascular discoloration inside split stem wood"
+    ],
+    rootCauses: [
+      "Soil-borne Fusarium chlamydospores persisting in dry soils"
+    ],
+    organicCures: [
+      {
+        name: "Trichoderma harzianum + HaNPV (Helicoverpa Nuclear Polyhedrosis Virus)",
+        dosage: "5g Trichoderma soil drench + 250 LE HaNPV spray per acre",
+        application: "Apply NPV spray during early larval instar emergence."
+      }
+    ],
+    chemicalCures: [
+      {
+        name: "Flubendiamide 39.35% SC (Fame @ 0.2ml/L) or Chlorantraniliprole (Coragen)",
+        dosage: "0.2ml Flubendiamide or 0.4ml Coragen per Liter water",
+        application: "Foliar spray at 50% flowering stage.",
+        phiDays: 10
+      }
+    ],
+    preventionProtocol: [
+      "Intercrop redgram with sorghum in 1:4 ratio to reduce pod borer egg laying"
+    ],
+    mineralDeficiency: "Molybdenum (Mo) deficiency impairs Rhizobium root nodule nitrogen fixation."
+  },
+
+  // 18. SPICES (TURMERIC & GINGER)
+  {
+    id: "turmeric_rhizome_rot",
+    crop: "Turmeric / Ginger (పసుపు / అల్లం)",
+    diseaseName: "Turmeric Leaf Blotch & Ginger Rhizome Rot (పసుపు ఆకు మచ్చ & అల్లం దుంప కుళ్ళు)",
+    scientificName: "Taphrina maculans & Pythium aphanidermatum",
+    type: "Soil Oomycete & Foliar Fungal Complex",
+    severityLevel: "Critical",
+    severityScore: 94,
+    badgeColor: "#dc2626",
+    symptoms: [
+      "Small reddish-brown spots on upper and lower surfaces of turmeric leaves",
+      "Water-soaked brown rotting of ginger pseudostem base pulling out easily",
+      "Foul smelling soft decay of subterranean rhizomes"
+    ],
+    rootCauses: [
+      "Waterlogging, poor soil drainage, and heavy monsoon rains"
+    ],
+    organicCures: [
+      {
+        name: "Trichoderma harzianum + Pseudomonas Soil Drenching",
+        dosage: "10g Trichoderma + 10g Pseudomonas per Liter water",
+        application: "Soil drenching around plant hills every 20 days during monsoon."
+      }
+    ],
+    chemicalCures: [
+      {
+        name: "Metalaxyl 8% + Mancozeb 64% WP (Ridomil Gold @ 2.5g/L)",
+        dosage: "2.5g per Liter water (Soil drenching + Foliar spray)",
+        application: "Drench 100-150ml solution per clump at first sign of soft rot.",
+        phiDays: 21
+      }
+    ],
+    preventionProtocol: [
+      "Plant on raised beds (30cm height) with broad drainage channels",
+      "Treat seed rhizomes with Mancozeb 3g/L for 30 minutes before planting"
+    ],
+    mineralDeficiency: "Fe & Mn deficiency causes interveinal chlorosis in young leaves."
+  },
+
+  // 19. HEALTHY LEAF (ALL CROPS)
   {
     id: "healthy_leaf",
     crop: "General Crop (అన్ని రకాల పంటలు)",
@@ -725,5 +769,7 @@ export const CROP_LIST = [
   "Potato (బంగాళదుంప)",
   "Pomegranate (దానిమ్మ)",
   "Maize / Corn (మొక్కజొన్న)",
-  "Groundnut (వేరుశనగ)"
+  "Groundnut (వేరుశనగ)",
+  "Pulses / Red Gram / Chickpea (కందులు / శనగ)",
+  "Turmeric / Ginger (పసుపు / అల్లం)"
 ];
