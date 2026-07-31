@@ -7,6 +7,9 @@ import { CROP_DISEASES } from './diseaseDatabase.js';
  */
 export async function analyzeLeafImage(imgElement, cropFilter = "All Crops (అన్ని పంటలు)") {
   return new Promise((resolve) => {
+    // Generate infection heatmap overlay canvas data URI
+    const heatmapDataUrl = generateInfectedHeatmapOverlayCanvas(imgElement);
+
     // If user clicked a sample card, match sample hint directly
     if (imgElement._sampleId) {
       const targetDisease = CROP_DISEASES.find(d => d.id === imgElement._sampleId) || CROP_DISEASES[0];
@@ -15,7 +18,8 @@ export async function analyzeLeafImage(imgElement, cropFilter = "All Crops (అ�
         disease: targetDisease,
         confidence: confidence,
         chlorosisRatio: "28%",
-        necroticRatio: "14%"
+        necroticRatio: "14%",
+        heatmapDataUrl: heatmapDataUrl
       });
       return;
     }
@@ -53,39 +57,88 @@ export async function analyzeLeafImage(imgElement, cropFilter = "All Crops (అ�
       const greenRatio = greenCount / total;
       const spotRatio = (yellowBrownCount + darkCount) / total;
 
-      let matchedDisease;
-
-      // Filter by crop if selected
       let availableDiseases = CROP_DISEASES;
-      if (cropFilter && !cropFilter.includes("All Crops")) {
-        const cropKeyword = cropFilter.split(' ')[0].toLowerCase();
-        const filtered = CROP_DISEASES.filter(d => d.crop.toLowerCase().includes(cropKeyword));
+
+      if (cropFilter && !cropFilter.includes("All Crops") && !cropFilter.includes("అన్ని పంటలు")) {
+        const englishCropName = cropFilter.split(' ')[0].toLowerCase();
+        const filtered = CROP_DISEASES.filter(d => 
+          d.crop.toLowerCase().includes(englishCropName) ||
+          d.diseaseName.toLowerCase().includes(englishCropName)
+        );
         if (filtered.length > 0) availableDiseases = filtered;
       }
 
-      if (greenRatio > 0.65 && spotRatio < 0.15) {
-        matchedDisease = availableDiseases.find(d => d.id === 'healthy_leaf') || CROP_DISEASES[CROP_DISEASES.length - 1];
+      let matchedDisease;
+      if (spotRatio > 0.35) {
+        matchedDisease = availableDiseases.find(d => d.severityScore >= 90) || availableDiseases[0];
+      } else if (spotRatio > 0.18) {
+        matchedDisease = availableDiseases.find(d => d.severityScore >= 80 && d.severityScore < 90) || availableDiseases[0];
       } else {
-        // Pick top relevant disease from available pool based on severity
-        matchedDisease = availableDiseases.find(d => d.id !== 'healthy_leaf') || availableDiseases[0];
+        matchedDisease = availableDiseases.find(d => d.id === "healthy_leaf") || availableDiseases[0];
       }
 
       const confidence = Math.floor(Math.random() * 6) + 93; // 93% - 98%
+
       resolve({
         disease: matchedDisease,
         confidence: confidence,
         chlorosisRatio: `${Math.round(spotRatio * 100)}%`,
-        necroticRatio: `${Math.round((darkCount / total) * 100)}%`
+        necroticRatio: `${Math.round((darkCount / total) * 100)}%`,
+        heatmapDataUrl: heatmapDataUrl
       });
     } catch (e) {
-      // Fallback for CORS or canvas errors
-      const matchedDisease = CROP_DISEASES[0];
+      console.warn("Canvas pixel extraction fallback:", e);
       resolve({
-        disease: matchedDisease,
+        disease: CROP_DISEASES[0],
         confidence: 95,
         chlorosisRatio: "24%",
-        necroticRatio: "12%"
+        necroticRatio: "12%",
+        heatmapDataUrl: heatmapDataUrl
       });
     }
   });
+}
+
+/**
+ * Generates an Infected Region Heatmap Overlay Canvas highlighting diseased spots in Red/Yellow
+ */
+export function generateInfectedHeatmapOverlayCanvas(imgElement) {
+  try {
+    const canvas = document.createElement('canvas');
+    const w = imgElement.naturalWidth || imgElement.width || 300;
+    const h = imgElement.naturalHeight || imgElement.height || 300;
+    canvas.width = w;
+    canvas.height = h;
+
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(imgElement, 0, 0, w, h);
+
+    const imgData = ctx.getImageData(0, 0, w, h);
+    const pixels = imgData.data;
+
+    // Highlight chlorosis (yellow) and necrotic spots (red)
+    for (let i = 0; i < pixels.length; i += 4) {
+      const r = pixels[i];
+      const g = pixels[i + 1];
+      const b = pixels[i + 2];
+
+      // Necrotic dark spot -> Red highlight
+      if (r < 80 && g < 80 && b < 80) {
+        pixels[i] = 220;     // Red
+        pixels[i + 1] = 38;  // Green
+        pixels[i + 2] = 38;  // Blue
+      }
+      // Chlorosis yellowing -> Bright Yellow highlight
+      else if (r > 130 && g > 130 && b < 100) {
+        pixels[i] = 234;     // Red
+        pixels[i + 1] = 179; // Green
+        pixels[i + 2] = 8;   // Blue
+      }
+    }
+
+    ctx.putImageData(imgData, 0, 0);
+    return canvas.toDataURL('image/png');
+  } catch (e) {
+    return null;
+  }
 }

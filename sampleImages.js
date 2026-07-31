@@ -8,7 +8,7 @@ function createLeafSvgDataUri(diseaseId) {
   if (diseaseId === "tomato_late_blight") {
     // Tomato Leaf with dark necrotic blight spots and chlorosis
     innerSvg = `
-      <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" height="100%" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <rect width="200" height="200" fill="#0f2214"/>
         <path d="M100 20 C130 50, 160 80, 150 130 C140 170, 100 185, 100 185 C100 185, 60 170, 50 130 C40 80, 70 50, 100 20 Z" fill="#2d6a3f" stroke="#1b4326" stroke-width="2"/>
         <path d="M100 20 L100 185 M100 60 L140 85 M100 90 L60 115 M100 120 L145 145 M100 140 L55 160" stroke="#163820" stroke-width="2.5" stroke-linecap="round"/>
@@ -26,7 +26,7 @@ function createLeafSvgDataUri(diseaseId) {
   } else if (diseaseId === "potato_early_blight") {
     // Potato Leaf with concentric ring brown spots
     innerSvg = `
-      <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" height="100%" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <rect width="200" height="200" fill="#0f2214"/>
         <path d="M100 25 C140 50, 155 90, 145 140 C135 175, 100 185, 100 185 C100 185, 65 175, 55 140 C45 90, 60 50, 100 25 Z" fill="#347846" stroke="#1b4326" stroke-width="2"/>
         <path d="M100 25 L100 185 M100 70 L135 90 M100 105 L65 125 M100 135 L138 150" stroke="#1b4326" stroke-width="2"/>
@@ -48,7 +48,7 @@ function createLeafSvgDataUri(diseaseId) {
   } else if (diseaseId === "corn_common_rust") {
     // Corn Leaf blade with reddish-brown rust pustules
     innerSvg = `
-      <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" height="100%" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <rect width="200" height="200" fill="#0f2214"/>
         <!-- Long corn leaf blade -->
         <path d="M40 180 C70 120, 90 70, 160 20 C130 60, 100 110, 80 180 Z" fill="#4d925d" stroke="#235431" stroke-width="2"/>
@@ -64,7 +64,7 @@ function createLeafSvgDataUri(diseaseId) {
   } else if (diseaseId === "rice_blast") {
     // Rice Leaf blade with spindle-shaped gray spots
     innerSvg = `
-      <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" height="100%" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <rect width="200" height="200" fill="#0f2214"/>
         <path d="M30 185 C60 130, 100 70, 175 15 C130 75, 80 135, 55 185 Z" fill="#3f8a52" stroke="#1d4d29" stroke-width="2"/>
         <path d="M30 185 Q100 100 175 15" stroke="#1d4d29" stroke-width="2"/>
@@ -82,7 +82,7 @@ function createLeafSvgDataUri(diseaseId) {
   } else if (diseaseId === "chilli_leaf_curl") {
     // Chilli Leaf with upward puckered curling
     innerSvg = `
-      <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" height="100%" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <rect width="200" height="200" fill="#0f2214"/>
         <!-- Puckered boat-shaped leaf -->
         <path d="M100 30 C135 55, 140 100, 125 150 C110 175, 100 180, 100 180 C100 180, 90 175, 75 150 C60 100, 65 55, 100 30 Z" fill="#2d6a3f" stroke="#1b4326" stroke-width="2"/>
@@ -93,7 +93,7 @@ function createLeafSvgDataUri(diseaseId) {
   } else if (diseaseId === "watermelon_anthracnose") {
     // Watermelon leaf with dark spots
     innerSvg = `
-      <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" height="100%" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <rect width="200" height="200" fill="#0f2214"/>
         <path d="M100 25 C145 45, 160 95, 140 145 C125 175, 100 185, 100 185 C100 185, 75 175, 60 145 C40 95, 55 45, 100 25 Z" fill="#3b824f" stroke="#1b4326" stroke-width="2"/>
         <circle cx="90" cy="80" r="14" fill="#1c0f07"/>
@@ -104,7 +104,7 @@ function createLeafSvgDataUri(diseaseId) {
   } else {
     // Healthy Vibrant Green Leaf
     innerSvg = `
-      <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" height="100%" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <rect width="200" height="200" fill="#0f2214"/>
         <path d="M100 20 C145 50, 160 90, 150 140 C140 175, 100 185, 100 185 C100 185, 60 175, 50 140 C40 90, 55 50, 100 20 Z" fill="url(#greenGrad)" stroke="#10b981" stroke-width="2.5"/>
         <path d="M100 20 L100 185 M100 60 L140 85 M100 90 L60 115 M100 120 L145 145 M100 140 L55 160" stroke="#047857" stroke-width="2" stroke-linecap="round"/>

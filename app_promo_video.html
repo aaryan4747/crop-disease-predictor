@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Care AI - Promo Video Player</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background: #0f172a; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 1rem; }
+    
+    .video-stage {
+      width: 360px;
+      height: 640px;
+      background: #000;
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 0 8px #1e293b;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: scale(0.95);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Slide 1: Hook */
+    #slide1 {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1592417817098-8f3d6ef23a28?auto=format&fit=crop&w=800&q=80');
+    }
+
+    /* Slide 2: Scanner */
+    #slide2 {
+      background: #064e3b;
+    }
+
+    /* Slide 3: Results */
+    #slide3 {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    }
+
+    /* Slide 4: CTA */
+    #slide4 {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    }
+
+    .badge-tag {
+      background: #ef4444;
+      color: #fff;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+      animation: pulse 1.5s infinite;
+    }
+
+    .hero-heading {
+      font-size: 1.8rem;
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .sub-heading {
+      font-size: 1rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    /* Laser Scanner Simulation */
+    .scanner-box {
+      width: 220px;
+      height: 220px;
+      border: 3px dashed #10b981;
+      border-radius: 16px;
+      position: relative;
+      margin: 1.5rem 0;
+      background: url('https://images.unsplash.com/photo-1592417817098-8f3d6ef23a28?auto=format&fit=crop&w=400&q=80') center/cover;
+    }
+
+    .laser-line {
+      position: absolute;
+      width: 100%;
+      height: 4px;
+      background: #34d399;
+      box-shadow: 0 0 15px #34d399;
+      top: 0;
+      animation: scan 2s infinite ease-in-out;
+    }
+
+    @keyframes scan {
+      0% { top: 0; }
+      50% { top: 96%; }
+      100% { top: 0; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .controls {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      background: #10b981;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(16,185,129,0.4);
+    }
+
+    .btn:hover { background: #059669; }
+
+    .progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 6px;
+      background: #10b981;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="video-stage">
+    <!-- Slide 1 -->
+    <div id="slide1" class="slide active">
+      <div class="badge-tag">🛑 STOP SPRAYING WRONG MEDICINES</div>
+      <h1 class="hero-heading">Chilli or Crop Leaf Curling?</h1>
+      <p class="sub-heading">Don't waste ₹5,000 on wrong sprays. Diagnose diseases instantly with AI!</p>
+    </div>
+
+    <!-- Slide 2 -->
+    <div id="slide2" class="slide">
+      <div class="badge-tag" style="background:#10b981;">🔬 AI LEAF PATHOLOGY SCAN</div>
+      <div class="scanner-box">
+        <div class="laser-line"></div>
+      </div>
+      <h2 style="font-size:1.4rem;">Analyzing Fungal Spores...</h2>
+      <p style="font-size:0.9rem; color:#a7f3d0; margin-top:0.5rem;">Precision: 98.4% Accuracy</p>
+    </div>
+
+    <!-- Slide 3 -->
+    <div id="slide3" class="slide">
+      <div class="badge-tag" style="background:#f59e0b;">🧪 CERTIFIED ICAR REMEDIES</div>
+      <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">Chilli Black Thrips & Leaf Curl</h2>
+      <div style="background:rgba(255,255,255,0.15); padding:0.8rem; border-radius:12px; font-size:0.9rem; margin-bottom:1rem; text-align:left;">
+        ✅ <strong>Spray:</strong> Coromandel Finio (1.25ml/L)<br>
+        🌧️ <strong>Rain Radar:</strong> Clear skies today<br>
+        🏛️ <strong>Mandi Rate:</strong> ₹18,500 / Qt
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div id="slide4" class="slide">
+      <div class="badge-tag" style="background:#3b82f6;">📲 TRY IT FREE TODAY</div>
+      <h1 class="hero-heading" style="font-size:1.6rem;">Crop Care AI</h1>
+      <p style="font-size:1rem; margin-bottom:1.5rem;">Instant Plant Disease Predictor & Cure Guide</p>
+      <div style="background:#fff; color:#047857; padding:0.75rem 1.25rem; border-radius:30px; font-weight:800; font-size:0.9rem;">
+        👉 crop-disease-predictor-mu.vercel.app
+      </div>
+    </div>
+
+    <div id="progress" class="progress-bar"></div>
+  </div>
+
+  <div class="controls">
+    <button id="playBtn" class="btn">▶️ Play Promo Video & Voiceover</button>
+  </div>
+
+  <script>
+    const slides = [
+      { id: 'slide1', duration: 4000, voice: "Is your Chilli or crop leaf curling? Stop wasting money on wrong sprays! Check your leaves free with AI." },
+      { id: 'slide2', duration: 3500, voice: "Just snap a leaf photo. In 2 seconds, our AI pathology engine detects fungal and pest infections with 98.4% accuracy!" },
+      { id: 'slide3', duration: 4500, voice: "Get certified remedies for Coromandel Gromor and IFFCO medicines, live rain weather alerts, and local Mandi market prices!" },
+      { id: 'slide4', duration: 4000, voice: "Try it 100% free today at crop disease predictor dot vercel dot app!" }
+    ];
+
+    let currentIdx = 0;
+    let timer = null;
+
+    const playBtn = document.getElementById('playBtn');
+    const progressBar = document.getElementById('progress');
+
+    playBtn.onclick = startVideo;
+
+    function startVideo() {
+      currentIdx = 0;
+      playBtn.textContent = '⏸️ Playing Video...';
+      playNextSlide();
+    }
+
+    function playNextSlide() {
+      if (currentIdx >= slides.length) {
+        playBtn.textContent = '🔄 Replay Promo Video';
+        progressBar.style.width = '100%';
+        return;
+      }
+
+      document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+      const activeSlide = document.getElementById(slides[currentIdx].id);
+      if (activeSlide) activeSlide.classList.add('active');
+
+      // Speech Synthesis Voiceover
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+        const msg = new SpeechSynthesisUtterance(slides[currentIdx].voice);
+        msg.rate = 1.0;
+        window.speechSynthesis.speak(msg);
+      }
+
+      progressBar.style.width = `${((currentIdx + 1) / slides.length) * 100}%`;
+
+      timer = setTimeout(() => {
+        currentIdx++;
+        playNextSlide();
+      }, slides[currentIdx].duration);
+    }
+  </script>
+</body>
+</html>

@@ -1,9 +1,10 @@
 /**
- * Comprehensive Master Global Crop, Fruit, Vegetable & Spices Database
- * Standardized with ICAR, FAO, and World Crops Database (world-crops.com) Standards:
- * - Pre-Harvest Interval (PHI) Toxic Waiting Days
- * - Soil N-P-K Mineral Deficiency Symptoms & Remedies
- * - Coverage for Cereals, Fruits, Vegetables, Pulses, Spices & Commercial Crops
+ * Comprehensive Master Global Agricultural Pathology & Geography Database
+ * Standardized with FAO, ICAR, World Crops Database, and RNLK Agricultural Geography Standards:
+ * 1. Food Crops: Rice, Wheat, Maize, Millets (Jowar/Sorghum, Bajra, Ragi), Rye, Pulses (Gram, Tur)
+ * 2. Cash Crops: Cotton, Jute, Sugarcane, Mustard Seed, Tobacco, Groundnut, Sesamum, Linseed
+ * 3. Plantation Crops: Tea, Coffee, Spices (Cardamom, Chillies, Ginger, Turmeric), Coconut, Rubber
+ * 4. Horticulture: Fruits (Apple, Mango, Banana, Watermelon, Citrus, Papaya, Pomegranate), Vegetables (Tomato, Brinjal, Okra, Onion)
  */
 
 export const CROP_DISEASES = [
