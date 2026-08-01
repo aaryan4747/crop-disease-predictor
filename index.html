@@ -140,6 +140,11 @@
         <span>📊 Farmer Dashboard &amp; Timeline (రైతు డ్యాష్‌బోర్డ్)</span>
       </button>
 
+      <button class="sidebar-nav-btn" data-section="blog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        <span>📖 Field Guides &amp; Articles (సస్యరక్షణ వ్యాసాలు)</span>
+      </button>
+
       <button class="sidebar-nav-btn" data-section="prescription">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         <span>🧾 Dealer Prescription Receipt (మందుల షాప్ రసీదు)</span>
@@ -788,24 +793,59 @@
       </div>
     </section>
 
-    <!-- SECTION 6: Mandi Live Crop Market Prices & Profit Estimator -->
+    <!-- SECTION 6: Daily Vegetable Market Prices in India -->
     <section id="sectionMandi" class="hidden">
-      <div class="glass-card" style="max-width:900px; margin:0 auto;">
-        <h2 class="card-title" style="color:#b45309;">
+      <div class="glass-card" style="max-width:950px; margin:0 auto;">
+        <h2 class="card-title" style="color:#ea580c; font-size:1.75rem;">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 21h18"/><path d="M3 10h18"/><path d="M5 6l7-3 7 3"/><path d="M4 10v11"/><path d="M20 10v11"/><path d="M8 14v3"/><path d="M12 14v3"/><path d="M16 14v3"/></svg>
-          <span>🏛️ Mandi Live Crop Market Prices &amp; Profit Estimator (పంట మార్కెట్ ధరలు)</span>
+          <span>Daily Vegetable Market Prices in India | Today's Mandi Rates</span>
         </h2>
-        <p style="color:var(--text-muted); margin-bottom:1.5rem;">
-          Live AP &amp; Telangana Agriculture Yard Mandi rates (Guntur Chilli, Warangal Cotton, Vijayawada Tomato, Nizamabad Rice) + Harvest Profit Calculator.
+        <p style="color:var(--text-muted); margin-bottom:1.25rem;">
+          Navigating daily agricultural commodity prices with accuracy and speed. Verified real-time prices from APMC Mandi yards across India.
         </p>
 
-        <div id="mandiPricesGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:1rem; margin-bottom:1.75rem;">
-          <!-- Live Mandi rate cards -->
+        <!-- STATE SELECTION FORM matching market.todaypricerates.com -->
+        <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:12px; padding:1.25rem; margin-bottom:1.5rem;">
+          <label class="select-label" for="mandiStateSelect" style="font-size:1rem; font-weight:700;">Select State</label>
+          <div style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:0.4rem;">
+            <select id="mandiStateSelect" class="custom-select" style="max-width:380px;">
+              <option value="Andhra Pradesh" selected>Andhra Pradesh</option>
+              <option value="Telangana">Telangana</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Tamil Nadu">Tamil Nadu</option>
+              <option value="Maharashtra">Maharashtra</option>
+            </select>
+            <button id="mandiSubmitBtn" type="button" class="btn-primary" style="width:auto; padding:0.65rem 1.6rem;">Submit</button>
+          </div>
+        </div>
+
+        <h3 id="mandiHeaderTitle" style="font-family:'Outfit',sans-serif; font-size:1.35rem; font-weight:800; color:var(--primary-emerald); margin-bottom:0.4rem;">
+          Andhra Pradesh Vegetable Market Rates Today: 01 Aug 2026
+        </h3>
+        <div id="mandiNoteDesc" style="font-size:0.85rem; color:#475569; margin-bottom:1rem;">
+          Note: The percentage changes (▲/▼) indicate today's price movement compared to the 7-day market average in Andhra Pradesh.
+        </div>
+
+        <!-- DAILY MARKET PRICE TABLE -->
+        <div style="overflow-x:auto; margin-bottom:1.75rem;">
+          <table style="width:100%; border-collapse:collapse; background:#ffffff; border-radius:10px; overflow:hidden; border:1px solid #cbd5e1;">
+            <thead>
+              <tr style="background:#ea580c; color:#ffffff; font-family:'Outfit',sans-serif; text-align:left; font-size:0.9rem;">
+                <th style="padding:0.75rem 1rem;">VEGETABLE / CROP NAME</th>
+                <th style="padding:0.75rem 1rem;">UNIT</th>
+                <th style="padding:0.75rem 1rem;">MANDI PRICE (VS. 7-DAY AVG)</th>
+                <th style="padding:0.75rem 1rem;">RETAIL PRICE RANGE</th>
+              </tr>
+            </thead>
+            <tbody id="mandiTableBody">
+              <!-- Dynamically populated by MandiMarketEngine -->
+            </tbody>
+          </table>
         </div>
 
         <div style="background:#fff7ed; border:1px solid #ffedd5; border-radius:var(--radius-md); padding:1.25rem;">
           <h3 style="font-family:'Outfit',sans-serif; font-size:1.15rem; color:#b45309; margin-bottom:1rem;">
-            💰 Calculate Your Field Harvest Revenue &amp; Profit
+            💰 Calculate Your Field Harvest Revenue &amp; Net Profit
           </h3>
           <div class="calc-grid">
             <div>
@@ -1013,6 +1053,21 @@
     <section id="sectionDashboard" class="hidden">
       <div id="farmerDashboardContainer">
         <!-- Dynamically populated by FarmerDashboard -->
+      </div>
+    </section>
+
+    <!-- SECTION: Agronomy Educational Field Guides & Articles -->
+    <section id="sectionBlog" class="hidden">
+      <div class="glass-card" style="margin-bottom:2rem;">
+        <h2 class="card-title" style="font-size:1.8rem; color:var(--primary-emerald);">
+          <span>📖 Agronomy Field Guides &amp; Crop Health Articles</span>
+        </h2>
+        <p style="color:var(--text-muted); margin-bottom:1.5rem;">
+          In-depth educational articles, ICAR certified spray guides, and pathology research compiled by our agronomists.
+        </p>
+        <div id="blogContainer">
+          <!-- Dynamically populated by BlogGuides -->
+        </div>
       </div>
     </section>
 

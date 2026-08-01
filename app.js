@@ -7,6 +7,9 @@ import { renderOutbreakHeatmapGrid } from './outbreakMap.js';
 import { recommendBestCropFromSoil } from './soilRecommendation.js';
 import { renderCommunityGallery, renderMarketplaceStores } from './communityMarketplace.js';
 import { renderFarmerDashboard } from './farmerDashboard.js';
+import { renderBlogArticles } from './blogGuides.js';
+
+import { renderDailyMarketRates } from './mandiMarketEngine.js';
 
 const cropDoctorInstance = new AICropDoctor();
 
@@ -96,6 +99,7 @@ document.addEventListener('click', (e) => {
   const community = document.getElementById('sectionCommunity');
   const marketplace = document.getElementById('sectionMarketplace');
   const dashboard = document.getElementById('sectionDashboard');
+  const blog = document.getElementById('sectionBlog');
 
   if (predictor) predictor.classList.add('hidden');
   if (weather) weather.classList.add('hidden');
@@ -111,12 +115,19 @@ document.addEventListener('click', (e) => {
   if (community) community.classList.add('hidden');
   if (marketplace) marketplace.classList.add('hidden');
   if (dashboard) dashboard.classList.add('hidden');
+  if (blog) blog.classList.add('hidden');
 
   if (sec === 'predictor') {
     if (heroBanner) heroBanner.classList.remove('hidden');
     if (metricsBar) metricsBar.classList.remove('hidden');
     if (weatherAlert) weatherAlert.classList.remove('hidden');
     if (predictor) predictor.classList.remove('hidden');
+  } else if (sec === 'blog') {
+    if (heroBanner) heroBanner.classList.add('hidden');
+    if (metricsBar) metricsBar.classList.add('hidden');
+    if (weatherAlert) weatherAlert.classList.add('hidden');
+    if (blog) blog.classList.remove('hidden');
+    renderBlogArticles('blogContainer');
   } else if (sec === 'dashboard') {
     if (heroBanner) heroBanner.classList.add('hidden');
     if (metricsBar) metricsBar.classList.add('hidden');
@@ -191,8 +202,17 @@ document.addEventListener('click', (e) => {
     if (metricsBar) metricsBar.classList.add('hidden');
     if (weatherAlert) weatherAlert.classList.add('hidden');
     if (mandi) mandi.classList.remove('hidden');
-    renderMandiPricesGrid();
+    const selectedState = document.getElementById('mandiStateSelect')?.value || 'Andhra Pradesh';
+    renderDailyMarketRates(selectedState);
     calculateMandiProfit();
+
+    const submitBtn = document.getElementById('mandiSubmitBtn');
+    const stateSelect = document.getElementById('mandiStateSelect');
+    if (submitBtn) {
+      submitBtn.onclick = () => {
+        renderDailyMarketRates(stateSelect?.value || 'Andhra Pradesh');
+      };
+    }
   } else if (sec === 'prescription') {
     if (heroBanner) heroBanner.classList.add('hidden');
     if (metricsBar) metricsBar.classList.add('hidden');
