@@ -715,7 +715,88 @@ export const CROP_DISEASES = [
     mineralDeficiency: "Fe & Mn deficiency causes interveinal chlorosis in young leaves."
   },
 
-  // 19. HEALTHY LEAF (ALL CROPS)
+  // 19. WHEAT RUST
+  {
+    id: "wheat_rust",
+    crop: "Wheat (గోధుమ)",
+    diseaseName: "Wheat Rust & Leaf Stripe (గోధుమ తుప్పు తెగులు)",
+    scientificName: "Puccinia striiformis & Puccinia triticina",
+    type: "Fungal Spore Complex",
+    severityLevel: "Severe",
+    severityScore: 92,
+    badgeColor: "#dc2626",
+    symptoms: [
+      "Bright yellow and orange pustule stripes running parallel along wheat leaf blades",
+      "Powdery yellow spores rubbing off easily on fingers when touching leaves"
+    ],
+    rootCauses: [
+      "Cool moist weather (10°C-20°C) with prolonged dew periods during early spring",
+      "Airborne urediniospores blown across regions by wind currents"
+    ],
+    organicCures: [
+      {
+        name: "5% Neem Leaf Extract + Fermented Sour Butter Milk Spray",
+        dosage: "50ml Neem extract + 20ml sour curd whey per Liter of water",
+        application: "Foliar spray to suppress spore germination on leaf blades."
+      }
+    ],
+    chemicalCures: [
+      {
+        name: "Propiconazole 25% EC (Tilt) or Tebuconazole 25.9% EC (Folicur)",
+        dosage: "1.0 ml per Liter of water",
+        application: "KVK recommended systemic spray at first appearance of yellow rust stripes.",
+        phiDays: 30
+      }
+    ],
+    preventionProtocol: [
+      "Sow certified rust-resistant varieties recommended by ICAR-IARI",
+      "Avoid late sowing and excessive nitrogenous fertilizer application"
+    ],
+    mineralDeficiency: "Potassium deficiency increases cell wall permeability to rust fungal germ tubes."
+  },
+
+  // 20. SUGARCANE RED ROT
+  {
+    id: "sugarcane_red_rot",
+    crop: "Sugarcane (చెరకు)",
+    diseaseName: "Sugarcane Red Rot (చెరకు ఎర్రకుళ్లు తెగులు)",
+    scientificName: "Colletotrichum falcatum",
+    type: "Fungal Systemic Pathogen",
+    severityLevel: "Critical",
+    severityScore: 97,
+    badgeColor: "#dc2626",
+    symptoms: [
+      "Third or fourth leaf from crown showing yellowing and drying along margins",
+      "Reddening of internal stalk pith tissue with distinct transverse white patches",
+      "Stalk emitting an alcoholic sour fermentation odor when split open"
+    ],
+    rootCauses: [
+      "Infected setts used for planting combined with waterlogging during monsoon",
+      "Pathogen surviving in crop debris and transmitted by irrigation water"
+    ],
+    organicCures: [
+      {
+        name: "Trichoderma harzianum Sett Treatment + Pseudomonas fluorescens",
+        dosage: "10 grams Trichoderma + 10 grams Pseudomonas per Liter of water",
+        application: "Soak sugarcane setts for 30 minutes prior to planting."
+      }
+    ],
+    chemicalCures: [
+      {
+        name: "Carbendazim 50% WP (Bavistin) Sett Dip Treatment",
+        dosage: "2.0 grams per Liter of water",
+        application: "Dip setts for 15 minutes before planting to eliminate seed-borne inoculum.",
+        phiDays: 45
+      }
+    ],
+    preventionProtocol: [
+      "Use certified disease-free setts from nursery seed plots",
+      "Adopt 2-year crop rotation with non-host crops like paddy or pulses"
+    ],
+    mineralDeficiency: "Potash and Calcium deficiency weakens rind hardness, aiding fungal hyphae penetration."
+  },
+
+  // 21. HEALTHY LEAF (ALL CROPS)
   {
     id: "healthy_leaf",
     crop: "General Crop (అన్ని రకాల పంటలు)",
@@ -772,5 +853,7 @@ export const CROP_LIST = [
   "Maize / Corn (మొక్కజొన్న)",
   "Groundnut (వేరుశనగ)",
   "Pulses / Red Gram / Chickpea (కందులు / శనగ)",
-  "Turmeric / Ginger (పసుపు / అల్లం)"
+  "Turmeric / Ginger (పసుపు / అల్లం)",
+  "Wheat (గోధుమ)",
+  "Sugarcane (చెరకు)"
 ];
