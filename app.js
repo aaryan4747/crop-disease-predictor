@@ -1695,29 +1695,89 @@ const STATE_MARKET_DATABASE = {
     { name: "Paddy BPT 5204 (వరి)", unit: "Quintal", mandiPrice: 2350, change: "▲ 2.5%", isUp: true, retail: "₹ 2450 - 2600" }
   ],
   "Telangana": [
-    { name: "Onion Big", unit: "Kg / Pcs", mandiPrice: 32, change: "▲ 3.8%", isUp: true, retail: "₹ 35 - 42" },
-    { name: "Tomato", unit: "Kg / Pcs", mandiPrice: 24, change: "▲ 10.5%", isUp: true, retail: "₹ 27 - 32" },
-    { name: "Potato", unit: "Kg / Pcs", mandiPrice: 25, change: "▲ 1.2%", isUp: true, retail: "₹ 28 - 33" },
-    { name: "Green Chilli", unit: "Kg / Pcs", mandiPrice: 50, change: "▲ 6.0%", isUp: true, retail: "₹ 55 - 64" },
+    { name: "Onion Big (ఉల్లిపాయ)", unit: "Kg / Pcs", mandiPrice: 32, change: "▲ 3.8%", isUp: true, retail: "₹ 35 - 42" },
+    { name: "Tomato (టమోటా)", unit: "Kg / Pcs", mandiPrice: 24, change: "▲ 10.5%", isUp: true, retail: "₹ 27 - 32" },
+    { name: "Potato (బంగాళదుంప)", unit: "Kg / Pcs", mandiPrice: 25, change: "▲ 1.2%", isUp: true, retail: "₹ 28 - 33" },
+    { name: "Green Chilli (పచ్చిమిరప)", unit: "Kg / Pcs", mandiPrice: 50, change: "▲ 6.0%", isUp: true, retail: "₹ 55 - 64" },
     { name: "Cotton (Warangal Mandi)", unit: "Quintal", mandiPrice: 7520, change: "▲ 2.2%", isUp: true, retail: "₹ 7700 - 8000" },
-    { name: "Rice Paddy (Nizamabad)", unit: "Quintal", mandiPrice: 2380, change: "▲ 3.1%", isUp: true, retail: "₹ 2500 - 2650" },
+    { name: "Rice Paddy (Nizamabad Yard)", unit: "Quintal", mandiPrice: 2380, change: "▲ 3.1%", isUp: true, retail: "₹ 2500 - 2650" },
     { name: "Turmeric (Nizamabad Yard)", unit: "Quintal", mandiPrice: 13400, change: "▲ 11.2%", isUp: true, retail: "₹ 14000 - 15000" }
   ],
   "Karnataka": [
-    { name: "Onion (Hubli Yard)", unit: "Kg / Pcs", mandiPrice: 29, change: "▲ 3.1%", isUp: true, retail: "₹ 32 - 38" },
+    { name: "Onion (Hubli Mandi)", unit: "Kg / Pcs", mandiPrice: 29, change: "▲ 3.1%", isUp: true, retail: "₹ 32 - 38" },
     { name: "Tomato (Kolar Market)", unit: "Kg / Pcs", mandiPrice: 20, change: "▲ 8.4%", isUp: true, retail: "₹ 23 - 28" },
     { name: "Potato", unit: "Kg / Pcs", mandiPrice: 26, change: "▼ 0.5%", isUp: false, retail: "₹ 29 - 34" },
-    { name: "Green Chilli", unit: "Kg / Pcs", mandiPrice: 45, change: "▲ 4.0%", isUp: true, retail: "₹ 50 - 58" }
+    { name: "Green Chilli", unit: "Kg / Pcs", mandiPrice: 45, change: "▲ 4.0%", isUp: true, retail: "₹ 50 - 58" },
+    { name: "Arecanut (Shivamogga Yard)", unit: "Quintal", mandiPrice: 48500, change: "▲ 5.2%", isUp: true, retail: "₹ 51000 - 54000" }
   ],
   "Tamil Nadu": [
     { name: "Onion Small (Shallots)", unit: "Kg / Pcs", mandiPrice: 60, change: "▲ 15.2%", isUp: true, retail: "₹ 68 - 78" },
-    { name: "Tomato (Koyambedu)", unit: "Kg / Pcs", mandiPrice: 23, change: "▲ 11.0%", isUp: true, retail: "₹ 26 - 31" },
-    { name: "Banana (Poovan)", unit: "Dozen", mandiPrice: 38, change: "▲ 4.2%", isUp: true, retail: "₹ 45 - 55" }
+    { name: "Tomato (Koyambedu Yard)", unit: "Kg / Pcs", mandiPrice: 23, change: "▲ 11.0%", isUp: true, retail: "₹ 26 - 31" },
+    { name: "Banana (Poovan)", unit: "Dozen", mandiPrice: 38, change: "▲ 4.2%", isUp: true, retail: "₹ 45 - 55" },
+    { name: "Coconut (Pollachi Market)", unit: "1000 Pcs", mandiPrice: 14500, change: "▲ 2.8%", isUp: true, retail: "₹ 16 - 22 /pc" }
   ],
   "Maharashtra": [
     { name: "Onion (Lasalgaon Mandi)", unit: "Kg / Pcs", mandiPrice: 27, change: "▲ 2.5%", isUp: true, retail: "₹ 30 - 36" },
-    { name: "Tomato (Nashik)", unit: "Kg / Pcs", mandiPrice: 21, change: "▲ 9.2%", isUp: true, retail: "₹ 24 - 29" },
-    { name: "Pomegranate (Solapur)", unit: "Kg / Pcs", mandiPrice: 110, change: "▲ 6.5%", isUp: true, retail: "₹ 130 - 150" }
+    { name: "Tomato (Nashik Yard)", unit: "Kg / Pcs", mandiPrice: 21, change: "▲ 9.2%", isUp: true, retail: "₹ 24 - 29" },
+    { name: "Pomegranate (Solapur)", unit: "Kg / Pcs", mandiPrice: 110, change: "▲ 6.5%", isUp: true, retail: "₹ 130 - 150" },
+    { name: "Sugarcane", unit: "Tonne", mandiPrice: 3150, change: "▲ 1.4%", isUp: true, retail: "₹ 3300 - 3500" }
+  ],
+  "Gujarat": [
+    { name: "Groundnut (Gondal Yard)", unit: "Quintal", mandiPrice: 6850, change: "▲ 3.4%", isUp: true, retail: "₹ 7100 - 7400" },
+    { name: "Cotton (Rajkot Mandi)", unit: "Quintal", mandiPrice: 7600, change: "▲ 2.0%", isUp: true, retail: "₹ 7800 - 8100" },
+    { name: "Cumin Seed / Jeera (Unjha Yard)", unit: "Quintal", mandiPrice: 28400, change: "▲ 8.6%", isUp: true, retail: "₹ 300 - 340 /kg" },
+    { name: "Onion", unit: "Kg / Pcs", mandiPrice: 28, change: "▲ 1.9%", isUp: true, retail: "₹ 31 - 37" }
+  ],
+  "Punjab": [
+    { name: "Wheat (Khanna Mandi)", unit: "Quintal", mandiPrice: 2275, change: "▲ 2.1%", isUp: true, retail: "₹ 2400 - 2550" },
+    { name: "Paddy Basmati 1121", unit: "Quintal", mandiPrice: 4350, change: "▲ 4.5%", isUp: true, retail: "₹ 4600 - 4900" },
+    { name: "Potato (Jalandhar Yard)", unit: "Kg / Pcs", mandiPrice: 18, change: "▼ 1.2%", isUp: false, retail: "₹ 22 - 26" }
+  ],
+  "Haryana": [
+    { name: "Wheat (Karnal Yard)", unit: "Quintal", mandiPrice: 2280, change: "▲ 2.3%", isUp: true, retail: "₹ 2420 - 2560" },
+    { name: "Mustard Seed (Sarson)", unit: "Quintal", mandiPrice: 5650, change: "▲ 3.8%", isUp: true, retail: "₹ 5850 - 6100" },
+    { name: "Tomato", unit: "Kg / Pcs", mandiPrice: 22, change: "▲ 7.5%", isUp: true, retail: "₹ 25 - 30" }
+  ],
+  "Uttar Pradesh": [
+    { name: "Potato (Agra Mandi)", unit: "Kg / Pcs", mandiPrice: 19, change: "▲ 1.1%", isUp: true, retail: "₹ 22 - 27" },
+    { name: "Sugarcane (FRP Rate)", unit: "Tonne", mandiPrice: 3700, change: "▲ 2.5%", isUp: true, retail: "₹ 3850 - 4000" },
+    { name: "Wheat (Kanpur Yard)", unit: "Quintal", mandiPrice: 2250, change: "▲ 1.8%", isUp: true, retail: "₹ 2380 - 2500" },
+    { name: "Mango Dasheri (Malihabad)", unit: "Kg / Pcs", mandiPrice: 45, change: "▲ 5.0%", isUp: true, retail: "₹ 55 - 70" }
+  ],
+  "Delhi": [
+    { name: "Onion (Azadpur Mandi)", unit: "Kg / Pcs", mandiPrice: 33, change: "▲ 4.8%", isUp: true, retail: "₹ 38 - 45" },
+    { name: "Tomato (Azadpur Mandi)", unit: "Kg / Pcs", mandiPrice: 25, change: "▲ 12.0%", isUp: true, retail: "₹ 30 - 35" },
+    { name: "Potato", unit: "Kg / Pcs", mandiPrice: 26, change: "▲ 1.5%", isUp: true, retail: "₹ 30 - 34" }
+  ],
+  "Bihar": [
+    { name: "Maize / Corn (Gulabbagh Yard)", unit: "Quintal", mandiPrice: 2150, change: "▲ 3.2%", isUp: true, retail: "₹ 2300 - 2450" },
+    { name: "Litchi (Muzaffarpur)", unit: "Kg / Pcs", mandiPrice: 90, change: "▲ 6.2%", isUp: true, retail: "₹ 110 - 140" },
+    { name: "Potato", unit: "Kg / Pcs", mandiPrice: 20, change: "▲ 1.0%", isUp: true, retail: "₹ 24 - 28" }
+  ],
+  "West Bengal": [
+    { name: "Jute (Raw Jute - Kolkata)", unit: "Quintal", mandiPrice: 5300, change: "▲ 2.8%", isUp: true, retail: "₹ 5550 - 5800" },
+    { name: "Rice Paddy (Bardhaman)", unit: "Quintal", mandiPrice: 2220, change: "▲ 2.0%", isUp: true, retail: "₹ 2350 - 2500" },
+    { name: "Potato (Jyoti Variety)", unit: "Kg / Pcs", mandiPrice: 22, change: "▲ 1.4%", isUp: true, retail: "₹ 25 - 29" }
+  ],
+  "Kerala": [
+    { name: "Rubber (Natural RSS-4)", unit: "Kg / Pcs", mandiPrice: 195, change: "▲ 4.1%", isUp: true, retail: "₹ 205 - 215" },
+    { name: "Coconut (Kochi Yard)", unit: "1000 Pcs", mandiPrice: 15200, change: "▲ 3.5%", isUp: true, retail: "₹ 18 - 25 /pc" },
+    { name: "Black Pepper (Idukki)", unit: "Quintal", mandiPrice: 62500, change: "▲ 7.8%", isUp: true, retail: "₹ 650 - 700 /kg" }
+  ],
+  "Madhya Pradesh": [
+    { name: "Soybean (Indore Mandi)", unit: "Quintal", mandiPrice: 4750, change: "▲ 3.6%", isUp: true, retail: "₹ 4950 - 5200" },
+    { name: "Wheat (Sharbati Variety)", unit: "Quintal", mandiPrice: 3400, change: "▲ 4.2%", isUp: true, retail: "₹ 3600 - 3850" },
+    { name: "Garlic (Mandsaur Yard)", unit: "Quintal", mandiPrice: 16500, change: "▲ 14.5%", isUp: true, retail: "₹ 180 - 220 /kg" }
+  ],
+  "Rajasthan": [
+    { name: "Mustard Seed (Kota Yard)", unit: "Quintal", mandiPrice: 5700, change: "▲ 3.2%", isUp: true, retail: "₹ 5900 - 6150" },
+    { name: "Cumin Seed / Jeera (Jodhpur)", unit: "Quintal", mandiPrice: 28900, change: "▲ 9.0%", isUp: true, retail: "₹ 310 - 350 /kg" },
+    { name: "Guar Seed (Bikaner Mandi)", unit: "Quintal", mandiPrice: 5400, change: "▲ 2.4%", isUp: true, retail: "₹ 5600 - 5850" }
+  ],
+  "Odisha": [
+    { name: "Paddy (Cuttack Mandi)", unit: "Quintal", mandiPrice: 2183, change: "▲ 2.0%", isUp: true, retail: "₹ 2300 - 2450" },
+    { name: "Brinjal", unit: "Kg / Pcs", mandiPrice: 26, change: "▲ 1.5%", isUp: true, retail: "₹ 30 - 35" },
+    { name: "Tomato", unit: "Kg / Pcs", mandiPrice: 21, change: "▲ 8.0%", isUp: true, retail: "₹ 24 - 29" }
   ]
 };
 
