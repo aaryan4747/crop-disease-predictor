@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSampleGallery();
   bindEvents();
   updateUiLanguage();
+  renderCropDoctorUI();
   renderDailyMarketRates('Andhra Pradesh');
 
   const submitBtn = document.getElementById('mandiSubmitBtn');
