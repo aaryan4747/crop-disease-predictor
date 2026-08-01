@@ -63,8 +63,23 @@ document.addEventListener('DOMContentLoaded', () => {
 let leafletMap = null;
 let leafletMarker = null;
 
-// BULLETPROOF GLOBAL DELEGATION FOR ALL NAVIGATION TABS & MOBILE SIDEBAR TOUCHES
+// BULLETPROOF GLOBAL DELEGATION FOR ALL NAVIGATION TABS, SUBMIT BUTTONS & MOBILE TOUCHES
+document.addEventListener('change', (e) => {
+  if (e.target && e.target.id === 'mandiStateSelect') {
+    renderDailyMarketRates(e.target.value);
+  }
+});
+
 document.addEventListener('click', (e) => {
+  const mandiSubmit = e.target.closest('#mandiSubmitBtn');
+  if (mandiSubmit) {
+    e.preventDefault();
+    const stSelect = document.getElementById('mandiStateSelect');
+    const selectedState = stSelect ? stSelect.value : 'Andhra Pradesh';
+    renderDailyMarketRates(selectedState);
+    return;
+  }
+
   const toggleBtn = e.target.closest('#menuToggleBtn');
   const closeBtn = e.target.closest('#sidebarCloseBtn');
   const overlay = e.target.closest('#sidebarOverlay');
