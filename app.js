@@ -35,16 +35,26 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSampleGallery();
   bindEvents();
   updateUiLanguage();
-  renderCropDoctorUI();
   renderDailyMarketRates('Andhra Pradesh');
 
   const submitBtn = document.getElementById('mandiSubmitBtn');
   const stateSelect = document.getElementById('mandiStateSelect');
+
+  function triggerMandiStateUpdate() {
+    const st = stateSelect ? stateSelect.value : 'Andhra Pradesh';
+    renderDailyMarketRates(st);
+  }
+
   if (submitBtn) {
     submitBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      const st = stateSelect ? stateSelect.value : 'Andhra Pradesh';
-      renderDailyMarketRates(st);
+      triggerMandiStateUpdate();
+    });
+  }
+
+  if (stateSelect) {
+    stateSelect.addEventListener('change', () => {
+      triggerMandiStateUpdate();
     });
   }
 });
