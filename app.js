@@ -39,6 +39,17 @@ document.addEventListener('DOMContentLoaded', () => {
   bindEvents();
   updateUiLanguage();
   renderCropDoctorUI();
+  renderDailyMarketRates('Andhra Pradesh');
+
+  const submitBtn = document.getElementById('mandiSubmitBtn');
+  const stateSelect = document.getElementById('mandiStateSelect');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const st = stateSelect ? stateSelect.value : 'Andhra Pradesh';
+      renderDailyMarketRates(st);
+    });
+  }
 });
 
 let leafletMap = null;
