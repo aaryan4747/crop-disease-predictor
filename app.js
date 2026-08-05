@@ -71,6 +71,18 @@ document.addEventListener('change', (e) => {
 });
 
 document.addEventListener('click', (e) => {
+  const langPill = e.target.closest('.lang-pill');
+  if (langPill) {
+    e.preventDefault();
+    const selectedLang = langPill.getAttribute('data-lang');
+    if (selectedLang) {
+      state.language = selectedLang;
+      localStorage.setItem('crop_lang', selectedLang);
+      updateUiLanguage();
+    }
+    return;
+  }
+
   const mandiSubmit = e.target.closest('#mandiSubmitBtn');
   if (mandiSubmit) {
     e.preventDefault();
