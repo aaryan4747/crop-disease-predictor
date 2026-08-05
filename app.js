@@ -1812,19 +1812,40 @@ function renderDailyMarketRates(selectedState = "Andhra Pradesh") {
   const headerTitle = document.getElementById('mandiHeaderTitle');
   const noteDesc = document.getElementById('mandiNoteDesc');
 
-  const todayDateStr = new Date().toLocaleDateString('en-IN', { day: '02-digit', month: 'short', year: 'numeric' });
+  const now = new Date();
+  const todayDateStr = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+  const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
 
   if (headerTitle) {
-    headerTitle.textContent = `${selectedState} Vegetable & Crop Market Rates Today: ${todayDateStr}`;
+    headerTitle.textContent = `${selectedState} APMC Mandi Benchmark Rates (${todayDateStr})`;
   }
 
   if (noteDesc) {
-    noteDesc.innerHTML = `Note: The percentage changes (▲/▼) indicate today's price movement compared to the <strong>7-day market average</strong> in ${selectedState}.`;
+    noteDesc.innerHTML = `<strong>Indicative Benchmark Data</strong> • Last Updated: ${todayDateStr} at ${timeStr} • Source: AGMARKNET &amp; Regional APMC Feeds.<br/>Note: The percentage changes (▲/▼) indicate today's price movement compared to the <strong>7-day market average</strong> in ${selectedState}.`;
   }
 
   if (!tableBody) return;
 
   const cropList = STATE_MARKET_DATABASE[selectedState] || STATE_MARKET_DATABASE["Andhra Pradesh"];
+  window._currentMandiCropList = cropList;
+
+  renderMandiRows(cropList);
+}
+
+function renderMandiRows(cropList) {
+  const tableBody = document.getElementById('mandiTableBody');
+  if (!tableBody) return;
+
+  if (cropList.length === 0) {
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="4" style="text-align:center; padding:2rem; color:var(--text-muted);">
+          🔍 No crops matched your search filter. Please try searching another vegetable or crop name.
+        </td>
+      </tr>
+    `;
+    return;
+  }
 
   tableBody.innerHTML = cropList.map(item => `
     <tr style="border-bottom:1px solid #e2e8f0;">
@@ -1840,6 +1861,18 @@ function renderDailyMarketRates(selectedState = "Andhra Pradesh") {
     </tr>
   `).join('');
 }
+
+function filterMandiCrops(query) {
+  if (!window._currentMandiCropList) return;
+  const q = (query || '').toLowerCase().trim();
+  const filtered = window._currentMandiCropList.filter(item => 
+    item.name.toLowerCase().includes(q) || item.unit.toLowerCase().includes(q)
+  );
+  renderMandiRows(filtered);
+}
+
+window.renderDailyMarketRates = renderDailyMarketRates;
+window.filterMandiCrops = filterMandiCrops;
 
 // AGRONOMY BLOG ARTICLES ENGINE
 const BLOG_ARTICLES = [

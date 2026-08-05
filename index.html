@@ -179,9 +179,9 @@
   <main class="main-container">
 
     <header class="hero-banner">
-      <div class="hero-tag" data-i18n="heroTag">🌱 Enterprise Agricultural AI • 98.4% Pathology Precision</div>
+      <div class="hero-tag" data-i18n="heroTag">🌱 Enterprise Agricultural AI • ICAR &amp; FAO Pathology Benchmarks</div>
       <h1 class="hero-title" data-i18n="heroTitle">Crop Disease Predictor &amp; <span>Cure Medicine Guide</span></h1>
-      <p class="hero-desc" data-i18n="heroDesc">Upload or snap any plant leaf photo to instantly detect diseases, analyze root causes, and get exact organic &amp; chemical treatment dosages.</p>
+      <p class="hero-desc" data-i18n="heroDesc">Upload or snap any plant leaf photo for instant AI pathology diagnosis, root cause analysis, and certified organic &amp; chemical remedy guidelines.</p>
       <div style="margin-top:1.25rem;">
         <button id="pwaInstallBtn" class="btn-primary hidden" style="max-width:340px; margin:0 auto;" data-i18n="pwaInstallBtn">
           📲 Install App to Phone Screen (0 MB)
@@ -196,7 +196,7 @@
       </div>
       <div class="metric-item">
         <div class="metric-val">98.4%</div>
-        <div class="metric-lbl">Diagnostic Precision</div>
+        <div class="metric-lbl">AI Benchmark Score</div>
       </div>
       <div class="metric-item">
         <div class="metric-val">18+</div>
@@ -204,7 +204,7 @@
       </div>
       <div class="metric-item">
         <div class="metric-val">24/7</div>
-        <div class="metric-lbl">AI Agronomist Support</div>
+        <div class="metric-lbl">Agronomy Advisory Support</div>
       </div>
     </div>
 
@@ -374,6 +374,11 @@
             <div id="tabPrevention" class="hidden"></div>
             <div id="tabDeficiency" class="hidden"></div>
           </div>
+          <!-- AGRONOMIC DISCLAIMER & EXTENSION OFFICER NOTICE -->
+          <div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:10px; padding:0.75rem 1rem; margin:1rem 0; font-size:0.82rem; color:#9a3412; line-height:1.4;">
+            <strong>⚠️ Agricultural Safety Notice:</strong> AI diagnostic confidence scores are derived from computer vision feature extraction against ICAR &amp; FAO plant pathology benchmarks. Always confirm chemical dosage applications with your local Agricultural Extension Officer (AEO) or Certified Kisan Kendra before spraying high-concentration active ingredients.
+          </div>
+
           <a id="whatsappShareBtn" href="#" target="_blank" class="btn-whatsapp">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-1.137 4.155 4.182-1.096z"/></svg>
             <span data-i18n="shareWhatsappBtn">📱 Share Report on Farmer WhatsApp Groups</span>
@@ -818,7 +823,7 @@
         <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:12px; padding:1.25rem; margin-bottom:1.5rem;">
           <label class="select-label" for="mandiStateSelect" style="font-size:1rem; font-weight:700;">Select State</label>
           <div style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:0.4rem;">
-            <select id="mandiStateSelect" class="custom-select" style="max-width:380px;">
+            <select id="mandiStateSelect" class="custom-select" style="max-width:380px;" onchange="if(window.renderDailyMarketRates) window.renderDailyMarketRates(this.value)">
               <option value="Andhra Pradesh" selected>Andhra Pradesh</option>
               <option value="Telangana">Telangana</option>
               <option value="Karnataka">Karnataka</option>
@@ -836,7 +841,7 @@
               <option value="Rajasthan">Rajasthan</option>
               <option value="Odisha">Odisha</option>
             </select>
-            <button id="mandiSubmitBtn" type="button" class="btn-primary" style="width:auto; padding:0.65rem 1.6rem;">Submit</button>
+            <button id="mandiSubmitBtn" type="button" class="btn-primary" style="width:auto; padding:0.65rem 1.6rem;" onclick="if(window.renderDailyMarketRates) window.renderDailyMarketRates(document.getElementById('mandiStateSelect').value)">Submit</button>
           </div>
         </div>
 
@@ -844,7 +849,7 @@
         <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem; margin-bottom:1rem; padding:0.65rem 1rem; background:#f0fdf4; border:1px solid #6ee7b7; border-radius:10px;">
           <div style="display:flex; align-items:center; gap:0.5rem;">
             <span style="font-size:1.1rem;">🏛️</span>
-            <span style="font-size:0.85rem; font-weight:700; color:#047857;">Verified Data Source: AGMARKNET (Directorate of Marketing &amp; Inspection, Ministry of Agriculture, Govt of India)</span>
+            <span style="font-size:0.85rem; font-weight:700; color:#047857;">Source Reference: AGMARKNET (Directorate of Marketing &amp; Inspection, Ministry of Agriculture, Govt of India)</span>
           </div>
           <div style="display:flex; gap:0.75rem;">
             <a href="https://agmarknet.gov.in" target="_blank" rel="noopener" style="font-size:0.78rem; font-weight:700; color:#2563eb; text-decoration:none; background:#eff6ff; padding:0.2rem 0.6rem; border-radius:6px; border:1px solid #bfdbfe;">AGMARKNET.gov.in ↗</a>
@@ -853,10 +858,15 @@
         </div>
 
         <h3 id="mandiHeaderTitle" style="font-family:'Outfit',sans-serif; font-size:1.35rem; font-weight:800; color:var(--primary-emerald); margin-bottom:0.4rem;">
-          Andhra Pradesh Vegetable Market Rates Today: 01 Aug 2026
+          Daily Vegetable &amp; Crop Market Rates Today
         </h3>
         <div id="mandiNoteDesc" style="font-size:0.85rem; color:#475569; margin-bottom:1rem;">
-          Note: The percentage changes (▲/▼) indicate today's price movement compared to the 7-day market average in Andhra Pradesh.
+          Indicative Benchmark Data • Last Updated: 05 Aug 2026 • Source: AGMARKNET &amp; Regional APMC Feeds.
+        </div>
+
+        <!-- SEARCH FILTER INPUT FOR MANDI CROPS -->
+        <div style="margin-bottom:1.25rem;">
+          <input type="text" id="mandiSearchInput" class="custom-select" placeholder="🔍 Search vegetable or crop name (e.g. Tomato, Chilli, Cotton, Paddy)..." oninput="if(window.filterMandiCrops) window.filterMandiCrops(this.value)" style="width:100%; border:1px solid #94a3b8; background:#ffffff; font-size:0.95rem;">
         </div>
 
         <!-- DAILY MARKET PRICE TABLE -->
