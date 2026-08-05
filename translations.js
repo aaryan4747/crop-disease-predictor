@@ -428,3 +428,13 @@ export const TELUGU_DISEASE_DATA = {
     mineralDeficiency: "పోషకాల లోపాలు ఏవీ లేవు (Optimal Soil Balance)."
   }
 };
+
+TRANSLATIONS.hi = { ...TRANSLATIONS.en, brandTitle: "क्रॉप केयर AI", heroTag: "🌱 कृषि एआई • फसल रोग निदान", browseFilesBtn: "फाइलें चुनें", useCameraBtn: "📷 कैमरा खोलें", shareWhatsappBtn: "📱 व्हाट्सएप पर शेयर करें" };
+TRANSLATIONS.ta = { ...TRANSLATIONS.en, brandTitle: "க்ராப் கேர் AI", heroTag: "🌱 விவசாய AI • பயிர் நோய் கண்டறிதல்", browseFilesBtn: "கோப்புகளைத் தேர்ந்தெடுக்கவும்", useCameraBtn: "📷 கேமராவைப் பயன்படுத்தவும்", shareWhatsappBtn: "📱 வாட்ஸ்அப்பில் பகிரவும்" };
+TRANSLATIONS.kn = { ...TRANSLATIONS.en, brandTitle: "ಕ್ರಾಪ್ ಕೇರ್ AI", heroTag: "🌱 ಕೃಷಿ AI • ಬೆಳೆ ರೋಗ ಪತ್ತೆ", browseFilesBtn: "ಫೈಲ್‌ಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ", useCameraBtn: "📷 ಕ್ಯಾಮೆರಾ ಬಳಸಿ", shareWhatsappBtn: "📱 ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳಿ" };
+TRANSLATIONS.ml = { ...TRANSLATIONS.en, brandTitle: "ക്രോപ്പ് കെയർ AI", heroTag: "🌱 കാർഷിക AI • രോഗ നിർണയം", browseFilesBtn: "ഫയലുകൾ തിരഞ്ഞെടുക്കുക", useCameraBtn: "📷 ക്യാമറ ഉപയോഗിക്കുക", shareWhatsappBtn: "📱 വാട്ട്‌സ്ആപ്പിൽ പങ്കിടുക" };
+TRANSLATIONS.mr = { ...TRANSLATIONS.en, brandTitle: "क्रॉप केअर AI", heroTag: "🌱 शेती AI • पीक रोग निदान", browseFilesBtn: "फाईल्स निवडा", useCameraBtn: "📷 कॅमेरा वापरा", shareWhatsappBtn: "📱 व्हॉट्सॲपवर शेअर करा" };
+TRANSLATIONS.gu = { ...TRANSLATIONS.en, brandTitle: "ક્રોપ કેર AI", heroTag: "🌱 કૃષિ AI • પાક રોગ નિદાન", browseFilesBtn: "ફાઇલો પસંદ કરો", useCameraBtn: "📷 કેમેરા વાપરો", shareWhatsappBtn: "📱 વોટ્સએપ પર શેર કરો" };
+TRANSLATIONS.bn = { ...TRANSLATIONS.en, brandTitle: "ক্রপ কেয়ার AI", heroTag: "🌱 কৃষি AI • ফসল রোগ নির্ণয়", browseFilesBtn: "ফাইল নির্বাচন করুন", useCameraBtn: "📷 ক্যামেরা ব্যবহার করুন", shareWhatsappBtn: "📱 হোয়াটসঅ্যাপে শেয়ার করুন" };
+TRANSLATIONS.pa = { ...TRANSLATIONS.en, brandTitle: "ਕ੍ਰੌਪ ਕੇਅਰ AI", heroTag: "🌱 ਖੇਤੀਬਾੜੀ AI • ਫਸਲ ਬਿਮਾਰੀ ਨਿਦਾਨ", browseFilesBtn: "ਫਾਈਲਾਂ ਚੁਣੋ", useCameraBtn: "📷 ਕੈਮਰਾ ਵਰਤੋ", shareWhatsappBtn: "📱 ਵਟਸਐਪ 'ਤੇ ਸਾਂਝਾ ਕਰੋ" };
+TRANSLATIONS.or = { ...TRANSLATIONS.en, brandTitle: "କ୍ରପ୍ କେୟାର AI", heroTag: "🌱 କୃଷି AI • ଫସଲ ରୋଗ ନିର୍ଣ୍ଣୟ", browseFilesBtn: "ଫାଇଲ୍ ବାଛନ୍ତୁ", useCameraBtn: "📷 କ୍ୟାମେରା ବ୍ୟବହାର କରନ୍ତୁ", shareWhatsappBtn: "📱 ହ୍ଵାଟ୍ସଆପ୍ ରେ ସେୟାର କରନ୍ତୁ" };
