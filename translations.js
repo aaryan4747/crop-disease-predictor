@@ -429,12 +429,174 @@ export const TELUGU_DISEASE_DATA = {
   }
 };
 
-TRANSLATIONS.hi = { ...TRANSLATIONS.en, brandTitle: "क्रॉप केयर AI", heroTag: "🌱 कृषि एआई • फसल रोग निदान", browseFilesBtn: "फाइलें चुनें", useCameraBtn: "📷 कैमरा खोलें", shareWhatsappBtn: "📱 व्हाट्सएप पर शेयर करें" };
-TRANSLATIONS.ta = { ...TRANSLATIONS.en, brandTitle: "க்ராப் கேர் AI", heroTag: "🌱 விவசாய AI • பயிர் நோய் கண்டறிதல்", browseFilesBtn: "கோப்புகளைத் தேர்ந்தெடுக்கவும்", useCameraBtn: "📷 கேமராவைப் பயன்படுத்தவும்", shareWhatsappBtn: "📱 வாட்ஸ்அப்பில் பகிரவும்" };
-TRANSLATIONS.kn = { ...TRANSLATIONS.en, brandTitle: "ಕ್ರಾಪ್ ಕೇರ್ AI", heroTag: "🌱 ಕೃಷಿ AI • ಬೆಳೆ ರೋಗ ಪತ್ತೆ", browseFilesBtn: "ಫೈಲ್‌ಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ", useCameraBtn: "📷 ಕ್ಯಾಮೆರಾ ಬಳಸಿ", shareWhatsappBtn: "📱 ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳಿ" };
-TRANSLATIONS.ml = { ...TRANSLATIONS.en, brandTitle: "ക്രോപ്പ് കെയർ AI", heroTag: "🌱 കാർഷിക AI • രോഗ നിർണയം", browseFilesBtn: "ഫയലുകൾ തിരഞ്ഞെടുക്കുക", useCameraBtn: "📷 ക്യാമറ ഉപയോഗിക്കുക", shareWhatsappBtn: "📱 വാട്ട്‌സ്ആപ്പിൽ പങ്കിടുക" };
-TRANSLATIONS.mr = { ...TRANSLATIONS.en, brandTitle: "क्रॉप केअर AI", heroTag: "🌱 शेती AI • पीक रोग निदान", browseFilesBtn: "फाईल्स निवडा", useCameraBtn: "📷 कॅमेरा वापरा", shareWhatsappBtn: "📱 व्हॉट्सॲपवर शेअर करा" };
-TRANSLATIONS.gu = { ...TRANSLATIONS.en, brandTitle: "ક્રોપ કેર AI", heroTag: "🌱 કૃષિ AI • પાક રોગ નિદાન", browseFilesBtn: "ફાઇલો પસંદ કરો", useCameraBtn: "📷 કેમેરા વાપરો", shareWhatsappBtn: "📱 વોટ્સએપ પર શેર કરો" };
-TRANSLATIONS.bn = { ...TRANSLATIONS.en, brandTitle: "ক্রপ কেয়ার AI", heroTag: "🌱 কৃষি AI • ফসল রোগ নির্ণয়", browseFilesBtn: "ফাইল নির্বাচন করুন", useCameraBtn: "📷 ক্যামেরা ব্যবহার করুন", shareWhatsappBtn: "📱 হোয়াটসঅ্যাপে শেয়ার করুন" };
-TRANSLATIONS.pa = { ...TRANSLATIONS.en, brandTitle: "ਕ੍ਰੌਪ ਕੇਅਰ AI", heroTag: "🌱 ਖੇਤੀਬਾੜੀ AI • ਫਸਲ ਬਿਮਾਰੀ ਨਿਦਾਨ", browseFilesBtn: "ਫਾਈਲਾਂ ਚੁਣੋ", useCameraBtn: "📷 ਕੈਮਰਾ ਵਰਤੋ", shareWhatsappBtn: "📱 ਵਟਸਐਪ 'ਤੇ ਸਾਂਝਾ ਕਰੋ" };
-TRANSLATIONS.or = { ...TRANSLATIONS.en, brandTitle: "କ୍ରପ୍ କେୟାର AI", heroTag: "🌱 କୃଷି AI • ଫସଲ ରୋଗ ନିର୍ଣ୍ଣୟ", browseFilesBtn: "ଫାଇଲ୍ ବାଛନ୍ତୁ", useCameraBtn: "📷 କ୍ୟାମେରା ବ୍ୟବହାର କରନ୍ତୁ", shareWhatsappBtn: "📱 ହ୍ଵାଟ୍ସଆପ୍ ରେ ସେୟାର କରନ୍ତୁ" };
+// MULTI-LINGUAL ALL INDIA REGIONAL DICTIONARY MAP
+TRANSLATIONS.hi = {
+  ...TRANSLATIONS.en,
+  brandTitle: "क्रॉप केयर AI",
+  heroTag: "🌱 उन्नत कृषि एआई • फसल रोग निदान",
+  heroTitle: "फसल रोग निदान एवं <span>औषधि उपचार गाइड</span>",
+  heroDesc: "फसल की पत्ती की फोटो अपलोड करें और तुरंत बीमारी का निदान, मूल कारण और जैविक व रासायनिक दवाओं की सही खुराक पाएं।",
+  navPredictor: "रोग निदान केंद्र",
+  navWeather: "🌤️ स्थानीय मौसम",
+  navLibrary: "रोग सूची",
+  navCalculator: "खुराक कैलकुलेटर",
+  pwaInstallBtn: "📲 फोन स्क्रीन पर ऐप इंस्टॉल करें (0 MB)",
+  browseFilesBtn: "फाइलें चुनें",
+  useCameraBtn: "📷 कैमरा खोलें",
+  sampleHeader: "या परीक्षण के लिए नमूना पत्ती पर क्लिक करें:",
+  awaitingTitle: "पत्ती की फोटो की प्रतीक्षा है",
+  awaitingDesc: "रोग निदान और दवा की सिफारिश प्राप्त करने के लिए बाएं गैलरी से फोटो अपलोड करें।",
+  tabRootCause: "लक्षण एवं मूल कारण",
+  tabOrganic: "जैविक उपचार",
+  tabChemical: "रासायनिक दवाएं",
+  tabPrevention: "बचाव की योजना",
+  tabDeficiency: "🌱 पोषक तत्वों की कमी",
+  shareWhatsappBtn: "📱 व्हाट्सएप किसान ग्रुप में शेयर करें",
+  callHotlineBtn: "📞 किसान हेल्पलाइन कॉल करें (1800-180-1551)"
+};
+
+TRANSLATIONS.ta = {
+  ...TRANSLATIONS.en,
+  brandTitle: "க்ராப் கேர் AI",
+  heroTag: "🌱 நவீன விவசாய AI • பயிர் நோய் கண்டறிதல்",
+  heroTitle: "பயிர் நோய் கண்டறிதல் & <span>மருந்து வழிகாட்டி</span>",
+  heroDesc: "பயிர் இலையின் புகைப்படத்தைப் பதிவேற்றி நோயைக் கண்டறிந்து, இயற்கை மற்றும் வேதியியல் மருந்து அளவுகளை உடனடியாகப் பெறுங்கள்.",
+  navPredictor: "நோய் கண்டறிதல் மையம்",
+  navWeather: "🌤️ வானிலை மையம்",
+  navLibrary: "நோய் அடைவு",
+  navCalculator: "மருந்து அளவி",
+  pwaInstallBtn: "📲 செயலியை போனில் நிறுவுங்கள் (0 MB)",
+  browseFilesBtn: "கோப்புகளைத் தேர்ந்தெடுக்கவும்",
+  useCameraBtn: "📷 கேமராவைப் பயன்படுத்தவும்",
+  sampleHeader: "அல்லது சோதனை செய்ய மாதிரி இலையைக் கிளிக் செய்யவும்:",
+  awaitingTitle: "இலை புகைப்படத்திற்காக காத்திருக்கிறது",
+  awaitingDesc: "நோயைக் கண்டறிய புகைப்படத்தைப் பதிவேற்றவும்.",
+  tabRootCause: "அறிகுறிகள் & காரணம்",
+  tabOrganic: "இயற்கை மருந்துகள்",
+  tabChemical: "வேதியியல் மருந்துகள்",
+  tabPrevention: "தடுப்பு திட்டம்",
+  tabDeficiency: "🌱 சத்து குறைபாடு",
+  shareWhatsappBtn: "📱 வாட்ஸ்அப்பில் பகிரவும்",
+  callHotlineBtn: "📞 கிசான் உதவி எண் (1800-180-1551)"
+};
+
+TRANSLATIONS.kn = {
+  ...TRANSLATIONS.en,
+  brandTitle: "ಕ್ರಾಪ್ ಕೇರ್ AI",
+  heroTag: "🌱 ಕೃಷಿ AI • ಬೆಳೆ ರೋಗ ಪತ್ತೆ ಮತ್ತು ಪರಿಹಾರ",
+  heroTitle: "ಬೆಳೆ ರೋಗ ಪತ್ತೆ & <span>ಔಷಧ ಮಾರ್ಗದರ್ಶಿ</span>",
+  heroDesc: "ಬೆಳೆ ಎಲೆಯ ಫೋಟೋವನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ ಮತ್ತು ರೋಗದ ರೋಗನಿರ್ಣಯ, ಸಾವಯವ ಮತ್ತು ರಾಸಾಯನಿಕ ಔಷಧಿಗಳ ಸರಿಯಾದ ಪ್ರಮಾಣವನ್ನು ತಕ್ಷಣ ಪಡೆಯಿರಿ.",
+  navPredictor: "ರೋಗ ಪತ್ತೆ ಕೇಂದ್ರ",
+  navWeather: "🌤️ ಹವಾಮಾನ",
+  navLibrary: "ರೋಗಗಳ ಪಟ್ಟಿ",
+  navCalculator: "ಪ್ರಮಾಣ ಲೆಕ್ಕಾಚಾರ",
+  pwaInstallBtn: "📲 ಫೋನ್‌ನಲ್ಲಿ ಆಪ್ ಸ್ಥಾಪಿಸಿ (0 MB)",
+  browseFilesBtn: "ಫೈಲ್‌ಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+  useCameraBtn: "📷 ಕ್ಯಾಮೆರಾ ಬಳಸಿ",
+  sampleHeader: "ಅಥವಾ ಪರೀಕ್ಷಿಸಲು ಮಾದರಿ ಎಲೆಯನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ:",
+  awaitingTitle: "ಎಲೆಯ ಫೋಟೋಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ",
+  awaitingDesc: "ರೋಗ ಪತ್ತೆಗಾಗಿ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ.",
+  tabRootCause: "ಲಕ್ಷಣಗಳು ಮತ್ತು ಕಾರಣಗಳು",
+  tabOrganic: "ಸಾವಯವ ಉಪಚಾರಗಳು",
+  tabChemical: "ರಾಸಾಯನಿಕ ಔಷಧಗಳು",
+  tabPrevention: "ತಡೆಗಟ್ಟುವ ಯೋಜನೆ",
+  tabDeficiency: "🌱 ಪೋಷಕಾಂಶಗಳ ಕೊರತೆ",
+  shareWhatsappBtn: "📱 ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳಿ",
+  callHotlineBtn: "📞 ಕಿಸಾನ್ ಸಹಾಯವಾಣಿ (1800-180-1551)"
+};
+
+TRANSLATIONS.ml = {
+  ...TRANSLATIONS.en,
+  brandTitle: "ക്രോപ്പ് കെയർ AI",
+  heroTag: "🌱 കാർഷിക AI • വിള രോഗ നിർണയം",
+  heroTitle: "വിള രോഗ നിർണ്ണയവും <span>മരുന്ന് മാർഗ്ഗനിർദ്ദേശവും</span>",
+  heroDesc: "ഇലയുടെ ഫോട്ടോ അപ്‌ലോഡ് ചെയ്ത് രോഗ നിർണ്ണയവും ഓർഗാനിക് & രാസ മരുന്നുകളുടെ കൃത്യമായ അളവും തൽക്ഷണം നേടുക.",
+  browseFilesBtn: "ഫയലുകൾ തിരഞ്ഞെടുക്കുക",
+  useCameraBtn: "📷 ക്യാമറ ഉപയോഗിക്കുക",
+  tabRootCause: "ലക്ഷണങ്ങളും കാരണങ്ങളും",
+  tabOrganic: "ജൈവ മരുന്നുകൾ",
+  tabChemical: "രാസ മരുന്നുകൾ",
+  tabPrevention: "പ്രതിരോധ മാർഗ്ഗങ്ങൾ",
+  tabDeficiency: "🌱 പോഷകക്കുറവ്",
+  shareWhatsappBtn: "📱 വാട്ട്‌സ്ആപ്പിൽ പങ്കിടുക"
+};
+
+TRANSLATIONS.mr = {
+  ...TRANSLATIONS.en,
+  brandTitle: "क्रॉप केअर AI",
+  heroTag: "🌱 प्रगत शेती AI • पीक रोग निदान",
+  heroTitle: "पीक रोग निदान आणि <span>औषध फवारणी मार्गदर्शक</span>",
+  heroDesc: "पानाचा फोटो अपलोड करा आणि रोगाचे निदान, कारणे व सेंद्रिय व रासायनिक औषधांची योग्य मात्रा मिळवा.",
+  browseFilesBtn: "फाईल्स निवडा",
+  useCameraBtn: "📷 कॅमेरा वापरा",
+  tabRootCause: "लक्षणे आणि कारणे",
+  tabOrganic: "सेंद्रिय उपाय",
+  tabChemical: "रासायनिक औषधे",
+  tabPrevention: "प्रतिबंधात्मक नियोजन",
+  tabDeficiency: "🌱 अन्नद्रव्यांची कमतरता",
+  shareWhatsappBtn: "📱 व्हॉट्सॲपवर शेअर करा"
+};
+
+TRANSLATIONS.gu = {
+  ...TRANSLATIONS.en,
+  brandTitle: "ક્રોપ કેર AI",
+  heroTag: "🌱 કૃષિ AI • પાક રોગ નિદાન અને દવાઓ",
+  heroTitle: "પાક રોગ નિદાન અને <span>દવા માર્ગદર્શિકા</span>",
+  heroDesc: "પાંદડાનો ફોટો અપલોડ કરો અને ત્વરિત રોગ નિદાન, સેન્દ્રીય અને રાસાયણિક દવાની સાચી માત્રા મેળવો.",
+  browseFilesBtn: "ફાઇલો પસંદ કરો",
+  useCameraBtn: "📷 કેમેરા વાપરો",
+  tabRootCause: "લક્ષણો અને કારણો",
+  tabOrganic: "જૈવિક ઉપચારો",
+  tabChemical: "રાસાયણિક દવાઓ",
+  tabPrevention: "રક્ષણ આયોજન",
+  tabDeficiency: "🌱 પોષક તત્વોની ઉણપ",
+  shareWhatsappBtn: "📱 વોટ્સએપ પર શેર કરો"
+};
+
+TRANSLATIONS.bn = {
+  ...TRANSLATIONS.en,
+  brandTitle: "ক্রপ কেয়ার AI",
+  heroTag: "🌱 উন্নত কৃষি AI • ফসল রোগ নির্ণয়",
+  heroTitle: "ফসল রোগ নির্ণয় এবং <span>ওষুধের নির্দেশিকা</span>",
+  heroDesc: "পাতার ছবি আপলোড করুন এবং তাৎক্ষণিক রোগ নির্ণয়, জৈব ও রাসায়নিক ওষুধের সঠিক মাত্রা পান।",
+  browseFilesBtn: "ফাইল নির্বাচন করুন",
+  useCameraBtn: "📷 ক্যামেরা ব্যবহার করুন",
+  tabRootCause: "লক্ষণ ও কারণ",
+  tabOrganic: "জৈব প্রতিকার",
+  tabChemical: "রাসায়নিক ওষুধ",
+  tabPrevention: "প্রতিরোধমূলক পরিকল্পনা",
+  tabDeficiency: "🌱 পুষ্টির অভাব",
+  shareWhatsappBtn: "📱 হোয়াটসঅ্যাপে শেয়ার করুন"
+};
+
+TRANSLATIONS.pa = {
+  ...TRANSLATIONS.en,
+  brandTitle: "ਕ੍ਰੌਪ ਕੇਅਰ AI",
+  heroTag: "🌱 ਖੇਤੀਬਾੜੀ AI • ਫਸਲ ਬਿਮਾਰੀ ਨਿਦਾਨ",
+  heroTitle: "ਫਸਲ ਬਿਮਾਰੀ ਨਿਦਾਨ ਅਤੇ <span>ਦਵਾਈ ਗਾਈਡ</span>",
+  heroDesc: "ਪੱਤੇ ਦੀ ਫੋਟੋ ਅੱਪਲੋਡ ਕਰੋ ਅਤੇ ਤੁਰੰਤ ਬਿਮਾਰੀ ਦਾ ਨਿਦਾਨ ਅਤੇ ਦੇਸੀ ਤੇ ਰਸਾਇਣਕ ਦਵਾਈਆਂ ਦੀ ਖੁਰਾਕ ਪ੍ਰਾਪਤ ਕਰੋ।",
+  browseFilesBtn: "ਫਾਈਲਾਂ ਚੁਣੋ",
+  useCameraBtn: "📷 ਕੈਮਰਾ ਵਰਤੋ",
+  tabRootCause: "ਲੱਛਣ ਅਤੇ ਕਾਰਨ",
+  tabOrganic: "ਦੇਸੀ ਇਲਾਜ",
+  tabChemical: "ਰਸਾਇਣਕ ਦਵਾਈਆਂ",
+  tabPrevention: "ਰੋਕਥਾਮ ਦੀ ਯੋਜਨਾ",
+  tabDeficiency: "🌱 ਪੋਸ਼ਕ ਤੱਤਾਂ ਦੀ ਘਾਟ",
+  shareWhatsappBtn: "📱 ਵਟਸਐਪ 'ਤੇ ਸਾਂਝਾ ਕਰੋ"
+};
+
+TRANSLATIONS.or = {
+  ...TRANSLATIONS.en,
+  brandTitle: "କ୍ରପ୍ କେୟାର AI",
+  heroTag: "🌱 କୃଷି AI • ଫସଲ ରୋଗ ନିର୍ଣ୍ଣୟ",
+  heroTitle: "ଫସଲ ରୋଗ ନିର୍ଣ୍ଣୟ ଏବଂ <span>ଓଷଧ ନିର୍ଦ୍ଦେଶିକା</span>",
+  heroDesc: "ପତ୍ରର ଫଟୋ ଅପଲୋଡ୍ କରନ୍ତୁ ଏବଂ ତୁରନ୍ତ ରୋଗ ଚିହ୍ନଟ, ଜୈବିକ ଏବଂ ରାସାୟନିକ ଓଷଧର ମାତ୍ରା ପାଆନ୍ତୁ।",
+  browseFilesBtn: "ଫାଇଲ୍ ବାଛନ୍ତୁ",
+  useCameraBtn: "📷 କ୍ୟାମେରା ବ୍ୟବହାର କରନ୍ତୁ",
+  tabRootCause: "ଲକ୍ଷଣ ଏବଂ କାରଣ",
+  tabOrganic: "ଜୈବିକ ଉପଚାର",
+  tabChemical: "ରାସାୟନିକ ଓଷଧ",
+  tabPrevention: "ପ୍ରତିରୋଧକ ଯୋଜନା",
+  tabDeficiency: "🌱 ପୋଷକ ତତ୍ତ୍ଵର ଅଭାବ",
+  shareWhatsappBtn: "📱 ହ୍ଵାଟ୍ସଆପ୍ ରେ ସେୟାର କରନ୍ତୁ"
+};
