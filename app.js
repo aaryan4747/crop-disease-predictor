@@ -1062,7 +1062,7 @@ function updateWhatsappShareLink() {
   msg += `🦠 *Disease Identified*: ${d.diseaseName}\n`;
   msg += `🎯 *AI Confidence*: ${state.currentAnalysis.confidence}%\n\n`;
   msg += `🌿 *Recommended Remedy*: ${d.organicCures[0].name} (${d.organicCures[0].dosage})\n\n`;
-  msg += `Check your crop diseases free here: https://crop-disease-predictor-mu.vercel.app/`;
+  msg += `Check your crop diseases free here: https://www.crop-care.in/`;
 
   dom.whatsappShareBtn.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
 }

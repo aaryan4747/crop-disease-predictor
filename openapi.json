@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://crop-disease-predictor-mu.vercel.app/api",
+      "url": "https://www.crop-care.in/api",
       "description": "Production Vercel Cloud Server"
     }
   ],
